@@ -17,7 +17,7 @@ const AboutSection = () => (
           startup to enterprise — with systems, insights, and strategy.
         </p>
       </motion.div>
-      <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }}>
+      <motion.div {...fadeUp} transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] as const, delay: 0.1 }}>
         <h4 className="text-primary font-bold mb-4 text-lg">Sight = Clarity</h4>
         <p className="text-sm text-muted-blue leading-relaxed">
           Eliminating the fog of numbers. We provide the visibility needed to
