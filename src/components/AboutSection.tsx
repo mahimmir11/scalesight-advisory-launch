@@ -26,7 +26,7 @@ const AboutSection = () => (
       </motion.div>
       <motion.div
         {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] as const, delay: 0.2 }}
         className="md:border-l border-primary/10 md:pl-12"
       >
         <h4 className="text-primary font-bold mb-4 italic text-lg font-display">
