@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -16,8 +17,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 bg-off-white/80 backdrop-blur-md border-b border-primary/5">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#" className="text-primary font-bold text-xl tracking-tighter">
-          SCALESIGHT<span className="text-emerald">.</span>
+        <a href="#" className="flex items-center gap-2">
+          <img src={logo} alt="ScaleSight Global Advisory" className="h-10 w-auto" />
         </a>
 
         <div className="hidden md:flex gap-8 text-sm font-medium text-muted-foreground">
