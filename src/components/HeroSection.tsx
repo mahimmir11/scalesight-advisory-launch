@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const fadeUp = {
@@ -11,13 +11,13 @@ const fadeUp = {
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-    {/* Animated background with slow zoom */}
+    {/* Background with faster zoom */}
     <motion.div
       className="absolute inset-0 z-0"
       initial={{ scale: 1 }}
-      animate={{ scale: 1.15 }}
+      animate={{ scale: 1.12 }}
       transition={{
-        duration: 25,
+        duration: 14,
         ease: "linear",
         repeat: Infinity,
         repeatType: "reverse",
@@ -30,9 +30,9 @@ const HeroSection = () => (
       />
     </motion.div>
 
-    {/* Subtle dark overlay — NOT blurry, just darkened for text readability */}
-    <div className="absolute inset-0 z-[1] bg-primary/60" />
-    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/80 via-transparent to-primary/30" />
+    {/* Very light overlay — preserving the actual image look */}
+    <div className="absolute inset-0 z-[1] bg-primary/25" />
+    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/50 via-transparent to-transparent" />
 
     {/* Content */}
     <div className="relative z-10 max-w-4xl mx-auto px-6 text-center py-32 md:py-0">
@@ -47,22 +47,29 @@ const HeroSection = () => (
       <motion.p
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.2 }}
-        className="text-base md:text-lg text-primary-foreground/75 leading-relaxed mb-14 max-w-xl mx-auto"
+        className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-14 max-w-xl mx-auto"
       >
-        At ScaleSight, we deliver tailored, insight-driven advisory to help businesses 
+        At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
         see clearly, stay compliant, and grow confidently.
       </motion.p>
 
       <motion.div
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.4 }}
+        className="flex flex-col sm:flex-row gap-4 justify-center"
       >
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 border border-primary-foreground/40 text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:bg-primary-foreground/10 transition-all group"
+          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:brightness-110 transition-all group"
         >
           Get Started
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </a>
+        <a
+          href="#showcase"
+          className="inline-flex items-center gap-2 border border-primary-foreground/30 text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:bg-primary-foreground/10 transition-all"
+        >
+          Learn More
         </a>
       </motion.div>
     </div>
@@ -77,9 +84,8 @@ const HeroSection = () => (
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        className="w-5 h-8 rounded-full border-2 border-primary-foreground/30 flex items-start justify-center pt-1.5"
       >
-        <div className="w-1 h-1.5 rounded-full bg-primary-foreground/50" />
+        <ChevronDown className="w-6 h-6 text-primary-foreground/50" />
       </motion.div>
     </motion.div>
   </section>
