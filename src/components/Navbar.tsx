@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const links = [
     { label: "Home", href: "#" },
-    { label: "About", href: "#about" },
+    { label: "About", href: "#showcase" },
     { label: "Services", href: "#services" },
     { label: "Team", href: "#founders" },
     { label: "FAQ", href: "#faq" },
@@ -26,8 +26,8 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-primary/95 backdrop-blur-md shadow-lg shadow-primary/10"
-          : "bg-transparent"
+          ? "bg-primary/90 backdrop-blur-md shadow-lg shadow-primary/10"
+          : "bg-gradient-to-b from-primary/40 to-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
