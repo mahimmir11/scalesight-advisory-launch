@@ -15,9 +15,9 @@ const HeroSection = () => (
     <motion.div
       className="absolute inset-0 z-0"
       initial={{ scale: 1 }}
-      animate={{ scale: 1.1 }}
+      animate={{ scale: 1.15 }}
       transition={{
-        duration: 20,
+        duration: 25,
         ease: "linear",
         repeat: Infinity,
         repeatType: "reverse",
@@ -30,24 +30,15 @@ const HeroSection = () => (
       />
     </motion.div>
 
-    {/* Dark overlay */}
-    <div className="absolute inset-0 z-[1] bg-primary/75" />
-
-    {/* Subtle gradient overlay for depth */}
-    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/90 via-transparent to-primary/40" />
+    {/* Subtle dark overlay — NOT blurry, just darkened for text readability */}
+    <div className="absolute inset-0 z-[1] bg-primary/60" />
+    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/80 via-transparent to-primary/30" />
 
     {/* Content */}
-    <div className="relative z-10 max-w-5xl mx-auto px-6 text-center py-32 md:py-0">
-      <motion.div {...fadeUp}>
-        <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/15 text-secondary text-xs font-bold tracking-widest uppercase mb-8 border border-secondary/20">
-          Strategic Finance Advisory
-        </span>
-      </motion.div>
-
+    <div className="relative z-10 max-w-4xl mx-auto px-6 text-center py-32 md:py-0">
       <motion.h1
         {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.15 }}
-        className="text-3xl sm:text-5xl md:text-7xl font-display text-primary-foreground leading-[1.1] mb-8"
+        className="text-4xl sm:text-5xl md:text-7xl font-display text-primary-foreground leading-[1.08] mb-8"
       >
         Strategic Expertise From{" "}
         <span className="italic text-secondary">Dedicated Advisors</span>
@@ -55,51 +46,42 @@ const HeroSection = () => (
 
       <motion.p
         {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.3 }}
-        className="text-base md:text-xl text-primary-foreground/70 leading-relaxed mb-12 max-w-2xl mx-auto"
+        transition={{ ...fadeUp.transition, delay: 0.2 }}
+        className="text-base md:text-lg text-primary-foreground/75 leading-relaxed mb-14 max-w-xl mx-auto"
       >
-        Helping businesses see clearly, stay compliant, and grow confidently.
-        Founder-led advisory for the next generation of global enterprises.
+        At ScaleSight, we deliver tailored, insight-driven advisory to help businesses 
+        see clearly, stay compliant, and grow confidently.
       </motion.p>
 
       <motion.div
         {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.45 }}
-        className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+        transition={{ ...fadeUp.transition, delay: 0.4 }}
       >
         <a
           href="#contact"
-          className="bg-secondary text-primary px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 group hover:bg-secondary/90 transition-all shadow-lg shadow-secondary/20"
+          className="inline-flex items-center gap-2 border border-primary-foreground/40 text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:bg-primary-foreground/10 transition-all group"
         >
           Get Started
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </a>
-        <a
-          href="#about"
-          className="border border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-full font-semibold hover:bg-primary-foreground/10 transition-all"
-        >
-          Learn More
-        </a>
-      </motion.div>
-
-      <motion.div
-        {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.6 }}
-        className="mt-14 flex items-center justify-center gap-4"
-      >
-        <div className="flex -space-x-2">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="w-8 h-8 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/20"
-            />
-          ))}
-        </div>
-        <p className="text-sm text-primary-foreground/50 font-medium italic">
-          Trusted by 50+ scaling firms
-        </p>
       </motion.div>
     </div>
+
+    {/* Scroll indicator */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.5, duration: 1 }}
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+    >
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        className="w-5 h-8 rounded-full border-2 border-primary-foreground/30 flex items-start justify-center pt-1.5"
+      >
+        <div className="w-1 h-1.5 rounded-full bg-primary-foreground/50" />
+      </motion.div>
+    </motion.div>
   </section>
 );
 
