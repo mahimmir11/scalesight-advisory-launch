@@ -20,11 +20,11 @@ const imgReveal = {
 
 const ShowcaseSection = () => (
   <section id="showcase" className="bg-background">
-    {/* Curved divider from hero */}
-    <div className="relative -mt-16 z-20">
-      <svg viewBox="0 0 1440 80" className="w-full block" preserveAspectRatio="none">
+    {/* Concave curve clipping into hero — matching reference */}
+    <div className="relative -mt-1 z-20">
+      <svg viewBox="0 0 1440 120" className="w-full block" preserveAspectRatio="none" style={{ marginTop: '-119px' }}>
         <path
-          d="M0,80 C360,0 1080,0 1440,80 L1440,80 L0,80 Z"
+          d="M0,0 L0,120 L1440,120 L1440,0 C1200,100 240,100 0,0 Z"
           fill="hsl(var(--background))"
         />
       </svg>
