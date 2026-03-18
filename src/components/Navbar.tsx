@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const links = [
+    { label: "Home", href: "#" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Team", href: "#founders" },
@@ -15,15 +23,25 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-off-white/80 backdrop-blur-md border-b border-primary/5">
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-primary/95 backdrop-blur-md shadow-lg shadow-primary/10"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="ScaleSight Global Advisory" className="h-10 w-auto" />
+          <img src={logo} alt="ScaleSight Global Advisory" className="h-10 w-auto brightness-0 invert" />
         </a>
 
-        <div className="hidden md:flex gap-8 text-sm font-medium text-muted-foreground">
+        <div className="hidden md:flex gap-8 text-sm font-medium">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-primary transition-colors duration-300">
+            <a
+              key={l.href + l.label}
+              href={l.href}
+              className="text-primary-foreground/80 hover:text-secondary transition-colors duration-300"
+            >
               {l.label}
             </a>
           ))}
@@ -31,14 +49,14 @@ const Navbar = () => {
 
         <a
           href="#contact"
-          className="hidden md:inline-flex bg-primary text-primary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-dark-teal transition-all shadow-lg shadow-primary/10"
+          className="hidden md:inline-flex border border-primary-foreground/30 text-primary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-foreground/10 transition-all"
         >
-          Schedule a Conversation
+          Get started
         </a>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-primary p-2"
+          className="md:hidden text-primary-foreground p-2"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -51,15 +69,15 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-off-white border-b border-primary/5 overflow-hidden"
+            className="md:hidden bg-primary/95 backdrop-blur-md border-t border-primary-foreground/10 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {links.map((l) => (
                 <a
-                  key={l.href}
+                  key={l.href + l.label}
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-primary font-medium py-2"
+                  className="text-primary-foreground/80 font-medium py-2 hover:text-secondary transition-colors"
                 >
                   {l.label}
                 </a>
@@ -67,9 +85,9 @@ const Navbar = () => {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="bg-primary text-primary-foreground px-6 py-3 rounded-full text-sm font-semibold text-center mt-2"
+                className="border border-primary-foreground/30 text-primary-foreground px-6 py-3 rounded-full text-sm font-semibold text-center mt-2 hover:bg-primary-foreground/10 transition-all"
               >
-                Schedule a Conversation
+                Get started
               </a>
             </div>
           </motion.div>
