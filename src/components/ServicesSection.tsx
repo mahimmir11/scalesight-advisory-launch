@@ -21,62 +21,86 @@ const data: Record<string, { title: string; desc: string }[]> = {
 };
 
 const ServicesSection = () => {
-  const [region, setRegion] = useState("India");
+  const [region, setRegion] = useState<string | null>(null);
 
   return (
-    <section id="services" className="py-20 md:py-24 px-6 bg-card">
+    <section id="services" className="py-20 md:py-28 px-6 bg-card">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
-          <div className="max-w-xl">
-            <motion.h2
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-display text-primary mb-4"
-            >
-              Specialized Expertise
-            </motion.h2>
-            <p className="text-muted-blue">
-              Select a region to explore our tailored advisory frameworks.
-            </p>
-          </div>
-          <div className="flex p-1 bg-off-white rounded-xl border border-primary/5 self-start md:self-auto">
-            {(["India", "UAE"] as const).map((r) => (
-              <button
-                key={r}
-                onClick={() => setRegion(r)}
-                className={`px-6 sm:px-8 py-3 rounded-lg text-sm font-bold transition-all ${
-                  region === r
-                    ? "bg-primary text-primary-foreground shadow-lg"
-                    : "text-primary/50 hover:text-primary"
-                }`}
-              >
-                {r === "India" ? "🇮🇳" : "🇦🇪"} {r}
-              </button>
-            ))}
-          </div>
+        <div className="text-center mb-14">
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-5xl font-display text-primary mb-4"
+          >
+            Specialized Expertise
+          </motion.h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Select a region to explore our tailored advisory frameworks.
+          </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence mode="wait">
-            {data[region].map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-                className="p-7 rounded-2xl border border-primary/5 bg-off-white hover:border-emerald/30 transition-colors group"
-              >
-                <div className="w-11 h-11 rounded-lg bg-emerald/5 flex items-center justify-center mb-5 group-hover:bg-emerald/10 transition-colors">
-                  <CheckCircle2 className="w-5 h-5 text-emerald" />
-                </div>
-                <h3 className="text-base font-bold text-primary mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-blue leading-relaxed">{s.desc}</p>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* Two big cards */}
+        <div className="grid md:grid-cols-2 gap-6 mb-14">
+          {(["India", "UAE"] as const).map((r) => (
+            <motion.button
+              key={r}
+              onClick={() => setRegion(region === r ? null : r)}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className={`relative p-10 md:p-14 rounded-3xl border-2 transition-all duration-300 text-left group ${
+                region === r
+                  ? "border-secondary bg-primary text-primary-foreground shadow-2xl"
+                  : "border-primary/10 bg-background hover:border-secondary/40 text-primary"
+              }`}
+            >
+              <span className="text-4xl md:text-5xl mb-4 block">{r === "India" ? "🇮🇳" : "🇦🇪"}</span>
+              <h3 className="text-2xl md:text-3xl font-display mb-2">
+                {r === "India" ? "India" : "Dubai & UAE"}
+              </h3>
+              <p className={`text-sm leading-relaxed ${region === r ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                {r === "India"
+                  ? "Virtual CFO, FP&A, budgeting, analytics, and strategic decision support for Indian enterprises."
+                  : "Accounting, compliance advisory, IFRS reporting, internal audit, and process reviews across the UAE."}
+              </p>
+              <div className={`mt-6 text-sm font-semibold flex items-center gap-2 ${region === r ? "text-secondary" : "text-secondary"}`}>
+                {region === r ? "Hide services ↑" : "View services →"}
+              </div>
+            </motion.button>
+          ))}
         </div>
+
+        {/* Expanded services */}
+        <AnimatePresence mode="wait">
+          {region && (
+            <motion.div
+              key={region}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-4">
+                {data[region].map((s, i) => (
+                  <motion.div
+                    key={s.title}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.4 }}
+                    className="p-7 rounded-2xl border border-primary/5 bg-off-white hover:border-emerald/30 transition-colors group"
+                  >
+                    <div className="w-11 h-11 rounded-lg bg-emerald/5 flex items-center justify-center mb-5 group-hover:bg-emerald/10 transition-colors">
+                      <CheckCircle2 className="w-5 h-5 text-emerald" />
+                    </div>
+                    <h3 className="text-base font-bold text-primary mb-2">{s.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
