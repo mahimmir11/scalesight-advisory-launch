@@ -19,10 +19,10 @@ const imgReveal = {
 };
 
 const ShowcaseSection = () => (
-  <section id="showcase" className="bg-background">
-    {/* Deeper concave curve */}
-    <div className="relative -mt-1 z-20">
-      <svg viewBox="0 0 1440 200" className="w-full block" preserveAspectRatio="none" style={{ marginTop: '-199px' }}>
+  <section id="showcase" className="relative bg-background -mt-px">
+    {/* Seamless concave curve without conflict line */}
+    <div className="absolute -top-[199px] left-0 right-0 z-20 pointer-events-none overflow-hidden leading-none">
+      <svg viewBox="0 0 1440 200" className="block w-[calc(100%+2px)] -ml-px h-[200px]" preserveAspectRatio="none">
         <path
           d="M0,0 L0,200 L1440,200 L1440,0 C1100,180 340,180 0,0 Z"
           fill="hsl(var(--background))"
