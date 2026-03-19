@@ -85,7 +85,7 @@ const Navbar = () => {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="border border-primary-foreground/30 text-primary-foreground px-6 py-3 rounded-full text-sm font-semibold text-center mt-2 hover:bg-primary-foreground/10 transition-all"
+                className="bg-secondary text-secondary-foreground px-6 py-3 rounded-full text-sm font-semibold text-center mt-2 hover:brightness-110 transition-all"
               >
                 Get started
               </a>
