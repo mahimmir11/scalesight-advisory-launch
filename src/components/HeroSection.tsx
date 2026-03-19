@@ -10,8 +10,8 @@ const fadeUp = {
 };
 
 const HeroSection = () => (
-  <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-    {/* Background with faster zoom */}
+  <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    {/* Background with zoom */}
     <motion.div
       className="absolute inset-0 z-0"
       initial={{ scale: 1 }}
@@ -26,19 +26,19 @@ const HeroSection = () => (
       <img
         src={heroBg}
         alt=""
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover blur-[2px]"
       />
     </motion.div>
 
-    {/* Very light overlay — preserving the actual image look */}
-    <div className="absolute inset-0 z-[1] bg-primary/25" />
-    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/50 via-transparent to-transparent" />
+    {/* Light overlay */}
+    <div className="absolute inset-0 z-[1] bg-primary/30" />
+    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
 
     {/* Content */}
-    <div className="relative z-10 max-w-4xl mx-auto px-6 text-center py-32 md:py-0">
+    <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
       <motion.h1
         {...fadeUp}
-        className="text-4xl sm:text-5xl md:text-7xl font-display text-primary-foreground leading-[1.08] mb-8"
+        className="text-4xl sm:text-5xl md:text-7xl font-display text-gold leading-[1.08] mb-8 drop-shadow-lg"
       >
         Strategic Expertise From{" "}
         <span className="italic text-secondary">Dedicated Advisors</span>
@@ -47,7 +47,7 @@ const HeroSection = () => (
       <motion.p
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.2 }}
-        className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-14 max-w-xl mx-auto"
+        className="text-base md:text-lg text-primary-foreground leading-relaxed mb-14 max-w-xl mx-auto drop-shadow-md"
       >
         At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
         see clearly, stay compliant, and grow confidently.
@@ -79,7 +79,7 @@ const HeroSection = () => (
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1.5, duration: 1 }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
     >
       <motion.div
         animate={{ y: [0, 8, 0] }}

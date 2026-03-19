@@ -20,11 +20,11 @@ const imgReveal = {
 
 const ShowcaseSection = () => (
   <section id="showcase" className="bg-background">
-    {/* Concave curve clipping into hero — matching reference */}
+    {/* Deeper concave curve */}
     <div className="relative -mt-1 z-20">
-      <svg viewBox="0 0 1440 120" className="w-full block" preserveAspectRatio="none" style={{ marginTop: '-119px' }}>
+      <svg viewBox="0 0 1440 200" className="w-full block" preserveAspectRatio="none" style={{ marginTop: '-199px' }}>
         <path
-          d="M0,0 L0,120 L1440,120 L1440,0 C1200,100 240,100 0,0 Z"
+          d="M0,0 L0,200 L1440,200 L1440,0 C1100,180 340,180 0,0 Z"
           fill="hsl(var(--background))"
         />
       </svg>
@@ -47,7 +47,7 @@ const ShowcaseSection = () => (
       </motion.p>
     </div>
 
-    {/* Block 1 — Who We Are (text left, image right) */}
+    {/* Block 1 — Who We Are */}
     <div className="max-w-7xl mx-auto px-6 pb-24">
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <motion.div {...fadeUp}>
@@ -69,7 +69,7 @@ const ShowcaseSection = () => (
       </div>
     </div>
 
-    {/* Block 2 — Mission & Vision (image left, text right) */}
+    {/* Block 2 — Mission & Vision */}
     <div className="max-w-7xl mx-auto px-6 pb-24">
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <motion.div {...imgReveal} className="rounded-2xl overflow-hidden shadow-xl md:order-1 order-2">
@@ -95,7 +95,7 @@ const ShowcaseSection = () => (
       </div>
     </div>
 
-    {/* Block 3 — Why Partner With Us (text left, image right) */}
+    {/* Block 3 — Why Partner With Us */}
     <div className="max-w-7xl mx-auto px-6 pb-24">
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <motion.div {...fadeUp}>

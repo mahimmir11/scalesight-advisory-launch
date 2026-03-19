@@ -49,7 +49,7 @@ const Navbar = () => {
 
         <a
           href="#contact"
-          className="hidden md:inline-flex border border-primary-foreground/30 text-primary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-foreground/10 transition-all"
+          className="hidden md:inline-flex bg-secondary text-secondary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:brightness-110 transition-all"
         >
           Get started
         </a>

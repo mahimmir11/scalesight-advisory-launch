@@ -57,6 +57,7 @@ export default {
         "muted-blue": "hsl(var(--muted-blue))",
         "dark-teal": "hsl(var(--dark-teal))",
         "off-white": "hsl(var(--off-white))",
+        gold: "hsl(var(--gold))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
