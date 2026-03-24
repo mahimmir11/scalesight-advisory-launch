@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,43 +6,43 @@
 
 @layer base {
   :root {
-    --background: 40 14% 98%;
-    --foreground: 216 75% 19%;
+    --background: 0 0% 100%;
+    --foreground: 218 79% 19%;
 
     --card: 0 0% 100%;
-    --card-foreground: 216 75% 19%;
+    --card-foreground: 218 79% 19%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 216 75% 19%;
+    --popover-foreground: 218 79% 19%;
 
-    --primary: 216 75% 19%;
-    --primary-foreground: 40 14% 98%;
+    --primary: 218 79% 19%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 165 76% 63%;
-    --secondary-foreground: 216 75% 19%;
+    --secondary: 172 72% 63%;
+    --secondary-foreground: 218 79% 19%;
 
-    --muted: 200 20% 95%;
-    --muted-foreground: 197 30% 44%;
+    --muted: 196 20% 95%;
+    --muted-foreground: 196 33% 44%;
 
-    --accent: 150 96% 39%;
+    --accent: 144 96% 38%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 216 20% 90%;
-    --input: 216 20% 90%;
-    --ring: 216 75% 19%;
+    --border: 218 20% 88%;
+    --input: 218 20% 88%;
+    --ring: 218 79% 19%;
 
     --radius: 0.75rem;
 
-    /* Brand tokens */
-    --navy: 216 75% 19%;
-    --aqua: 165 76% 63%;
-    --emerald: 150 96% 39%;
-    --muted-blue: 197 30% 44%;
-    --dark-teal: 183 85% 21%;
-    --off-white: 40 14% 98%;
+    /* Brand tokens — exact hex matched */
+    --navy: 218 79% 19%;        /* #09285A */
+    --aqua: 172 72% 63%;        /* #5EE4CF */
+    --emerald: 144 96% 38%;     /* #03C359 */
+    --muted-blue: 196 33% 44%;  /* #4B8697 */
+    --dark-teal: 184 84% 21%;   /* #085B63 */
+    --off-white: 0 0% 100%;
     --gold: 38 92% 60%;
 
     --sidebar-background: 0 0% 98%;
@@ -63,10 +63,16 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-size: 17px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 700;
   }
 
   ::selection {
-    background: hsl(165 76% 63% / 0.3);
+    background: hsl(172 72% 63% / 0.3);
   }
 }
 

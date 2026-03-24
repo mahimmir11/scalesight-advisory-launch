@@ -33,7 +33,7 @@ const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-display text-primary mb-14"
+          className="text-4xl md:text-5xl font-bold text-primary mb-14"
         >
           What Our Clients Say
         </motion.h2>
@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
               className="px-4"
             >
               <Quote className="w-10 h-10 text-emerald/30 mx-auto mb-6" />
-              <p className="text-lg md:text-xl text-primary leading-relaxed mb-8 italic font-display">
+              <p className="text-lg md:text-xl text-primary leading-relaxed mb-8 italic font-sans font-bold">
                 "{testimonials[idx].text}"
               </p>
               <p className="font-bold text-primary">{testimonials[idx].name}</p>
@@ -89,3 +89,5 @@ const TestimonialsSection = () => {
 };
 
 export default TestimonialsSection;
+
+

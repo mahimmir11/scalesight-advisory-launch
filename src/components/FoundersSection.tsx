@@ -1,18 +1,18 @@
 import { motion } from "framer-motion";
-import zaidImg from "@/assets/zaid.jpg";
-import sameeImg from "@/assets/samee.jpg";
+import zaidImg from "@/assets/zaid.png";
+import sameeImg from "@/assets/samee.png";
 
 const founders = [
   {
     name: "Zaid Shaikh",
-    role: "Co-Founder | Virtual CFO & Finance Advisory",
+    role: "Co-Founder · Virtual CFO & Finance Advisory",
     exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"],
     desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.",
     img: zaidImg,
   },
   {
     name: "Samee Shaikh",
-    role: "Business Development | Compliance & UAE Advisory",
+    role: "Business Development · Compliance & UAE Advisory",
     exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"],
     desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.",
     img: sameeImg,
@@ -20,15 +20,15 @@ const founders = [
 ];
 
 const FoundersSection = () => (
-  <section id="founders" className="py-20 md:py-24 px-6 bg-off-white">
-    <div className="max-w-7xl mx-auto">
+  <section id="founders" className="py-20 md:py-24 px-6 bg-white">
+    <div className="max-w-5xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="text-center mb-14"
       >
-        <h2 className="text-3xl md:text-4xl font-display text-primary mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
           Founder-Led Precision
         </h2>
         <p className="text-muted-blue">
@@ -36,7 +36,7 @@ const FoundersSection = () => (
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-10">
         {founders.map((f, i) => (
           <motion.div
             key={f.name}
@@ -44,26 +44,26 @@ const FoundersSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.15, duration: 0.6 }}
-            className="group"
+            className="flex flex-col items-center text-center group"
           >
-            <div className="relative overflow-hidden rounded-2xl aspect-[4/5] mb-7 bg-primary/5">
+            {/* Bigger image, full colour */}
+            <div className="relative overflow-hidden rounded-2xl w-72 h-80 mb-6 shadow-md">
               <img
                 src={f.img}
                 alt={f.name}
-                className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                className="object-cover object-top w-full h-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-50" />
             </div>
+
+            {/* Info always visible */}
             <h3 className="text-xl font-bold text-primary mb-1">{f.name}</h3>
-            <p className="text-emerald font-semibold text-xs mb-4 uppercase tracking-wider">
-              {f.role}
-            </p>
-            <p className="text-muted-blue text-sm mb-5 leading-relaxed">{f.desc}</p>
-            <div className="flex flex-wrap gap-2">
+            <p className="text-secondary font-semibold text-xs mb-4 uppercase tracking-wider">{f.role}</p>
+            <p className="text-muted-blue text-sm mb-5 leading-relaxed max-w-xs">{f.desc}</p>
+            <div className="flex flex-wrap gap-2 justify-center">
               {f.exp.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-primary/5 text-primary/70 text-xs font-medium"
+                  className="px-3 py-1 rounded-full bg-primary/5 text-primary/70 text-xs font-medium border border-primary/10"
                 >
                   {tag}
                 </span>

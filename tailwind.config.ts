@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Geist", "sans-serif"],
-        display: ["Instrument Serif", "serif"],
+        sans: ["Plus Jakarta Sans", "sans-serif"],
+        display: ["Plus Jakarta Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

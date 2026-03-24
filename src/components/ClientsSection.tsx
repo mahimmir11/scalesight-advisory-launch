@@ -14,7 +14,7 @@ const ClientsSection = () => (
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-3xl md:text-4xl font-display text-primary mb-4"
+        className="text-4xl md:text-5xl font-bold text-primary mb-4"
       >
         Who We Work With
       </motion.h2>
@@ -42,3 +42,5 @@ const ClientsSection = () => (
 );
 
 export default ClientsSection;
+
+

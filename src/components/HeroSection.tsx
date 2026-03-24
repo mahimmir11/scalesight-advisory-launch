@@ -1,53 +1,62 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import { ArrowRight } from "lucide-react";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
-  transition: { duration: 0.9, ease: [0.19, 1, 0.22, 1] as const },
+  transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] as const },
 };
 
 const HeroSection = () => (
-  <section className="relative h-screen flex items-center justify-center overflow-hidden">
-    {/* Background with zoom */}
+  <section
+    className="relative flex items-center justify-center overflow-hidden"
+    style={{ minHeight: "100vh" }}
+  >
+    {/* Background — starts at 100%, loops zoom in → out → in */}
     <motion.div
       className="absolute inset-0 z-0"
-      initial={{ scale: 1 }}
-      animate={{ scale: 1.12 }}
-      transition={{
-        duration: 14,
-        ease: "linear",
-        repeat: Infinity,
-        repeatType: "reverse",
+      style={{
+        backgroundImage: "url('/hero.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
-    >
-      <img
-        src={heroBg}
-        alt=""
-        className="w-full h-full object-cover blur-[2px]"
-      />
-    </motion.div>
+      animate={{ scale: [1, 1.08, 1] }}
+      transition={{
+        duration: 10,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "loop",
+      }}
+    />
 
-    {/* Light overlay */}
-    <div className="absolute inset-0 z-[1] bg-primary/30" />
-    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
+    {/* Overlays */}
+    <div className="absolute inset-0 z-[1] bg-primary/50" />
+    <div className="absolute inset-0 z-[2] bg-gradient-to-b from-black/10 via-transparent to-black/40" />
 
     {/* Content */}
     <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <motion.p
+        {...fadeUp}
+        className="text-xs font-semibold tracking-[0.22em] uppercase text-secondary mb-5"
+      >
+        Financial Advisory · UAE & India
+      </motion.p>
+
       <motion.h1
         {...fadeUp}
-        className="text-4xl sm:text-5xl md:text-7xl font-display text-gold leading-[1.08] mb-8 drop-shadow-lg"
+        transition={{ ...fadeUp.transition, delay: 0.1 }}
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.15] mb-6 drop-shadow"
       >
         Strategic Expertise From{" "}
-        <span className="italic text-secondary">Dedicated Advisors</span>
+        <span className="text-secondary">Dedicated Advisors</span>
       </motion.h1>
 
       <motion.p
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.2 }}
-        className="text-base md:text-lg text-primary-foreground leading-relaxed mb-14 max-w-xl mx-auto drop-shadow-md"
+        className="text-base md:text-lg text-white/80 leading-relaxed mb-10 max-w-xl mx-auto font-normal"
       >
         At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
         see clearly, stay compliant, and grow confidently.
@@ -55,39 +64,24 @@ const HeroSection = () => (
 
       <motion.div
         {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.4 }}
-        className="flex flex-col sm:flex-row gap-4 justify-center"
+        transition={{ ...fadeUp.transition, delay: 0.35 }}
+        className="flex flex-col sm:flex-row gap-3 justify-center"
       >
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:brightness-110 transition-all group"
+          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:brightness-110 transition-all group"
         >
           Get Started
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </a>
         <a
           href="#showcase"
-          className="inline-flex items-center gap-2 border border-primary-foreground/30 text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm tracking-wide hover:bg-primary-foreground/10 transition-all"
+          className="inline-flex items-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white/10 transition-all"
         >
           Learn More
         </a>
       </motion.div>
     </div>
-
-    {/* Scroll indicator */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.5, duration: 1 }}
-      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
-    >
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-      >
-        <ChevronDown className="w-6 h-6 text-primary-foreground/50" />
-      </motion.div>
-    </motion.div>
   </section>
 );
 

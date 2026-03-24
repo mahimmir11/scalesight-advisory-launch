@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import StatsSection from "@/components/StatsSection";
 import ShowcaseSection from "@/components/ShowcaseSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -17,6 +18,7 @@ const Index = () => (
   <div className="scroll-smooth">
     <Navbar />
     <HeroSection />
+    <StatsSection />
     <ShowcaseSection />
     <AboutSection />
     <ServicesSection />

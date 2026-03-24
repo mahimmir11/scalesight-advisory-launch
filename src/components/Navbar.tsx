@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,13 +25,13 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-primary/90 backdrop-blur-md shadow-lg shadow-primary/10"
+          ? "bg-[#09285A] shadow-md border-b border-white/10"
           : "bg-gradient-to-b from-primary/40 to-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="ScaleSight Global Advisory" className="h-10 w-auto brightness-0 invert" />
+          <img src="/logo.png" alt="ScaleSight Global Advisory" className="h-10 w-auto" />
         </a>
 
         <div className="hidden md:flex gap-8 text-sm font-medium">
@@ -40,7 +39,9 @@ const Navbar = () => {
             <a
               key={l.href + l.label}
               href={l.href}
-              className="text-primary-foreground/80 hover:text-secondary transition-colors duration-300"
+              className={`transition-colors duration-300 hover:text-secondary ${
+                scrolled ? "text-primary-foreground/90" : "text-primary-foreground/80"
+              }`}
             >
               {l.label}
             </a>
@@ -56,7 +57,7 @@ const Navbar = () => {
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-primary-foreground p-2"
+          className={`md:hidden p-2 text-primary-foreground`}
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -98,3 +99,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
