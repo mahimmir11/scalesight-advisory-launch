@@ -1,27 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const testimonials = [
   {
     name: "Arjun Mehta",
     company: "TechScale Solutions",
     text: "ScaleSight transformed our financial operations. Their Virtual CFO service gave us the strategic clarity we needed to raise our Series A.",
+    rating: 5,
   },
   {
     name: "Fatima Al-Rashidi",
     company: "Gulf Ventures LLC",
     text: "Navigating UAE compliance was a nightmare before ScaleSight. Their team made IFRS reporting seamless and stress-free.",
+    rating: 5,
   },
   {
     name: "Priya Sharma",
     company: "GreenLeaf Exports",
     text: "The FP&A and budgeting support from ScaleSight helped us forecast with confidence. We've never had this level of financial visibility.",
+    rating: 4,
   },
 ];
 
 const TestimonialsSection = () => {
   const [idx, setIdx] = useState(0);
+
+  // Auto-scroll every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIdx((i) => (i + 1) % testimonials.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const next = () => setIdx((i) => (i + 1) % testimonials.length);
   const prev = () => setIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
@@ -38,17 +50,30 @@ const TestimonialsSection = () => {
           What Our Clients Say
         </motion.h2>
 
-        <div className="relative min-h-[220px]">
+        <div className="relative min-h-[280px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.4 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               className="px-4"
             >
-              <Quote className="w-10 h-10 text-emerald/30 mx-auto mb-6" />
+              {/* Star Rating */}
+              <div className="flex items-center justify-center gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-5 h-5 ${
+                      i < testimonials[idx].rating
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "fill-gray-200 text-gray-200"
+                    }`}
+                  />
+                ))}
+              </div>
+
               <p className="text-lg md:text-xl text-primary leading-relaxed mb-8 italic font-sans font-bold">
                 "{testimonials[idx].text}"
               </p>

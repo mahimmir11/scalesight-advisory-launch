@@ -76,20 +76,35 @@ const ServicesSection = () => {
                   key={r}
                   whileHover={{ y: -4, scale: 1.02 }}
                   transition={{ duration: 0.2 }}
-                  className="p-10 rounded-3xl border-2 border-primary/10 bg-off-white hover:border-emerald/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col gap-5"
+                  className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-emerald/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
                   onClick={() => setSelected(r)}
                 >
-                  <div className="text-5xl">{regionInfo[r].flag}</div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-primary mb-2">{regionInfo[r].label}</h3>
-                    <p className="text-base text-muted-blue leading-relaxed mb-1">{regionInfo[r].tagline}</p>
-                    <p className="text-sm text-muted-blue/70">{regionInfo[r].summary}</p>
-                  </div>
-                  <div className="mt-auto flex items-center justify-between">
-                    <span className="text-sm font-semibold text-emerald">{regionInfo[r].count} Services</span>
-                    <span className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-bold group-hover:bg-emerald group-hover:text-white transition-colors">
-                      Show More Details <ArrowRight className="w-4 h-4" />
-                    </span>
+                  {/* Background Image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ 
+                      backgroundImage: `url(/${r === "India" ? "india" : "dubai"}.png)`,
+                    }}
+                  />
+                  
+                  {/* Dark overlay for better text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/50 group-hover:from-black/60 group-hover:via-black/50 group-hover:to-black/40 transition-all" />
+                  
+                  {/* Content with relative positioning to appear above background */}
+                  <div className="relative z-10 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-3xl md:text-4xl font-bold text-white group-hover:text-emerald-400 transition-colors drop-shadow-lg mb-6">
+                        {regionInfo[r].label}
+                      </h3>
+                      <p className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md">{regionInfo[r].tagline}</p>
+                      <p className="text-sm text-white/80 drop-shadow-md">{regionInfo[r].summary}</p>
+                    </div>
+                    <div className="flex items-center justify-between mt-5">
+                      <span className="text-sm font-semibold text-amber-100 drop-shadow-md">{regionInfo[r].count} Services</span>
+                      <span className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2.5 rounded-full text-sm font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg animate-pulse">
+                        Show More Details <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               ))}

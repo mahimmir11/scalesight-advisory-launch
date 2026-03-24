@@ -39,7 +39,8 @@ const HeroSection = () => (
     <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
       <motion.p
         {...fadeUp}
-        className="text-xs font-semibold tracking-[0.22em] uppercase text-secondary mb-5"
+        className="text-xs font-semibold tracking-[0.25em] uppercase text-white mb-5"
+        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
       >
         Financial Advisory · UAE & India
       </motion.p>
@@ -47,16 +48,18 @@ const HeroSection = () => (
       <motion.h1
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.1 }}
-        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.15] mb-6 drop-shadow"
+        className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.1] mb-6 drop-shadow-lg"
+        style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
       >
         Strategic Expertise From{" "}
-        <span className="text-secondary">Dedicated Advisors</span>
+        <span className="text-white">Dedicated Advisors</span>
       </motion.h1>
 
       <motion.p
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.2 }}
-        className="text-base md:text-lg text-white/80 leading-relaxed mb-10 max-w-xl mx-auto font-normal"
+        className="text-base md:text-xl text-white leading-relaxed mb-10 max-w-2xl mx-auto font-normal"
+        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
       >
         At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
         see clearly, stay compliant, and grow confidently.
@@ -65,18 +68,20 @@ const HeroSection = () => (
       <motion.div
         {...fadeUp}
         transition={{ ...fadeUp.transition, delay: 0.35 }}
-        className="flex flex-col sm:flex-row gap-3 justify-center"
+        className="flex flex-col sm:flex-row gap-4 justify-center"
       >
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:brightness-110 transition-all group"
+          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-lg animate-pulse"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >
           Get Started
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </a>
         <a
           href="#showcase"
-          className="inline-flex items-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide hover:bg-white/10 transition-all"
+          className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-white hover:text-primary transition-all shadow-lg"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >
           Learn More
         </a>
