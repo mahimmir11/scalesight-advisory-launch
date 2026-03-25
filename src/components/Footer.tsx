@@ -16,11 +16,13 @@ const Footer = () => (
           <h4 className="text-white font-semibold mb-5 text-sm tracking-wide">Quick Links</h4>
           <ul className="space-y-3 text-sm text-white/55">
             {[
-              { label: "Home", href: "#" },
-              { label: "About Us", href: "#showcase" },
-              { label: "Services", href: "#services" },
-              { label: "Team", href: "#founders" },
-              { label: "Contact Us", href: "#contact" },
+              { label: "Home", href: "/" },
+              { label: "About Us", href: "/about" },
+              { label: "UAE Services", href: "/services/uae" },
+              { label: "India Services", href: "/services/india" },
+              { label: "Team", href: "/team" },
+              { label: "Contact Us", href: "/contact" },
+              { label: "Blog", href: "/blog" },
             ].map((l) => (
               <li key={l.label}>
                 <a href={l.href} className="hover:text-white transition-colors">{l.label}</a>

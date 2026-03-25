@@ -10,7 +10,7 @@ const fadeUp = {
 
 const HeroSection = () => (
   <section
-    className="relative flex items-center justify-center overflow-hidden"
+    className="relative flex items-center justify-center overflow-hidden pt-[70px]"
     style={{ minHeight: "100vh" }}
   >
     {/* Background — starts at 100%, loops zoom in → out → in */}
