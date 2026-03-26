@@ -14,7 +14,28 @@ const links = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [atHero, setAtHero] = useState(false);
   const location = useLocation();
+
+  // Only be transparent on the homepage while within the hero section height
+  useEffect(() => {
+    const isHome = location.pathname === "/";
+    if (!isHome) {
+      setAtHero(false);
+      return;
+    }
+    const heroEl = document.getElementById("hero");
+    const check = () => {
+      if (!heroEl) {
+        setAtHero(window.scrollY < window.innerHeight - 80);
+        return;
+      }
+      setAtHero(window.scrollY < heroEl.offsetHeight - 80);
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -23,13 +44,19 @@ const Navbar = () => {
   const isActive = (to: string) => location.pathname === to;
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100">
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        atHero
+          ? "bg-transparent border-b border-transparent shadow-none"
+          : "bg-white shadow-sm border-b border-gray-100"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 h-[70px] flex items-center justify-between">
 
         {/* Logo + Name */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img src="/logo.png" alt="ScaleSight" className="h-10 w-auto" />
-          <span className="text-[#09285A] text-lg font-bold tracking-tight leading-none">
+          <span className={`text-lg font-bold tracking-tight leading-none transition-colors duration-300 ${atHero ? "text-white" : "text-[#09285A]"}`}>
             ScaleSight
           </span>
         </Link>
@@ -43,6 +70,8 @@ const Navbar = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 isActive(l.to)
                   ? "bg-[#09285A] text-white"
+                  : atHero
+                  ? "text-white/90 hover:text-white hover:bg-white/15"
                   : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
               }`}
             >
@@ -54,7 +83,7 @@ const Navbar = () => {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-[#09285A]"
+          className={`md:hidden p-2 transition-colors duration-300 ${atHero ? "text-white" : "text-[#09285A]"}`}
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

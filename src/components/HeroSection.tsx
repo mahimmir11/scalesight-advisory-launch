@@ -10,6 +10,7 @@ const fadeUp = {
 
 const HeroSection = () => (
   <section
+    id="hero"
     className="relative flex items-center justify-center overflow-hidden pt-[70px]"
     style={{ minHeight: "100vh" }}
   >
@@ -72,7 +73,7 @@ const HeroSection = () => (
       >
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-lg animate-pulse"
+          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-lg"
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >
           Get Started

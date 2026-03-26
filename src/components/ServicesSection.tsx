@@ -101,7 +101,7 @@ const ServicesSection = () => {
                     </div>
                     <div className="flex items-center justify-between mt-5">
                       <span className="text-sm font-semibold text-amber-100 drop-shadow-md">{regionInfo[r].count} Services</span>
-                      <span className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2.5 rounded-full text-sm font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg animate-pulse">
+                      <span className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2.5 rounded-full text-sm font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg">
                         Show More Details <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
