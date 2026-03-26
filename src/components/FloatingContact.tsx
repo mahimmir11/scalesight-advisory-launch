@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
 
 const FloatingContact = () => {
@@ -10,10 +10,11 @@ const FloatingContact = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            initial={{ opacity: 0, scale: 0.95, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            className="bg-white p-5 rounded-2xl shadow-2xl border border-primary/5 flex flex-col items-center gap-1 mb-2 min-w-[240px]"
+            exit={{ opacity: 0, scale: 0.95, y: 8 }}
+            transition={{ duration: 0.18 }}
+            className="bg-white p-5 rounded-2xl shadow-2xl border border-gray-100 flex flex-col items-center gap-1 mb-2 min-w-[240px]"
           >
             <img src="/logo.png" alt="ScaleSight" className="h-12 w-auto mb-4" />
 
@@ -39,7 +40,7 @@ const FloatingContact = () => {
               Get in Touch
             </a>
 
-            <div className="flex items-center gap-4 mt-3 pt-3 border-t border-primary/5 w-full justify-center">
+            <div className="flex items-center gap-4 mt-3 pt-3 border-t border-gray-100 w-full justify-center">
               <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <svg className="w-7 h-7" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="12" fill="#25D366"/>
@@ -75,12 +76,10 @@ const FloatingContact = () => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center shadow-xl hover:brightness-110 transition-all active:scale-95"
+        className="w-14 h-14 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center shadow-xl hover:brightness-110 transition-[filter] active:scale-95"
         aria-label="Contact options"
       >
-        <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
-          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-        </motion.div>
+        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </button>
     </div>
   );

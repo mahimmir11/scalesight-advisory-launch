@@ -5,7 +5,10 @@ const Footer = () => (
 
         {/* Col 1 — Logo + tagline */}
         <div>
-          <img src="/logo.png" alt="ScaleSight" className="h-12 w-auto mb-4" />
+          <div className="flex items-center gap-2 mb-4">
+            <img src="/logo.png" alt="ScaleSight" className="h-12 w-auto" />
+            <span className="text-white text-xl font-bold tracking-wide">SCALESIGHT</span>
+          </div>
           <p className="text-white/50 text-sm leading-relaxed">
             Your trusted partner for expert financial advisory, compliance, and strategic growth across India & UAE.
           </p>
