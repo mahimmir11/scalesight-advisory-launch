@@ -10,7 +10,7 @@ const SplashScreen = ({ visible }: { visible: boolean }) => (
         transition={{ duration: 0.6, ease: "easeInOut" }}
       >
         <motion.img
-          src="/fulllogo.png"
+          src="/logo.png"
           alt="ScaleSight"
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
