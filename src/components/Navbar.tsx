@@ -12,19 +12,19 @@ const links = [
   { label: "Contact Us", to: "/contact" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ heroId }: { heroId?: string } = {}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [atHero, setAtHero] = useState(false);
   const location = useLocation();
 
-  // Only be transparent on the homepage while within the hero section height
+  // Be transparent whenever a heroId is provided or we're on the homepage
   useEffect(() => {
-    const isHome = location.pathname === "/";
-    if (!isHome) {
+    const resolvedId = heroId ?? (location.pathname === "/" ? "hero" : null);
+    if (!resolvedId) {
       setAtHero(false);
       return;
     }
-    const heroEl = document.getElementById("hero");
+    const heroEl = document.getElementById(resolvedId);
     const check = () => {
       if (!heroEl) {
         setAtHero(window.scrollY < window.innerHeight - 80);
@@ -35,7 +35,7 @@ const Navbar = () => {
     check();
     window.addEventListener("scroll", check, { passive: true });
     return () => window.removeEventListener("scroll", check);
-  }, [location.pathname]);
+  }, [location.pathname, heroId]);
 
   useEffect(() => {
     setMobileOpen(false);

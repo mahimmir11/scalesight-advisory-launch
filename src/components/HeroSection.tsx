@@ -12,7 +12,7 @@ const HeroSection = () => (
   <section
     id="hero"
     className="relative flex items-center justify-center overflow-hidden pt-[70px]"
-    style={{ minHeight: "100vh" }}
+    style={{ minHeight: "100vh", borderRadius: "0 0 4rem 4rem" }}
   >
     {/* Background — starts at 100%, loops zoom in → out → in */}
     <motion.div
