@@ -1,10 +1,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import SplashScreen from "./components/SplashScreen";
+import ScrollToTop from "./components/ScrollToTop";
+import PageTransition from "./components/PageTransition";
 import Index from "./pages/Index.tsx";
 import About from "./pages/About.tsx";
 import UAEServices from "./pages/UAEServices.tsx";
@@ -12,10 +15,31 @@ import IndiaServices from "./pages/IndiaServices.tsx";
 import Team from "./pages/Team.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Contact from "./pages/Contact.tsx";
-import Blog from "./pages/Blog.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import FloatingContact from "./components/FloatingContact";
 
 const queryClient = new QueryClient();
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+          <Route path="/services/uae" element={<PageTransition><UAEServices /></PageTransition>} />
+          <Route path="/services/india" element={<PageTransition><IndiaServices /></PageTransition>} />
+          <Route path="/team" element={<PageTransition><Team /></PageTransition>} />
+          <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+    </>
+  );
+};
 
 const App = () => {
   const [splash, setSplash] = useState(() => !sessionStorage.getItem("visited"));
@@ -34,17 +58,8 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services/uae" element={<UAEServices />} />
-            <Route path="/services/india" element={<IndiaServices />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
+          <FloatingContact />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

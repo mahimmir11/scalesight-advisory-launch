@@ -6,7 +6,7 @@ const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 z-[100] flex flex-col items-end gap-3" style={{ right: "1.5rem" }}>
+    <div className="fixed bottom-6 z-[100] flex flex-col items-end gap-3" style={{ right: "1.5rem", willChange: "transform", transform: "translateZ(0)" }}>
       <AnimatePresence>
         {isOpen && (
           <motion.div

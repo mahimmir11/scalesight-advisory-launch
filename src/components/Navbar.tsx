@@ -8,7 +8,6 @@ const links = [
   { label: "About Us", to: "/about" },
   { label: "UAE Services", to: "/services/uae" },
   { label: "India Services", to: "/services/india" },
-  { label: "Blog", to: "/blog" },
   { label: "Contact Us", to: "/contact" },
 ];
 
@@ -90,30 +89,39 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="md:hidden bg-[#09285A] flex flex-col overflow-hidden"
           >
-            <div className="px-6 py-4 flex flex-col gap-1">
-              {links.map((l) => (
+            {links.map((l, i) => (
+              <motion.div
+                key={l.to}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.04, duration: 0.15 }}
+              >
                 <Link
-                  key={l.to}
                   to={l.to}
-                  className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center justify-between px-6 py-3.5 text-sm font-semibold transition-colors ${
                     isActive(l.to)
-                      ? "bg-[#09285A] text-white"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-[#09285A]"
+                      ? "text-[#5EE4CF] bg-white/10"
+                      : "text-white/75 hover:text-white hover:bg-white/8"
                   }`}
                 >
-                  {l.label}
+                  <span>{l.label}</span>
+                  {isActive(l.to) && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#5EE4CF]" />
+                  )}
                 </Link>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
