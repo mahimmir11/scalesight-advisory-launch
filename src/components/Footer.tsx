@@ -9,14 +9,11 @@ const Footer = () => (
     }}
   >
     <div className="max-w-7xl mx-auto relative z-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-white/10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-white/10 items-start">
 
         {/* Col 1 — Logo + tagline */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <img src="/logo.png" alt="ScaleSight" className="h-12 w-auto" />
-            <span className="text-white text-xl font-bold tracking-wide">SCALESIGHT</span>
-          </div>
+          <img src="/fulllogo.png" alt="ScaleSight" className="h-16 w-auto object-contain object-left mb-4" />
           <p className="text-white/50 text-sm leading-relaxed">
             Your trusted partner for expert financial advisory, compliance, and strategic growth across India & UAE.
           </p>

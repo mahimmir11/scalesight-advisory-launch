@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const heroImages = ["/india.png", "/gate.png", "/goldentemple.png", "/redfort.png"];
+const heroImages = [
+  "/India Services/Image 1.jpg",
+  "/India Services/Image 2.png",
+  "/India Services/Image 3.png",
+  "/India Services/Image 4.png",
+];
 
 const services = [
   { title: "Virtual CFO", desc: "Strategic financial leadership without the full-time overhead." },

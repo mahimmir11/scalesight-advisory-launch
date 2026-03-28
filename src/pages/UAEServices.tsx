@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const heroImages = ["/dubai.png", "/jumeirah.png", "/marina.png", "/muesum.png"];
+const heroImages = [
+  "/UAE Services/Image 1.png",
+  "/UAE Services/Image 2.png",
+  "/UAE Services/Image 3.png",
+  "/UAE Services/Image 4.png",
+];
 
 const services = [
   { title: "Accounting & Bookkeeping", desc: "Precision-led maintenance of your financial records." },
