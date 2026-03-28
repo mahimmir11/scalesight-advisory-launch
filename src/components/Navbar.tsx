@@ -16,14 +16,13 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
   const [atHero, setAtHero] = useState(false);
   const location = useLocation();
 
-  // Be transparent whenever a heroId is provided or we're on the homepage
+  // Only be transparent when a heroId is explicitly provided (not on homepage)
   useEffect(() => {
-    const resolvedId = heroId ?? (location.pathname === "/" ? "hero" : null);
-    if (!resolvedId) {
+    if (!heroId) {
       setAtHero(false);
       return;
     }
-    const heroEl = document.getElementById(resolvedId);
+    const heroEl = document.getElementById(heroId);
     const check = () => {
       if (!heroEl) {
         setAtHero(window.scrollY < window.innerHeight - 80);
