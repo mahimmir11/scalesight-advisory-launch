@@ -11,81 +11,88 @@ const fadeUp = {
 const HeroSection = () => (
   <section
     id="hero"
-    className="relative flex items-center justify-center overflow-hidden pt-[70px]"
-    style={{ minHeight: "100vh", borderRadius: "0 0 4rem 4rem" }}
+    className="relative bg-white overflow-hidden pt-[70px]"
+    style={{ minHeight: "100vh" }}
   >
-    {/* Background — starts at 100%, loops zoom in → out → in */}
-    <motion.div
-      className="absolute inset-0 z-0"
-      style={{
-        backgroundImage: "url('/hero.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      animate={{ scale: [1, 1.08, 1] }}
-      transition={{
-        duration: 10,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "loop",
-      }}
-    />
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10 min-h-[calc(100vh-70px)] py-16">
+      {/* Left — text */}
+      <div className="flex-1 max-w-xl">
+        <motion.p
+          {...fadeUp}
+          className="text-xs font-semibold tracking-[0.25em] uppercase text-gray-500 mb-5"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
+          Financial Advisory · UAE &amp; India
+        </motion.p>
 
-    {/* Overlays */}
-    <div className="absolute inset-0 z-[1] bg-primary/50" />
-    <div className="absolute inset-0 z-[2] bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+        <motion.h1
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.1 }}
+          className="text-4xl sm:text-5xl font-bold leading-[1.15] mb-6"
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            letterSpacing: "-0.02em",
+            color: "#0f1f3d",
+          }}
+        >
+          Strategic Expertise From{" "}
+          <span style={{ color: "#0f1f3d" }}>Dedicated Advisors</span>
+        </motion.h1>
 
-    {/* Content */}
-    <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-      <motion.p
-        {...fadeUp}
-        className="text-xs font-semibold tracking-[0.25em] uppercase text-white mb-5"
-        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-      >
-        Financial Advisory · UAE & India
-      </motion.p>
+        <motion.p
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.2 }}
+          className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 max-w-lg"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
+          At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
+          see clearly, stay compliant, and grow confidently.
+        </motion.p>
 
-      <motion.h1
-        {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.1 }}
-        className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.1] mb-6 drop-shadow-lg"
-        style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
-      >
-        Strategic Expertise From{" "}
-        <span className="text-white">Dedicated Advisors</span>
-      </motion.h1>
+        <motion.div
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.35 }}
+          className="flex flex-col sm:flex-row gap-4"
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-md"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              background: "#2dd4bf",
+              color: "#0f1f3d",
+            }}
+          >
+            Get Started
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+          <a
+            href="#showcase"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all shadow-md hover:opacity-90"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              background: "#0f1f3d",
+              color: "#ffffff",
+            }}
+          >
+            Learn More
+          </a>
+        </motion.div>
+      </div>
 
-      <motion.p
-        {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.2 }}
-        className="text-base md:text-xl text-white leading-relaxed mb-10 max-w-2xl mx-auto font-normal"
-        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-      >
-        At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
-        see clearly, stay compliant, and grow confidently.
-      </motion.p>
-
+      {/* Right — illustration */}
       <motion.div
-        {...fadeUp}
-        transition={{ ...fadeUp.transition, delay: 0.35 }}
-        className="flex flex-col sm:flex-row gap-4 justify-center"
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1], delay: 0.15 }}
+        className="flex-1 flex items-center justify-center"
       >
-        <a
-          href="#contact"
-          className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-lg"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          Get Started
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </a>
-        <a
-          href="#showcase"
-          className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-white hover:text-primary transition-all shadow-lg"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          Learn More
-        </a>
+        <img
+          src="/hero1.png"
+          alt="Financial advisory illustration"
+          className="w-full max-w-lg object-contain drop-shadow-xl"
+        />
       </motion.div>
     </div>
   </section>
