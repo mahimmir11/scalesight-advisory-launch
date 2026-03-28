@@ -148,7 +148,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-white min-h-screen">
+    <section className="bg-white min-h-screen overflow-x-hidden">
 
       {/* ── Hero banner ── */}
       <div className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #09285A 0%, #085B63 50%, #09285A 100%)" }}>
@@ -224,10 +224,10 @@ const ContactSection = () => {
         </svg>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-10 sm:space-y-16">
 
         {/* ── Info cards ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {info.map((item, i) => (
             <motion.div key={item.label} custom={i} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
               className="bg-white rounded-2xl border border-primary/8 p-5 shadow-sm hover:shadow-md transition-shadow group">
@@ -242,26 +242,26 @@ const ContactSection = () => {
         </div>
 
         {/* ── Main grid: form + sidebar ── */}
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
 
           {/* Contact form */}
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="lg:col-span-3">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            className="lg:col-span-3 w-full min-w-0">
             {/* Outer glow layer */}
-            <div className="relative rounded-3xl"
+            <div className="relative rounded-2xl sm:rounded-3xl w-full"
               style={{ boxShadow: "0 0 0 1px rgba(94,228,207,0.25), 0 32px 80px -8px rgba(9,40,90,0.55), 0 8px 32px -4px rgba(8,91,99,0.4), 0 0 60px -10px rgba(94,228,207,0.15)" }}>
               {/* Gradient border */}
-              <div className="rounded-3xl p-px"
+              <div className="rounded-2xl sm:rounded-3xl p-px w-full"
                 style={{ background: "linear-gradient(135deg, rgba(94,228,207,0.5) 0%, rgba(9,40,90,0.3) 40%, rgba(3,195,89,0.4) 100%)" }}>
                 {/* Light cream card */}
-                <div className="rounded-3xl p-8" style={{ background: "#FAFAF8" }}>
+                <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 w-full" style={{ background: "#FAFAF8" }}>
 
-                  <h2 className="text-2xl font-extrabold text-primary mb-1">Send Us a Message</h2>
-                  <p className="text-muted-blue text-sm mb-7">Fill in the form and our team will get back to you within one business day.</p>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-primary mb-1">Send Us a Message</h2>
+                  <p className="text-muted-blue text-sm mb-6 sm:mb-7">Fill in the form and our team will get back to you within one business day.</p>
 
                   {submitted ? (
                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-                      className="flex flex-col items-center justify-center py-16 text-center gap-4">
+                      className="flex flex-col items-center justify-center py-12 text-center gap-4">
                       <div className="w-16 h-16 rounded-full bg-emerald/10 flex items-center justify-center">
                         <CheckCircle2 className="w-8 h-8 text-emerald" />
                       </div>
@@ -273,8 +273,8 @@ const ContactSection = () => {
                       </button>
                     </motion.div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                      <div className="grid sm:grid-cols-2 gap-5">
+                    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <div>
                           <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Full Name *</label>
                           <input required type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -295,14 +295,14 @@ const ContactSection = () => {
                         <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Phone Number</label>
                         <div className="flex gap-2">
                           <select value={form.countryCode} onChange={(e) => setForm({ ...form, countryCode: e.target.value })}
-                            className="px-3 py-3 rounded-xl bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-aqua/40 min-w-[90px]"
-                            style={{ border: "1.5px solid #4a5568" }}>
+                            className="px-2 sm:px-3 py-3 rounded-xl bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-aqua/40 flex-shrink-0"
+                            style={{ border: "1.5px solid #4a5568", minWidth: "80px", maxWidth: "100px" }}>
                             {countryCodes.map((c) => (
                               <option key={c.code} value={c.code}>{c.flag} {c.code}</option>
                             ))}
                           </select>
                           <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                            className="flex-1 px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm"
+                            className="flex-1 min-w-0 px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm"
                             style={{ border: "1.5px solid #4a5568" }}
                             placeholder="Phone number" />
                         </div>
@@ -341,8 +341,8 @@ const ContactSection = () => {
           </motion.div>
 
           {/* Sidebar */}
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-2 space-y-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2 space-y-6 w-full min-w-0">
 
             {/* LinkedIn hero card */}
             <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer"
