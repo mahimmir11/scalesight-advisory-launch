@@ -10,17 +10,16 @@ const Contact = () => (
       {/* Hero Section with Background Image - starts from top */}
       <div 
         id="contact-hero"
-        className="relative h-[70vh] md:h-[80vh] bg-cover bg-center bg-no-repeat pt-[70px]"
+        className="relative h-[70vh] md:h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{ 
           backgroundImage: "url('/contact.png')",
-          marginTop: '-70px'
         }}
       >
         {/* Light overlay for text visibility - very subtle */}
         <div className="absolute inset-0 bg-white/50" />
         
         {/* Hero Content */}
-        <div className="relative h-full flex items-center justify-center px-6">
+        <div className="relative h-full flex items-center justify-center px-6 pt-[70px]">
           <div className="text-center max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: -10 }}

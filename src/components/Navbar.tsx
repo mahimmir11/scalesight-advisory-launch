@@ -25,14 +25,20 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
     const heroEl = document.getElementById(heroId);
     const check = () => {
       if (!heroEl) {
-        setAtHero(window.scrollY < window.innerHeight - 80);
+        setAtHero(window.scrollY < 100);
         return;
       }
-      setAtHero(window.scrollY < heroEl.offsetHeight - 80);
+      const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+      const navbarBottom = window.scrollY + 70; // navbar height
+      setAtHero(navbarBottom < heroBottom - 50);
     };
     check();
     window.addEventListener("scroll", check, { passive: true });
-    return () => window.removeEventListener("scroll", check);
+    window.addEventListener("resize", check, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
+    };
   }, [location.pathname, heroId]);
 
   useEffect(() => {
@@ -47,10 +53,13 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
     ? "text-white/90 hover:text-white hover:bg-white/15"
     : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
 
+  // For pages with keepDarkText, navbar should still be transparent at hero but with dark text
+  const shouldBeTransparent = atHero;
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        atHero
+        shouldBeTransparent
           ? "bg-transparent border-b border-transparent shadow-none"
           : "bg-white shadow-sm border-b border-gray-100"
       }`}

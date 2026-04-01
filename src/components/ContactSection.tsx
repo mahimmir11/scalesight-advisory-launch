@@ -148,7 +148,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-white overflow-x-hidden">
+    <section className="bg-white overflow-x-hidden pb-0">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-10 sm:space-y-16">
 
         {/* ── Info cards ── */}
