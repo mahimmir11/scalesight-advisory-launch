@@ -13,33 +13,20 @@ const links = [
 
 const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: boolean } = {}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [atHero, setAtHero] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Only be transparent when a heroId is explicitly provided (not on homepage)
   useEffect(() => {
-    if (!heroId) {
-      setAtHero(false);
-      return;
-    }
-    const heroEl = document.getElementById(heroId);
-    const check = () => {
-      if (!heroEl) {
-        setAtHero(window.scrollY < 100);
-        return;
-      }
-      const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
-      const navbarBottom = window.scrollY + 70; // navbar height
-      setAtHero(navbarBottom < heroBottom - 50);
+    // Reset scrolled state on route change based on current scroll position
+    setScrolled(window.scrollY > 50);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
     };
-    check();
-    window.addEventListener("scroll", check, { passive: true });
-    window.addEventListener("resize", check, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", check);
-      window.removeEventListener("resize", check);
-    };
-  }, [location.pathname, heroId]);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -47,19 +34,21 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
 
   const isActive = (to: string) => location.pathname === to;
 
-  // Determine text color based on keepDarkText prop
-  const textColor = atHero && !keepDarkText ? "text-white" : "text-[#09285A]";
-  const linkColor = atHero && !keepDarkText 
-    ? "text-white/90 hover:text-white hover:bg-white/15"
-    : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
+  // Transparent only when: heroId is provided AND user hasn't scrolled past 50px
+  const isTransparent = !!heroId && !scrolled;
 
-  // For pages with keepDarkText, navbar should still be transparent at hero but with dark text
-  const shouldBeTransparent = atHero;
+  // Text color: dark when not transparent OR keepDarkText is true
+  const useDarkText = !isTransparent || !!keepDarkText;
+
+  const textColor = useDarkText ? "text-[#09285A]" : "text-white";
+  const linkColor = useDarkText
+    ? "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
+    : "text-white/90 hover:text-white hover:bg-white/15";
 
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        shouldBeTransparent
+        isTransparent
           ? "bg-transparent border-b border-transparent shadow-none"
           : "bg-white shadow-sm border-b border-gray-100"
       }`}

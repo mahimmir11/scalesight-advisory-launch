@@ -77,36 +77,39 @@ const socials = [
 // ── Contact info cards ────────────────────────────────────────────────────────
 const info = [
   {
-    icon: <Phone className="w-5 h-5" />,
+    icon: <Phone className="w-6 h-6" />,
     label: "Call Us",
     value: "+00 00000 00000",
-    sub: "Mon–Sat, 9am–7pm IST",
+    sub: "Available 24/7",
     color: "text-emerald",
     bg: "bg-emerald/10",
+    href: "https://wa.me/919999999999",
+    clickable: true,
+    hoverBg: "hover:bg-[#25D366]",
+    hoverBorder: "hover:border-[#25D366]",
   },
   {
-    icon: <Mail className="w-5 h-5" />,
+    icon: <Mail className="w-6 h-6" />,
     label: "Email Us",
     value: "hello@scalesight.com",
     sub: "We reply within 24 hours",
     color: "text-aqua",
     bg: "bg-aqua/10",
+    href: "mailto:hello@scalesight.com",
+    clickable: true,
+    hoverBg: "hover:bg-[#0A66C2]",
+    hoverBorder: "hover:border-[#0A66C2]",
   },
   {
-    icon: <MapPin className="w-5 h-5" />,
+    icon: <MapPin className="w-6 h-6" />,
     label: "Our Offices",
     value: "India & UAE",
     sub: "New Delhi · Dubai",
     color: "text-gold",
     bg: "bg-gold/10",
-  },
-  {
-    icon: <Clock className="w-5 h-5" />,
-    label: "Working Hours",
-    value: "Mon – Sat",
-    sub: "9:00 AM – 7:00 PM",
-    color: "text-[#0A66C2]",
-    bg: "bg-[#0A66C2]/10",
+    clickable: false,
+    hoverBg: "hover:bg-[#2A7C85]",
+    hoverBorder: "hover:border-[#2A7C85]",
   },
 ];
 
@@ -135,6 +138,19 @@ const fadeUp: Variants = {
   show: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.55, ease: [0.25, 0.1, 0.25, 1] } }),
 };
 
+const slideInFromRight: Variants = {
+  hidden: { opacity: 0, x: 100 },
+  show: (i: number) => ({ 
+    opacity: 1, 
+    x: 0, 
+    transition: { 
+      delay: i * 0.2, 
+      duration: 0.6, 
+      ease: [0.25, 0.1, 0.25, 1] 
+    } 
+  }),
+};
+
 // ── Component ─────────────────────────────────────────────────────────────────
 const ContactSection = () => {
   const [form, setForm] = useState({
@@ -152,18 +168,71 @@ const ContactSection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-10 sm:space-y-16">
 
         {/* ── Info cards ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {info.map((item, i) => (
-            <motion.div key={item.label} custom={i} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-              className="bg-white rounded-2xl border border-primary/8 p-5 shadow-sm hover:shadow-md transition-shadow group">
-              <div className={`w-10 h-10 rounded-xl ${item.bg} ${item.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                {item.icon}
-              </div>
-              <p className="text-xs text-muted-blue font-medium uppercase tracking-wider mb-1">{item.label}</p>
-              <p className="text-primary font-bold text-sm">{item.value}</p>
-              <p className="text-muted-blue text-xs mt-0.5">{item.sub}</p>
-            </motion.div>
-          ))}
+        <div className="relative">
+          {/* Background shadow layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-aqua/5 to-emerald/5 rounded-3xl blur-3xl -z-10" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 p-2">
+            {info.map((item, i) => {
+              const CardContent = (
+                <>
+                  <motion.div 
+                    className={`w-16 h-16 rounded-2xl ${item.bg} flex items-center justify-center mb-4 transition-all duration-300 ${item.color} group-hover:bg-white/10 group-hover:text-white`}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 3,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    {item.icon}
+                  </motion.div>
+                  <p className="text-xs text-muted-blue group-hover:text-white/90 font-semibold uppercase tracking-wider mb-2 transition-colors duration-300">{item.label}</p>
+                  <p className="text-primary group-hover:text-white font-bold text-base mb-1 transition-colors duration-300">{item.value}</p>
+                  <p className="text-muted-blue group-hover:text-white/80 text-sm transition-colors duration-300">{item.sub}</p>
+                  {item.clickable && (
+                    <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-primary group-hover:text-white/90 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <span>Click to {item.label === "Call Us" ? "chat" : "send email"}</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </div>
+                  )}
+                </>
+              );
+
+              return item.clickable ? (
+                <motion.a
+                  key={item.label}
+                  custom={i}
+                  variants={slideInFromRight}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group bg-white ${item.hoverBg} rounded-3xl border-2 border-[#5EE4CF] ${item.hoverBorder} p-6 shadow-[0_4px_20px_rgba(94,228,207,0.2)] hover:shadow-[0_8px_30px_rgba(42,124,133,0.4)] hover:-translate-y-2 transition-all duration-300 cursor-pointer`}
+                >
+                  {CardContent}
+                </motion.a>
+              ) : (
+                <motion.div
+                  key={item.label}
+                  custom={i}
+                  variants={slideInFromRight}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className={`group bg-white ${item.hoverBg} rounded-3xl border-2 border-[#5EE4CF] ${item.hoverBorder} p-6 shadow-[0_4px_20px_rgba(94,228,207,0.2)] hover:shadow-[0_8px_30px_rgba(42,124,133,0.4)] transition-all duration-300`}
+                >
+                  {CardContent}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
         {/* ── Main grid: form + sidebar ── */}
