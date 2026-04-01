@@ -99,11 +99,20 @@ const ServicesSection = () => {
                       <p className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md">{regionInfo[r].tagline}</p>
                       <p className="text-sm text-white/80 drop-shadow-md">{regionInfo[r].summary}</p>
                     </div>
-                    <div className="flex items-center justify-between mt-5">
-                      <span className="text-sm font-semibold text-amber-100 drop-shadow-md">{regionInfo[r].count} Services</span>
-                      <span className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2.5 rounded-full text-sm font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg">
-                        Show More Details <ArrowRight className="w-4 h-4" />
-                      </span>
+                    <div className="flex items-start mt-6">
+                      <motion.span 
+                        animate={{
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        className="inline-flex items-center gap-2 bg-white text-primary px-7 py-3.5 rounded-full text-base font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg hover:shadow-xl cursor-pointer">
+                        Show More Details <ArrowRight className="w-5 h-5" />
+                      </motion.span>
                     </div>
                   </div>
                 </motion.div>

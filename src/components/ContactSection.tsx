@@ -148,83 +148,8 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-white min-h-screen overflow-x-hidden">
-
-      {/* ── Hero banner ── */}
-      <div className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #09285A 0%, #085B63 50%, #09285A 100%)" }}>
-
-        {/* Decorative gradient orbs */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, hsl(172 72% 63%) 0%, transparent 70%)" }} />
-        <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full opacity-15"
-          style={{ background: "radial-gradient(circle, hsl(144 96% 38%) 0%, transparent 70%)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] opacity-10"
-          style={{ background: "radial-gradient(ellipse, hsl(172 72% 63%) 0%, transparent 65%)" }} />
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
-
-        {/* Floating accent rings */}
-        <div className="absolute top-8 right-[15%] w-32 h-32 rounded-full border border-aqua/20" />
-        <div className="absolute top-12 right-[15%] w-20 h-20 rounded-full border border-aqua/10 translate-x-6 translate-y-6" />
-        <div className="absolute bottom-12 left-[10%] w-24 h-24 rounded-full border border-emerald/20" />
-
-        {/* Glowing line accent */}
-        <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: "linear-gradient(90deg, transparent, hsl(172 72% 63% / 0.6), hsl(144 96% 38% / 0.4), transparent)" }} />
-
-        <div className="relative max-w-6xl mx-auto px-6 py-24 text-center">
-          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 border border-aqua/30 text-aqua text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-widest uppercase"
-            style={{ background: "rgba(94,228,207,0.08)", backdropFilter: "blur(8px)" }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" />
-            We're here to help
-          </motion.div>
-
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-5"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-            Let's Start a{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10" style={{ background: "linear-gradient(135deg, hsl(172 72% 63%), hsl(144 96% 38%))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                Conversation
-              </span>
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full opacity-60"
-                style={{ background: "linear-gradient(90deg, hsl(172 72% 63%), hsl(144 96% 38%))" }} />
-            </span>
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.2 }}
-            className="text-white/65 text-lg max-w-2xl mx-auto leading-relaxed">
-            Whether you're expanding into India or the UAE, our advisors are ready to guide you every step of the way.
-          </motion.p>
-
-          {/* Stat pills */}
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }}
-            className="flex flex-wrap justify-center gap-3 mt-8">
-            {[
-              { val: "< 24h", label: "Response time" },
-              { val: "2 Markets", label: "India & UAE" },
-              { val: "Free", label: "First consultation" },
-            ].map((s) => (
-              <div key={s.label} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm"
-                style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}>
-                <span className="font-bold text-white">{s.val}</span>
-                <span className="text-white/50">·</span>
-                <span className="text-white/60">{s.label}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Wave divider */}
-        <svg className="w-full -mb-1 block" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M0 56h1440V28C1320 8 1200 48 1080 28 960 8 840 48 720 28 600 8 480 48 360 28 240 8 120 48 0 28V56z" fill="white" />
-        </svg>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-10 sm:space-y-16">
+    <section className="bg-white overflow-x-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-10 sm:space-y-16">
 
         {/* ── Info cards ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
@@ -385,12 +310,9 @@ const ContactSection = () => {
           </motion.div>
         </div>
 
-
-
       </div>
     </section>
   );
 };
 
 export default ContactSection;
-

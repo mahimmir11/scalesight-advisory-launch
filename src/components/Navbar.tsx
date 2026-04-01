@@ -11,7 +11,7 @@ const links = [
   { label: "Contact Us", to: "/contact" },
 ];
 
-const Navbar = ({ heroId }: { heroId?: string } = {}) => {
+const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: boolean } = {}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [atHero, setAtHero] = useState(false);
   const location = useLocation();
@@ -41,6 +41,12 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
 
   const isActive = (to: string) => location.pathname === to;
 
+  // Determine text color based on keepDarkText prop
+  const textColor = atHero && !keepDarkText ? "text-white" : "text-[#09285A]";
+  const linkColor = atHero && !keepDarkText 
+    ? "text-white/90 hover:text-white hover:bg-white/15"
+    : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -54,7 +60,7 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
         {/* Logo + Name */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img src="/logo.png" alt="ScaleSight" className="h-10 w-auto" />
-          <span className={`text-lg font-bold tracking-tight leading-none transition-colors duration-300 ${atHero ? "text-white" : "text-[#09285A]"}`}>
+          <span className={`text-lg font-bold tracking-tight leading-none transition-colors duration-300 ${textColor}`}>
             ScaleSight
           </span>
         </Link>
@@ -68,9 +74,7 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 isActive(l.to)
                   ? "bg-[#09285A] text-white"
-                  : atHero
-                  ? "text-white/90 hover:text-white hover:bg-white/15"
-                  : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
+                  : linkColor
               }`}
             >
               {l.label}
@@ -81,7 +85,7 @@ const Navbar = ({ heroId }: { heroId?: string } = {}) => {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`md:hidden p-2 transition-colors duration-300 ${atHero ? "text-white" : "text-[#09285A]"}`}
+          className={`md:hidden p-2 transition-colors duration-300 ${textColor}`}
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
