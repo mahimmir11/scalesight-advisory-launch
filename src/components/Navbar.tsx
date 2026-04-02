@@ -14,6 +14,7 @@ const links = [
 const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: boolean } = {}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isInHero, setIsInHero] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -21,12 +22,28 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
     setScrolled(window.scrollY > 50);
 
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 50);
+
+      // Check if we're still in the hero section
+      if (heroId) {
+        const heroElement = document.getElementById(heroId);
+        if (heroElement) {
+          const heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
+          const navbarHeight = 70;
+          setIsInHero(scrollY + navbarHeight < heroBottom);
+        }
+      }
     };
 
+    handleScroll(); // Initial check
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [location.pathname]);
+    window.addEventListener("resize", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [location.pathname, heroId]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -34,11 +51,10 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
 
   const isActive = (to: string) => location.pathname === to;
 
-  // Transparent only when: heroId is provided AND user hasn't scrolled past 50px
-  const isTransparent = !!heroId && !scrolled;
-
-  // Text color: dark when not transparent OR keepDarkText is true
-  const useDarkText = !isTransparent || !!keepDarkText;
+  // When keepDarkText is true: always use dark text, transparent bg in hero, white bg when scrolled out
+  // When keepDarkText is false: transparent bg with white text in hero, white bg with dark text when scrolled out
+  const isTransparent = !!heroId && isInHero;
+  const useDarkText = keepDarkText || !isTransparent;
 
   const textColor = useDarkText ? "text-[#09285A]" : "text-white";
   const linkColor = useDarkText

@@ -14,7 +14,7 @@ const Footer = () => (
 
         {/* Col 1 — Logo + tagline */}
         <div>
-          <img src="/fulllogo1.png" alt="ScaleSight" className="h-24 md:h-28 w-auto object-contain object-left mb-4" />
+          <img src="/fulllogo1.png" alt="ScaleSight" className="h-20 md:h-24 w-auto object-contain object-left mb-4" />
           <p className="text-gray-800 text-sm leading-relaxed font-light">
             Your trusted partner for expert financial advisory, compliance, and strategic growth across India & UAE.
           </p>

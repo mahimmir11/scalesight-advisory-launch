@@ -1,101 +1,405 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useRef, useEffect } from "react";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] as const },
-};
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 36 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
 
-const HeroSection = () => (
-  <section
-    id="hero"
-    className="relative bg-white overflow-hidden pt-[70px]"
-    style={{ minHeight: "100vh" }}
-  >
-    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10 min-h-[calc(100vh-70px)] py-16">
-      {/* Left — text */}
-      <div className="flex-1 max-w-xl">
-        <motion.p
-          {...fadeUp}
-          className="text-xs font-semibold tracking-[0.25em] uppercase text-gray-500 mb-5"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          Financial Advisory · UAE &amp; India
-        </motion.p>
+const popIn = (delay = 0) => ({
+  initial: { opacity: 0, scale: 0.80, y: 16 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  transition: { duration: 0.58, delay, ease: [0.34, 1.56, 0.64, 1] as const },
+});
 
-        <motion.h1
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.1 }}
-          className="text-4xl sm:text-5xl font-bold leading-[1.15] mb-6"
-          style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-            letterSpacing: "-0.02em",
-            color: "#0f1f3d",
-          }}
-        >
-          Strategic Expertise From{" "}
-          <span style={{ color: "#0f1f3d" }}>Dedicated Advisors</span>
-        </motion.h1>
+const HeroSection = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-        <motion.p
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.2 }}
-          className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 max-w-lg"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          At ScaleSight, we deliver tailored, insight-driven advisory to help businesses
-          see clearly, stay compliant, and grow confidently.
-        </motion.p>
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = 0.65;
+  }, []);
 
+  return (
+    <>
+      <style>{`
+        /* ══ ROOT ══ */
+        .ss-hero {
+          position: relative;
+          overflow: hidden;
+          padding-top: 70px;
+          min-height: 100vh;
+          background: linear-gradient(
+            to bottom,
+            #f0f8ff 0%,
+            #ddf0fb 18%,
+            #c2e6f9 38%,
+            #a3d8f5 56%,
+            #84c9f0 72%,
+            #6dbde9 88%,
+            #5cb4e4 100%
+          );
+        }
+
+        /* smoky white top-half haze */
+        .ss-smoke {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 1;
+          background: linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.90) 0%,
+            rgba(255,255,255,0.74) 12%,
+            rgba(255,255,255,0.46) 26%,
+            rgba(255,255,255,0.18) 42%,
+            rgba(255,255,255,0.04) 55%,
+            transparent 68%
+          );
+        }
+
+        /* ══ TWO-COLUMN LAYOUT ══ */
+        .ss-layout {
+          position: relative;
+          z-index: 10;
+          max-width: 1400px;
+          margin: 0 auto;
+          min-height: calc(100vh - 70px);
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          padding: clamp(32px, 5vw, 72px) clamp(28px, 5.5vw, 80px);
+        }
+
+        /* LEFT col */
+        .ss-left {
+          flex: 0 0 46%;
+          max-width: 46%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        /* RIGHT col */
+        .ss-right {
+          flex: 0 0 54%;
+          max-width: 54%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+
+        /* ══ VIDEO WRAPPER — the mask lives here ══ */
+        .ss-video-wrap {
+          position: relative;
+          width: clamp(340px, 52vw, 740px);
+          /*
+            The wrapper is intentionally TALLER than you'd expect so the
+            radial mask can fade the very top/bottom edges of the video
+            frame fully to transparent.
+          */
+          aspect-ratio: 16/11;
+          margin-top: -50px;   /* push illustration into upper half */
+
+          /*
+            MASK — radial gradient:
+            • Opaque in the center ellipse (the people / table area)
+            • Fully transparent at all four edges → removes frame + white bg
+            The gradient is on the alpha channel so it clips the video itself.
+          */
+          -webkit-mask-image: radial-gradient(
+            ellipse 72% 68% at 50% 52%,
+            black 28%,
+            rgba(0,0,0,0.95) 38%,
+            rgba(0,0,0,0.80) 50%,
+            rgba(0,0,0,0.40) 62%,
+            rgba(0,0,0,0.10) 74%,
+            transparent 86%
+          );
+          mask-image: radial-gradient(
+            ellipse 72% 68% at 50% 52%,
+            black 28%,
+            rgba(0,0,0,0.95) 38%,
+            rgba(0,0,0,0.80) 50%,
+            rgba(0,0,0,0.40) 62%,
+            rgba(0,0,0,0.10) 74%,
+            transparent 86%
+          );
+        }
+
+        .ss-video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          /*
+            mix-blend-mode: multiply removes the remaining white
+            areas inside the video (background sky, table surface etc.)
+            by blending them with the page colour behind.
+          */
+          mix-blend-mode: multiply;
+          border-radius: 0;   /* no border-radius — mask handles edges */
+          border: none;
+          outline: none;
+          background: transparent;
+        }
+
+        /* ══ TEXT ══ */
+        .ss-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 5px 14px;
+          border-radius: 100px;
+          background: rgba(45,212,191,0.12);
+          border: 1px solid rgba(45,212,191,0.38);
+          color: #0d9488;
+          font-size: 11.5px;
+          font-family: 'Space Grotesk', sans-serif;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          margin-bottom: 20px;
+        }
+        .ss-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #2dd4bf;
+          box-shadow: 0 0 6px rgba(45,212,191,0.75);
+          flex-shrink: 0;
+        }
+        .ss-h1 {
+          margin: 0 0 16px 0;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+          font-weight: 800;
+          line-height: 1.1;
+          letter-spacing: -0.022em;
+          color: #0b1d3a;
+        }
+        .ss-h1-grad {
+          background: linear-gradient(118deg, #0b1d3a 0%, #1565a8 44%, #2dd4bf 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .ss-desc {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(0.88rem, 1.15vw, 1rem);
+          color: #2c4f6b;
+          line-height: 1.7;
+          max-width: 460px;
+          margin: 0 0 30px 0;
+        }
+        .ss-btns {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          align-items: center;
+          margin-bottom: 38px;
+        }
+        .ss-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          padding: 12px 28px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+          color: #fff;
+          font-family: 'Space Grotesk', sans-serif;
+          font-weight: 700;
+          font-size: 0.9rem;
+          letter-spacing: 0.01em;
+          box-shadow: 0 4px 20px rgba(45,212,191,0.38);
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .ss-btn-primary:hover {
+          box-shadow: 0 8px 30px rgba(45,212,191,0.54);
+          transform: scale(1.03);
+        }
+        .ss-btn-ghost {
+          display: inline-flex;
+          align-items: center;
+          padding: 11px 24px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.68);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          color: #0b1d3a;
+          font-family: 'Space Grotesk', sans-serif;
+          font-weight: 700;
+          font-size: 0.9rem;
+          border: 1.5px solid rgba(11,29,58,0.22);
+          text-decoration: none;
+          transition: all 0.2s;
+          box-shadow: 0 2px 10px rgba(11,29,58,0.06);
+        }
+        .ss-btn-ghost:hover {
+          background: rgba(255,255,255,0.9);
+          border-color: rgba(11,29,58,0.4);
+        }
+        .ss-stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 28px;
+          align-items: center;
+        }
+        .ss-stat-num {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+          font-weight: 800;
+          color: #0b1d3a;
+          line-height: 1;
+        }
+        .ss-stat-label {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 0.72rem;
+          color: #3a6080;
+          font-weight: 500;
+          line-height: 1.3;
+          max-width: 62px;
+        }
+        .ss-caret {
+          position: absolute;
+          bottom: 22px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 20;
+        }
+
+        /* ══ MOBILE ══ */
+        @media (max-width: 768px) {
+          .ss-layout {
+            flex-direction: column;
+            align-items: flex-start;
+            padding-bottom: 24px;
+            min-height: unset;
+            padding-top: clamp(24px, 6vw, 48px);
+          }
+          .ss-left  { flex: unset; max-width: 100%; width: 100%; }
+          .ss-right {
+            flex: unset; max-width: 100%; width: 100%;
+            justify-content: center;
+            margin-top: 8px;
+          }
+          .ss-video-wrap {
+            width: clamp(260px, 92vw, 460px) !important;
+            margin-top: 0 !important;
+          }
+          .ss-btns { flex-direction: column; align-items: stretch; }
+          .ss-btn-primary, .ss-btn-ghost { justify-content: center; }
+          .ss-h1 { font-size: clamp(1.55rem, 7vw, 2.2rem); }
+        }
+      `}</style>
+
+      <section id="hero" className="ss-hero">
+
+        {/* Smoky white overlay */}
+        <div aria-hidden className="ss-smoke" />
+
+        {/* Top-left white bloom */}
+        <div aria-hidden style={{
+          position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+          background: "radial-gradient(ellipse 55% 50% at 5% 0%, rgba(255,255,255,0.65) 0%, transparent 70%)",
+        }} />
+
+        {/* ══ LAYOUT ══ */}
+        <div className="ss-layout">
+
+          {/* ── LEFT ── */}
+          <div className="ss-left">
+            <motion.div {...fadeUp(0.05)}>
+              <div className="ss-badge">
+                <span className="ss-dot" />
+                Trusted Advisory · UAE &amp; India
+              </div>
+            </motion.div>
+
+            <h1 className="ss-h1">
+              <motion.span {...fadeUp(0.16)} style={{ display: "block" }}>
+                Strategic Expertise
+              </motion.span>
+              <motion.span {...fadeUp(0.30)} style={{ display: "block" }}>
+                From Dedicated{" "}
+                <span className="ss-h1-grad">Advisors</span>
+              </motion.span>
+            </h1>
+
+            <motion.p className="ss-desc" {...fadeUp(0.44)}>
+              At ScaleSight, we deliver tailored, insight-driven advisory to help
+              businesses see clearly, stay compliant, and grow confidently.
+            </motion.p>
+
+            <div className="ss-btns">
+              <motion.a href="#contact" className="ss-btn-primary" {...popIn(0.58)}>
+                Get Started
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.7, ease: "easeInOut" }}
+                >
+                  <ArrowRight size={16} />
+                </motion.span>
+              </motion.a>
+              <motion.div {...popIn(0.70)}>
+                <Link to="/uae-services" className="ss-btn-ghost">UAE Services</Link>
+              </motion.div>
+              <motion.div {...popIn(0.82)}>
+                <Link to="/india-services" className="ss-btn-ghost">India Services</Link>
+              </motion.div>
+            </div>
+
+            <motion.div className="ss-stats" {...fadeUp(0.96)}>
+              {[
+                { num: "500+", label: "Clients Served" },
+                { num: "12+",  label: "Years Experience" },
+                { num: "98%",  label: "Satisfaction Rate" },
+              ].map(({ num, label }) => (
+                <div key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                  <span className="ss-stat-num">{num}</span>
+                  <span className="ss-stat-label">{label}</span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── RIGHT: masked video ── */}
+          <motion.div
+            className="ss-right"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="ss-video-wrap">
+              <video
+                ref={videoRef}
+                className="ss-video"
+                src="/home.mp4"
+                autoPlay muted loop playsInline
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll chevron */}
         <motion.div
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.35 }}
-          className="flex flex-col sm:flex-row gap-4"
+          className="ss-caret"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5, y: [0, 7, 0] }}
+          transition={{ delay: 1.8, duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
         >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:brightness-110 hover:scale-105 transition-all group shadow-md"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              background: "#2dd4bf",
-              color: "#0f1f3d",
-            }}
-          >
-            Get Started
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href="#showcase"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all shadow-md hover:opacity-90"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              background: "#0f1f3d",
-              color: "#ffffff",
-            }}
-          >
-            Learn More
-          </a>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="#1565a8" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </motion.div>
-      </div>
-
-      {/* Right — illustration */}
-      <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1], delay: 0.15 }}
-        className="flex-1 flex items-center justify-center"
-      >
-        <img
-          src="/hero1.png"
-          alt="Financial advisory illustration"
-          className="w-full max-w-lg object-contain drop-shadow-xl"
-        />
-      </motion.div>
-    </div>
-  </section>
-);
+      </section>
+    </>
+  );
+};
 
 export default HeroSection;

@@ -1,30 +1,16 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Send, Phone, Mail, MapPin, Clock, Linkedin, ExternalLink, CheckCircle2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Send, Phone, Mail, MapPin, Linkedin, ExternalLink, CheckCircle2 } from "lucide-react";
 
-// ── Social links ──────────────────────────────────────────────────────────────
 const socials = [
-  {
-    label: "LinkedIn",
-    handle: "ScaleSight Advisory",
-    sub: "Follow us for business insights",
-    href: "https://linkedin.com/company/scalesight",
-    highlight: true,
-    bg: "bg-[#0A66C2]",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <rect width="24" height="24" rx="5" fill="white" fillOpacity="0.15" />
-        <path fill="white" d="M7.75 9.5h-2.5v8h2.5v-8zm-1.25-4a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5zm10 4c-1.2 0-2 .6-2.3 1.2V9.5h-2.5v8h2.5v-4.3c0-1.1.6-1.7 1.5-1.7.9 0 1.3.6 1.3 1.7v4.3h2.5v-4.8c0-2.2-1.2-3.2-3-3.2z" />
-      </svg>
-    ),
-  },
   {
     label: "WhatsApp",
     handle: "+00 00000 00000",
     sub: "Chat with us directly",
     href: "https://wa.me/919999999999",
-    highlight: false,
     bg: "bg-[#25D366]",
+    solidBg: "#25D366",
+    hoverText: "Tap to open WhatsApp chat →",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
         <path fill="white" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -36,8 +22,9 @@ const socials = [
     handle: "@scalesight",
     sub: "Behind the scenes & updates",
     href: "https://instagram.com/scalesight",
-    highlight: false,
     bg: "bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]",
+    solidBg: "linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7)",
+    hoverText: "View our latest posts →",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
         <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" strokeWidth="1.8" />
@@ -51,8 +38,9 @@ const socials = [
     handle: "ScaleSight",
     sub: "News & announcements",
     href: "https://facebook.com/scalesight",
-    highlight: false,
     bg: "bg-[#1877F2]",
+    solidBg: "#1877F2",
+    hoverText: "Like our page →",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
         <path fill="white" d="M15.5 8H13V6.5c0-.6.4-.5 1-.5h1.5V4H13c-1.7 0-3 1.3-3 3v1H8v2.5h2V20h2.5v-9.5H15l.5-2.5z" />
@@ -64,52 +52,14 @@ const socials = [
     handle: "@scalesight",
     sub: "Thoughts & industry news",
     href: "https://twitter.com/scalesight",
-    highlight: false,
     bg: "bg-black",
+    solidBg: "#000000",
+    hoverText: "Follow us on X →",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="white">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.988l4.26 5.632 4.746-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
       </svg>
     ),
-  },
-];
-
-// ── Contact info cards ────────────────────────────────────────────────────────
-const info = [
-  {
-    icon: <Phone className="w-6 h-6" />,
-    label: "Call Us",
-    value: "+00 00000 00000",
-    sub: "Available 24/7",
-    color: "text-emerald",
-    bg: "bg-emerald/10",
-    href: "https://wa.me/919999999999",
-    clickable: true,
-    hoverBg: "hover:bg-[#25D366]",
-    hoverBorder: "hover:border-[#25D366]",
-  },
-  {
-    icon: <Mail className="w-6 h-6" />,
-    label: "Email Us",
-    value: "hello@scalesight.com",
-    sub: "We reply within 24 hours",
-    color: "text-aqua",
-    bg: "bg-aqua/10",
-    href: "mailto:hello@scalesight.com",
-    clickable: true,
-    hoverBg: "hover:bg-[#0A66C2]",
-    hoverBorder: "hover:border-[#0A66C2]",
-  },
-  {
-    icon: <MapPin className="w-6 h-6" />,
-    label: "Our Offices",
-    value: "India & UAE",
-    sub: "New Delhi · Dubai",
-    color: "text-gold",
-    bg: "bg-gold/10",
-    clickable: false,
-    hoverBg: "hover:bg-[#2A7C85]",
-    hoverBorder: "hover:border-[#2A7C85]",
   },
 ];
 
@@ -131,32 +81,291 @@ const services = [
   "Other / General Inquiry",
 ];
 
-import type { Variants } from "framer-motion";
+// ── New Premium Info Cards ────────────────────────────────────────────────────
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.55, ease: [0.25, 0.1, 0.25, 1] } }),
+const PhoneCard = ({ i }: { i: number }) => (
+  <motion.a
+    href="https://wa.me/919999999999"
+    target="_blank"
+    rel="noopener noreferrer"
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: i * 0.13, duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden block w-full"
+    style={{
+      background: "linear-gradient(135deg, #0B7A5E 0%, #09285A 100%)",
+      boxShadow: "0 0 0 1px rgba(94,228,207,0.3), 0 20px 60px -8px rgba(9,40,90,0.45)",
+      minHeight: "200px",
+      animation: `floatCard 4s ease-in-out 0s infinite`,
+    }}
+  >
+    {/* Decorative ring */}
+    <div
+      className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+      style={{ background: "radial-gradient(circle, #5EE4CF 0%, transparent 70%)" }}
+    />
+    <div
+      className="absolute -bottom-6 -left-6 w-28 h-28 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+      style={{ background: "radial-gradient(circle, #03C359 0%, transparent 70%)" }}
+    />
+
+    <div className="relative z-10 p-6 flex flex-col h-full" style={{ minHeight: "200px" }}>
+      {/* Top row */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
+          <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+        </div>
+        {/* Live pulse indicator */}
+        <div className="flex items-center gap-1.5">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+          </span>
+          <span className="text-emerald-300 text-xs font-semibold">Available 24/7</span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <p className="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Call / WhatsApp</p>
+      <p className="text-white font-extrabold text-xl mb-auto">+00 00000 00000</p>
+
+      {/* CTA Button */}
+      <div className="mt-5 flex gap-2">
+        <div
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold text-[#09285A] group-hover:scale-105 transition-transform duration-300"
+          style={{ background: "#5EE4CF" }}
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Chat on WhatsApp
+        </div>
+      </div>
+    </div>
+
+    <style>{`
+      @keyframes floatCard {
+        0%   { transform: translateY(0px); }
+        50%  { transform: translateY(-7px); }
+        100% { transform: translateY(0px); }
+      }
+    `}</style>
+  </motion.a>
+);
+
+const EmailCard = ({ i }: { i: number }) => (
+  <motion.a
+    href="mailto:hello@scalesight.com"
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: i * 0.13, duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden block w-full"
+    style={{
+      background: "linear-gradient(135deg, #0A66C2 0%, #054a91 100%)",
+      boxShadow: "0 0 0 1px rgba(10,102,194,0.3), 0 20px 60px -8px rgba(5,74,145,0.45)",
+      minHeight: "200px",
+      animation: `floatCard 4s ease-in-out 0.5s infinite`,
+    }}
+  >
+    {/* Decorative elements */}
+    <div
+      className="absolute -top-8 -right-8 w-36 h-36 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+      style={{ background: "radial-gradient(circle, #60A5FA 0%, transparent 70%)" }}
+    />
+    {/* Envelope decorative lines */}
+    <div className="absolute bottom-0 left-0 right-0 h-16 opacity-5">
+      <svg viewBox="0 0 400 64" fill="none" className="w-full h-full">
+        <path d="M0 0 L200 40 L400 0" stroke="white" strokeWidth="2"/>
+        <path d="M0 64 L160 24" stroke="white" strokeWidth="1.5"/>
+        <path d="M400 64 L240 24" stroke="white" strokeWidth="1.5"/>
+      </svg>
+    </div>
+
+    <div className="relative z-10 p-6 flex flex-col" style={{ minHeight: "200px" }}>
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
+          <Mail className="w-6 h-6 text-white" />
+        </div>
+        <span className="text-blue-200 text-xs font-semibold bg-white/10 px-3 py-1 rounded-full">
+          Reply in 24h
+        </span>
+      </div>
+
+      <p className="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Email Us</p>
+      <p className="text-white font-extrabold text-lg mb-1 break-all">hello@scalesight.com</p>
+      <p className="text-blue-200 text-sm mb-auto">Drop us a line, any time</p>
+
+      <div className="mt-5 flex gap-2">
+        <div
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold text-white group-hover:scale-105 transition-transform duration-300"
+          style={{ background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.3)" }}
+        >
+          <Mail className="w-4 h-4" />
+          Send an Email
+        </div>
+      </div>
+    </div>
+  </motion.a>
+);
+
+const LocationCard = ({ i }: { i: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: i * 0.13, duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+    className="relative rounded-2xl sm:rounded-3xl overflow-hidden w-full"
+    style={{
+      background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+      boxShadow: "0 0 0 1px rgba(255,200,60,0.2), 0 20px 60px -8px rgba(15,52,96,0.5)",
+      minHeight: "200px",
+      animation: `floatCard 4s ease-in-out 1s infinite`,
+    }}
+  >
+    {/* World map dots subtle bg */}
+    <div className="absolute inset-0 opacity-5">
+      <svg viewBox="0 0 400 200" className="w-full h-full">
+        {[...Array(20)].map((_, row) =>
+          [...Array(40)].map((_, col) => (
+            <circle key={`${row}-${col}`} cx={col * 10 + 5} cy={row * 10 + 5} r="1" fill="white" />
+          ))
+        )}
+      </svg>
+    </div>
+
+    {/* Globe icon decorative */}
+    <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-10">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="45" stroke="white" strokeWidth="2"/>
+        <ellipse cx="50" cy="50" rx="20" ry="45" stroke="white" strokeWidth="1.5"/>
+        <line x1="5" y1="50" x2="95" y2="50" stroke="white" strokeWidth="1.5"/>
+        <line x1="50" y1="5" x2="50" y2="95" stroke="white" strokeWidth="1.5"/>
+      </svg>
+    </div>
+
+    <div className="relative z-10 p-6 flex flex-col items-center justify-center text-center" style={{ minHeight: "200px" }}>
+      <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-4">
+        <MapPin className="w-8 h-8 text-amber-400" />
+      </div>
+
+      <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-2">Our Offices</p>
+      <p className="text-white font-extrabold text-3xl mb-2">India & UAE</p>
+      <p className="text-white/60 text-sm">Serving clients across two continents</p>
+    </div>
+  </motion.div>
+);
+
+// ── Social card ───────────────────────────────────────────────────────────────
+const SocialCard = ({
+  s,
+  index,
+  blinkIndex,
+}: {
+  s: (typeof socials)[0];
+  index: number;
+  blinkIndex: number | null;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const isBlinking = blinkIndex === index;
+
+  return (
+    <motion.a
+      href={s.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.08, duration: 0.5 }}
+      animate={
+        isBlinking
+          ? {
+              scale: [1, 1.03, 1],
+              boxShadow: [
+                "0 0 0px rgba(0,0,0,0)",
+                `0 0 24px ${s.solidBg.startsWith("linear") ? "rgba(238,42,123,0.6)" : s.solidBg + "99"}`,
+                "0 0 0px rgba(0,0,0,0)",
+              ],
+            }
+          : { scale: 1, boxShadow: "0 0 0px rgba(0,0,0,0)" }
+      }
+      className="group relative flex items-center gap-4 bg-white border border-gray-100 rounded-2xl px-4 py-3.5 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer"
+      style={{ minHeight: "64px" }}
+    >
+      <motion.div
+        className="absolute inset-0 rounded-2xl"
+        style={{ background: s.solidBg }}
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={{ x: isHovered ? "0%" : "-100%", opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      />
+
+      <div className="relative z-10 flex items-center gap-4 w-full">
+        <motion.div
+          className={`w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}
+          animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {s.icon}
+        </motion.div>
+
+        <div className="flex-1 min-w-0 relative" style={{ height: "40px" }}>
+          <motion.div
+            className="absolute inset-0 flex flex-col justify-center"
+            animate={{ opacity: isHovered ? 0 : 1, y: isHovered ? -8 : 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <p className="text-gray-900 font-bold text-sm leading-tight">{s.label}</p>
+            <p className="text-gray-400 text-xs leading-tight truncate">{s.sub}</p>
+          </motion.div>
+
+          <motion.div
+            className="absolute inset-0 flex flex-col justify-center"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 8 }}
+            transition={{ duration: 0.3, delay: isHovered ? 0.08 : 0 }}
+          >
+            <p className="text-white font-bold text-sm leading-tight">{s.hoverText}</p>
+            <p className="text-white/80 text-xs leading-tight">{s.handle}</p>
+          </motion.div>
+        </div>
+
+        <ExternalLink
+          className="w-3.5 h-3.5 flex-shrink-0 transition-colors duration-300"
+          style={{ color: isHovered ? "white" : "#9ca3af" }}
+        />
+      </div>
+    </motion.a>
+  );
 };
 
-const slideInFromRight: Variants = {
-  hidden: { opacity: 0, x: 100 },
-  show: (i: number) => ({ 
-    opacity: 1, 
-    x: 0, 
-    transition: { 
-      delay: i * 0.2, 
-      duration: 0.6, 
-      ease: [0.25, 0.1, 0.25, 1] 
-    } 
-  }),
-};
-
-// ── Component ─────────────────────────────────────────────────────────────────
+// ── Main component ────────────────────────────────────────────────────────────
 const ContactSection = () => {
   const [form, setForm] = useState({
     name: "", email: "", phone: "", countryCode: "+91", service: "", message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [blinkIndex, setBlinkIndex] = useState<number | null>(null);
+
+  const socialsRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(socialsRef, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i >= socials.length) { clearInterval(interval); setBlinkIndex(null); return; }
+      setBlinkIndex(i);
+      i++;
+    }, 250);
+    return () => clearInterval(interval);
+  }, [isInView]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,165 +377,106 @@ const ContactSection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-10 sm:space-y-16">
 
         {/* ── Info cards ── */}
-        <div className="relative">
-          {/* Background shadow layer */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-aqua/5 to-emerald/5 rounded-3xl blur-3xl -z-10" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 p-2">
-            {info.map((item, i) => {
-              const CardContent = (
-                <>
-                  <motion.div 
-                    className={`w-16 h-16 rounded-2xl ${item.bg} flex items-center justify-center mb-4 transition-all duration-300 ${item.color} group-hover:bg-white/10 group-hover:text-white`}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      rotate: [0, 5, -5, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <p className="text-xs text-muted-blue group-hover:text-white/90 font-semibold uppercase tracking-wider mb-2 transition-colors duration-300">{item.label}</p>
-                  <p className="text-primary group-hover:text-white font-bold text-base mb-1 transition-colors duration-300">{item.value}</p>
-                  <p className="text-muted-blue group-hover:text-white/80 text-sm transition-colors duration-300">{item.sub}</p>
-                  {item.clickable && (
-                    <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-primary group-hover:text-white/90 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <span>Click to {item.label === "Call Us" ? "chat" : "send email"}</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </div>
-                  )}
-                </>
-              );
-
-              return item.clickable ? (
-                <motion.a
-                  key={item.label}
-                  custom={i}
-                  variants={slideInFromRight}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group bg-white ${item.hoverBg} rounded-3xl border-2 border-[#5EE4CF] ${item.hoverBorder} p-6 shadow-[0_4px_20px_rgba(94,228,207,0.2)] hover:shadow-[0_8px_30px_rgba(42,124,133,0.4)] hover:-translate-y-2 transition-all duration-300 cursor-pointer`}
-                >
-                  {CardContent}
-                </motion.a>
-              ) : (
-                <motion.div
-                  key={item.label}
-                  custom={i}
-                  variants={slideInFromRight}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  className={`group bg-white ${item.hoverBg} rounded-3xl border-2 border-[#5EE4CF] ${item.hoverBorder} p-6 shadow-[0_4px_20px_rgba(94,228,207,0.2)] hover:shadow-[0_8px_30px_rgba(42,124,133,0.4)] transition-all duration-300`}
-                >
-                  {CardContent}
-                </motion.div>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-1 py-3">
+          <PhoneCard i={0} />
+          <EmailCard i={1} />
+          <LocationCard i={2} />
         </div>
 
-        {/* ── Main grid: form + sidebar ── */}
+        {/* ── Main grid ── */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
 
           {/* Contact form */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="lg:col-span-3 w-full min-w-0">
-            {/* Outer glow layer */}
-            <div className="relative rounded-2xl sm:rounded-3xl w-full"
-              style={{ boxShadow: "0 0 0 1px rgba(94,228,207,0.25), 0 32px 80px -8px rgba(9,40,90,0.55), 0 8px 32px -4px rgba(8,91,99,0.4), 0 0 60px -10px rgba(94,228,207,0.15)" }}>
-              {/* Gradient border */}
-              <div className="rounded-2xl sm:rounded-3xl p-px w-full"
-                style={{ background: "linear-gradient(135deg, rgba(94,228,207,0.5) 0%, rgba(9,40,90,0.3) 40%, rgba(3,195,89,0.4) 100%)" }}>
-                {/* Light cream card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-3 w-full min-w-0"
+          >
+            <div
+              className="relative rounded-2xl sm:rounded-3xl w-full"
+              style={{ boxShadow: "0 0 0 1px rgba(94,228,207,0.25), 0 32px 80px -8px rgba(9,40,90,0.55), 0 8px 32px -4px rgba(8,91,99,0.4)" }}
+            >
+              <div
+                className="rounded-2xl sm:rounded-3xl p-px w-full"
+                style={{ background: "linear-gradient(135deg, rgba(94,228,207,0.5) 0%, rgba(9,40,90,0.3) 40%, rgba(3,195,89,0.4) 100%)" }}
+              >
                 <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 w-full" style={{ background: "#FAFAF8" }}>
-
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-primary mb-1">Send Us a Message</h2>
-                  <p className="text-muted-blue text-sm mb-6 sm:mb-7">Fill in the form and our team will get back to you within one business day.</p>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#09285A] mb-1">Send Us a Message</h2>
+                  <p className="text-gray-400 text-sm mb-6">Fill in the form and our team will get back to you within one business day.</p>
 
                   {submitted ? (
-                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-                      className="flex flex-col items-center justify-center py-12 text-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-emerald/10 flex items-center justify-center">
-                        <CheckCircle2 className="w-8 h-8 text-emerald" />
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="flex flex-col items-center justify-center py-12 text-center gap-4"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center">
+                        <CheckCircle2 className="w-8 h-8 text-emerald-500" />
                       </div>
-                      <h3 className="text-xl font-bold text-primary">Message Sent!</h3>
-                      <p className="text-muted-blue text-sm max-w-xs">Thanks for reaching out. We'll be in touch within 24 hours.</p>
-                      <button onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", countryCode: "+91", service: "", message: "" }); }}
-                        className="mt-2 text-sm text-primary font-semibold underline underline-offset-4 hover:text-dark-teal transition-colors">
+                      <h3 className="text-xl font-bold text-[#09285A]">Message Sent!</h3>
+                      <p className="text-gray-400 text-sm max-w-xs">Thanks for reaching out. We'll be in touch within 24 hours.</p>
+                      <button
+                        onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", countryCode: "+91", service: "", message: "" }); }}
+                        className="mt-2 text-sm text-[#09285A] font-semibold underline underline-offset-4"
+                      >
                         Send another message
                       </button>
                     </motion.div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Full Name *</label>
+                          <label className="block text-xs font-semibold text-[#09285A] uppercase tracking-wider mb-1.5">Full Name *</label>
                           <input required type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            className="w-full px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm"
-                            style={{ border: "1.5px solid #4a5568" }}
+                            className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-200 text-sm border-2 border-gray-400"
                             placeholder="Your full name" />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Email Address *</label>
+                          <label className="block text-xs font-semibold text-[#09285A] uppercase tracking-wider mb-1.5">Email Address *</label>
                           <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            className="w-full px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm"
-                            style={{ border: "1.5px solid #4a5568" }}
+                            className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-200 text-sm border-2 border-gray-400"
                             placeholder="you@company.com" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Phone Number</label>
+                        <label className="block text-xs font-semibold text-[#09285A] uppercase tracking-wider mb-1.5">Phone Number</label>
                         <div className="flex gap-2">
                           <select value={form.countryCode} onChange={(e) => setForm({ ...form, countryCode: e.target.value })}
-                            className="px-2 sm:px-3 py-3 rounded-xl bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-aqua/40 flex-shrink-0"
-                            style={{ border: "1.5px solid #4a5568", minWidth: "80px", maxWidth: "100px" }}>
-                            {countryCodes.map((c) => (
-                              <option key={c.code} value={c.code}>{c.flag} {c.code}</option>
-                            ))}
+                            className="px-2 py-3 rounded-xl bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200 border-2 border-gray-400"
+                            style={{ minWidth: "88px", maxWidth: "100px" }}>
+                            {countryCodes.map((c) => <option key={c.code} value={c.code}>{c.flag} {c.code}</option>)}
                           </select>
                           <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                            className="flex-1 min-w-0 px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm"
-                            style={{ border: "1.5px solid #4a5568" }}
+                            className="flex-1 min-w-0 px-4 py-3 rounded-xl bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-200 text-sm border-2 border-gray-400"
                             placeholder="Phone number" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">I'm interested in</label>
+                        <label className="block text-xs font-semibold text-[#09285A] uppercase tracking-wider mb-1.5">I'm interested in</label>
                         <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all"
-                          style={{ border: "1.5px solid #4a5568" }}>
+                          className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200 border-2 border-gray-400">
                           <option value="">Select a service...</option>
                           {services.map((s) => <option key={s} value={s}>{s}</option>)}
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1.5">Message *</label>
+                        <label className="block text-xs font-semibold text-[#09285A] uppercase tracking-wider mb-1.5">Message *</label>
                         <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-white text-primary placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-aqua/40 transition-all text-sm resize-none"
-                          style={{ border: "1.5px solid #4a5568" }}
+                          className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-200 text-sm resize-none border-2 border-gray-400"
                           placeholder="Tell us about your business goals or how we can help..." />
                       </div>
 
                       <button type="submit"
                         className="w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-white"
                         style={{ background: "linear-gradient(135deg, hsl(172 72% 63%), hsl(184 84% 21%))", boxShadow: "0 8px 24px -4px rgba(94,228,207,0.35)" }}>
-                        Send Message
-                        <Send className="w-4 h-4" />
+                        Send Message <Send className="w-4 h-4" />
                       </button>
-                      <p className="text-center text-xs text-muted-blue">We respect your privacy. No spam, ever.</p>
+                      <p className="text-center text-xs text-gray-400">We respect your privacy. No spam, ever.</p>
                     </form>
                   )}
                 </div>
@@ -335,12 +485,19 @@ const ContactSection = () => {
           </motion.div>
 
           {/* Sidebar */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-2 space-y-6 w-full min-w-0">
-
-            {/* LinkedIn hero card */}
-            <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer"
-              className="group block bg-[#0A66C2] rounded-3xl p-6 text-white shadow-xl shadow-[#0A66C2]/30 hover:shadow-[#0A66C2]/50 hover:-translate-y-1 transition-all duration-300">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2 space-y-6 w-full min-w-0"
+          >
+            <a
+              href="https://linkedin.com/company/scalesight"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-[#0A66C2] rounded-3xl p-6 text-white shadow-xl shadow-[#0A66C2]/30 hover:shadow-[#0A66C2]/50 hover:-translate-y-1 transition-all duration-300"
+            >
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
                   <Linkedin className="w-6 h-6 text-white" />
@@ -356,23 +513,11 @@ const ContactSection = () => {
               </div>
             </a>
 
-            {/* Other socials grid */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-blue mb-3">Also find us on</p>
+            <div ref={socialsRef}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Also find us on</p>
               <div className="grid grid-cols-1 gap-3">
-                {socials.slice(1).map((s, i) => (
-                  <motion.a key={s.label} custom={i} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-                    href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="group flex items-center gap-4 bg-white border border-primary/8 rounded-2xl px-4 py-3.5 hover:border-primary/20 hover:shadow-md transition-all">
-                    <div className={`w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
-                      {s.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-primary font-bold text-sm">{s.label}</p>
-                      <p className="text-muted-blue text-xs truncate">{s.sub}</p>
-                    </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-muted-blue/40 group-hover:text-primary transition-colors flex-shrink-0" />
-                  </motion.a>
+                {socials.map((s, i) => (
+                  <SocialCard key={s.label} s={s} index={i} blinkIndex={blinkIndex} />
                 ))}
               </div>
             </div>
