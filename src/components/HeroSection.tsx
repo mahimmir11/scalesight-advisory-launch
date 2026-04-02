@@ -346,10 +346,10 @@ const HeroSection = () => {
                 </motion.span>
               </motion.a>
               <motion.div {...popIn(0.70)}>
-                <Link to="/uae-services" className="ss-btn-ghost">UAE Services</Link>
+                <Link to="/services/uae" className="ss-btn-ghost">UAE Services</Link>
               </motion.div>
               <motion.div {...popIn(0.82)}>
-                <Link to="/india-services" className="ss-btn-ghost">India Services</Link>
+                <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
               </motion.div>
             </div>
 

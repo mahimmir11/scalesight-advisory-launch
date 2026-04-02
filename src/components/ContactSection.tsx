@@ -346,7 +346,7 @@ const SocialCard = ({
 };
 
 // ── Main component ────────────────────────────────────────────────────────────
-const ContactSection = () => {
+const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) => {
   const [form, setForm] = useState({
     name: "", email: "", phone: "", countryCode: "+91", service: "", message: "",
   });
@@ -376,12 +376,37 @@ const ContactSection = () => {
     <section className="bg-white overflow-x-hidden pb-0">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-10 sm:space-y-16">
 
+        {/* ── Contact Us Heading ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <h2 
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            <span className="text-[#09285A]">Contact </span>
+            <span className="text-[#00C2A8]">Us</span>
+          </h2>
+          <p className="text-gray-500 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            Ready to elevate your business? Get in touch with our team of experts and let's discuss how we can help you achieve your financial goals.
+          </p>
+        </motion.div>
+
         {/* ── Info cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-1 py-3">
-          <PhoneCard i={0} />
-          <EmailCard i={1} />
-          <LocationCard i={2} />
-        </div>
+        {showInfoCards && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-1 py-3">
+            <PhoneCard i={0} />
+            <EmailCard i={1} />
+            <LocationCard i={2} />
+          </div>
+        )}
 
         {/* ── Main grid ── */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">

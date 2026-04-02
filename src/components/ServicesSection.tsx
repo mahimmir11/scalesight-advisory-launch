@@ -72,28 +72,28 @@ const ServicesSection = () => {
               className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
             >
               {(["India", "UAE"] as const).map((r) => (
-                <motion.div
+                <motion.a
                   key={r}
+                  href={r === "India" ? "/services/india" : "/services/uae"}
                   whileHover={{ y: -4, scale: 1.02 }}
                   transition={{ duration: 0.2 }}
-                  className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-emerald/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
-                  onClick={() => setSelected(r)}
+                  className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-[#00C2A8]/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
                 >
                   {/* Background Image */}
                   <div 
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ 
-                      backgroundImage: `url(/${r === "India" ? "india" : "dubai"}.png)`,
+                      backgroundImage: `url('/${r === "India" ? "india1.png" : "uae.jpg"}')`,
                     }}
                   />
                   
                   {/* Dark overlay for better text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/50 group-hover:from-black/60 group-hover:via-black/50 group-hover:to-black/40 transition-all" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/15 group-hover:from-black/25 group-hover:via-black/15 group-hover:to-black/10 transition-all" />
                   
                   {/* Content with relative positioning to appear above background */}
                   <div className="relative z-10 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-3xl md:text-4xl font-bold text-white group-hover:text-emerald-400 transition-colors drop-shadow-lg mb-6">
+                      <h3 className="text-3xl md:text-4xl font-bold text-white group-hover:text-[#00C2A8] transition-colors drop-shadow-lg mb-6">
                         {regionInfo[r].label}
                       </h3>
                       <p className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md">{regionInfo[r].tagline}</p>
@@ -110,12 +110,12 @@ const ServicesSection = () => {
                           ease: "easeInOut",
                         }}
                         whileHover={{ scale: 1.1 }}
-                        className="inline-flex items-center gap-2 bg-white text-primary px-7 py-3.5 rounded-full text-base font-bold group-hover:bg-emerald group-hover:text-white transition-colors shadow-lg hover:shadow-xl cursor-pointer">
+                        className="inline-flex items-center gap-2 bg-white text-primary px-7 py-3.5 rounded-full text-base font-bold group-hover:bg-[#00C2A8] group-hover:text-white transition-colors shadow-lg hover:shadow-xl cursor-pointer">
                         Show More Details <ArrowRight className="w-5 h-5" />
                       </motion.span>
                     </div>
                   </div>
-                </motion.div>
+                </motion.a>
               ))}
             </motion.div>
           )}
