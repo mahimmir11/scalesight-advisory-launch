@@ -162,7 +162,7 @@ const ClientsSection = () => {
           WHO WE WORK WITH
       ══════════════════════════════════════ */}
       <section className="relative z-10 py-28 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.span
               initial={{ opacity: 0, x: -40 }}
@@ -178,7 +178,7 @@ const ClientsSection = () => {
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true }}
               transition={{ duration: 0.85, delay: 0.1, ease }}
-              className="text-5xl md:text-6xl font-bold text-[#09285A] leading-tight"
+              className="text-5xl md:text-6xl font-bold text-[#09285A] leading-tight mb-5"
               style={{ letterSpacing: "-0.025em" }}
             >
               Who We Work With
@@ -188,52 +188,100 @@ const ClientsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.25, ease }}
-              className="mt-5 text-gray-500 text-lg max-w-md mx-auto"
+              className="text-gray-500 text-lg max-w-2xl mx-auto"
             >
               We serve ambitious teams that demand clarity and results.
             </motion.p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {[
-              { Icon: Rocket, label: "Startups", desc: "Early-stage companies needing financial structure and clarity to grow fast." },
-              { Icon: Building2, label: "SMEs", desc: "Established businesses scaling their operations with confidence." },
-              { Icon: TrendingUp, label: "Growing Businesses", desc: "Companies expanding across borders and entering new markets." },
+              { 
+                Icon: Rocket, 
+                label: "Startups", 
+                desc: "Early-stage companies needing financial structure and clarity to grow fast.",
+                gradient: "from-blue-500 to-cyan-500"
+              },
+              { 
+                Icon: Building2, 
+                label: "SMEs", 
+                desc: "Established businesses scaling their operations with confidence.",
+                gradient: "from-purple-500 to-pink-500"
+              },
+              { 
+                Icon: TrendingUp, 
+                label: "Growing Businesses", 
+                desc: "Companies expanding across borders and entering new markets.",
+                gradient: "from-emerald-500 to-teal-500"
+              },
             ].map((s, i) => (
               <motion.div
                 key={s.label}
-                initial={{ opacity: 0, y: 60, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.18, duration: 0.9, ease }}
-                whileHover={{ y: -10, boxShadow: "0 28px 64px -10px rgba(0,194,168,0.2)" }}
-                className="group relative p-10 rounded-3xl border border-gray-100 bg-white hover:border-[#00C2A8]/40 transition-all duration-500 overflow-hidden"
+                initial={{ opacity: 0, x: 300 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  delay: i * 0.2, 
+                  duration: 0.8, 
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                className="group relative"
               >
-                <div
-                  className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,194,168,0.07),transparent 70%)" }}
-                />
-                <div className="relative z-10 mb-7">
-                  <motion.div
-                    whileHover={{ rotate: [0, -6, 6, -4, 0] }}
-                    transition={{ duration: 0.5 }}
-                    className="w-20 h-20 rounded-2xl bg-[#09285A] flex items-center justify-center shadow-lg group-hover:bg-[#0B3060] transition-colors duration-300"
-                  >
-                    <s.Icon className="w-10 h-10 text-[#5EE4CF]" strokeWidth={1.8} />
-                  </motion.div>
+                {/* Card */}
+                <div className="relative h-full p-8 rounded-3xl bg-white border border-gray-100 hover:border-[#00C2A8]/30 transition-all duration-500 overflow-hidden">
+                  
+                  {/* Gradient background on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#00C2A8]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Animated shapes in top-right corner */}
+                  <div className="absolute top-4 right-4">
+                    {/* Moving triangle */}
+                    <motion.div
+                      animate={{
+                        x: [-8, 8, -8],
+                        rotate: [0, 180, 360],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      style={{
+                        width: 0,
+                        height: 0,
+                        borderLeft: "6px solid transparent",
+                        borderRight: "6px solid transparent",
+                        borderBottom: "10px solid #00C2A8",
+                        opacity: 0.5,
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Icon with gradient background */}
+                  <div className="relative mb-6">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${s.gradient} p-[2px] shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
+                      <div className="w-full h-full rounded-2xl bg-white flex items-center justify-center">
+                        <s.Icon className="w-8 h-8 text-[#09285A] group-hover:scale-110 transition-transform duration-300" strokeWidth={2} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative">
+                    <h3 className="text-2xl font-bold text-[#09285A] mb-3 transition-colors duration-300">
+                      {s.label}
+                    </h3>
+                    <p className="text-gray-600 text-base leading-relaxed">
+                      {s.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00C2A8] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-bold text-[#09285A] mb-3 group-hover:text-[#00C2A8] transition-colors duration-300">
-                    {s.label}
-                  </h3>
-                  <p className="text-gray-500 text-base leading-relaxed">{s.desc}</p>
-                </div>
-                <motion.div
-                  className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#00C2A8] to-[#5EE4CF] rounded-full"
-                  initial={{ width: "0%" }}
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.4 }}
-                />
+
+                {/* Floating shadow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-[#00C2A8]/10 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
               </motion.div>
             ))}
           </div>

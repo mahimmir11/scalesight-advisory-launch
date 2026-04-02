@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import zaidImg from "@/assets/zaid.png";
-import sameeImg from "@/assets/samee.png";
 
 const founders = [
   {
@@ -8,14 +6,14 @@ const founders = [
     role: "Co-Founder · Virtual CFO & Finance Advisory",
     exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"],
     desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.",
-    img: zaidImg,
+    img: "/zaid.png",
   },
   {
     name: "Samee Shaikh",
     role: "Business Development · Compliance & UAE Advisory",
     exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"],
     desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.",
-    img: sameeImg,
+    img: "/samee.png",
   },
 ];
 

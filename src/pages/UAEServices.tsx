@@ -45,7 +45,7 @@ const UAEServices = () => {
               transition={{ duration: 0.6 }}
               className="inline-flex items-center gap-2 bg-primary/8 text-primary px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-6"
             >
-              🇦🇪 Dubai, UAE
+              🇦🇪 UAE
             </motion.div>
 
             <motion.h1
@@ -130,20 +130,14 @@ const UAEServices = () => {
                   transition={{ duration: 1, ease: "easeInOut" }}
                 />
               </AnimatePresence>
-
-
             </div>
-
-            {/* Decorative blob behind card */}
-            <div className="absolute -z-10 -bottom-6 -right-6 w-64 h-64 bg-secondary/20 rounded-full blur-3xl" />
-            <div className="absolute -z-10 -top-6 -left-6 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
           </motion.div>
         </div>
       </section>
 
-      {/* Services grid */}
+      {/* Services list */}
       <main className="flex-1" id="uae-services-list">
-        <section className="py-24 px-6 bg-card">
+        <section className="py-24 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <motion.h2
@@ -159,21 +153,25 @@ const UAEServices = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-8 max-w-4xl mx-auto">
               {services.map((s, i) => (
                 <motion.div
                   key={s.title}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.07 }}
-                  className="p-7 rounded-2xl border border-primary/5 bg-off-white hover:border-secondary/30 transition-colors group"
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="flex items-start gap-6 p-8 rounded-2xl border border-primary/10 bg-white hover:border-secondary/30 hover:shadow-lg transition-all group"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-secondary/10 flex items-center justify-center mb-5 group-hover:bg-secondary/20 transition-colors">
-                    <CheckCircle2 className="w-5 h-5 text-secondary" />
+                  <div className="flex-shrink-0">
+                    <div className="w-14 h-14 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                      <CheckCircle2 className="w-7 h-7 text-secondary" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold text-primary mb-2">{s.title}</h3>
-                  <p className="text-base text-muted-blue leading-relaxed">{s.desc}</p>
+                  <div className="flex-1 pt-1">
+                    <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors">{s.title}</h3>
+                    <p className="text-base text-muted-blue leading-relaxed">{s.desc}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>

@@ -30,7 +30,7 @@ const regionInfo = {
   },
   UAE: {
     flag: "🇦🇪",
-    label: "Dubai, UAE",
+    label: "UAE",
     tagline: "Expert advisory for the UAE regulatory landscape",
     summary: "Accounting, Compliance, IFRS Reporting, Internal Audit & Process Reviews.",
     count: 5,
@@ -148,7 +148,7 @@ const ServicesSection = () => {
                           : "text-primary/50 hover:text-primary"
                       }`}
                     >
-                      {r === "India" ? "🇮🇳" : "🇦🇪"} {r === "UAE" ? "Dubai" : r}
+                      {r === "India" ? "🇮🇳" : "🇦🇪"} {r}
                     </button>
                   ))}
                 </div>
