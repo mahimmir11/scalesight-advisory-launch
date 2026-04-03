@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const data: Record<string, { title: string; desc: string }[]> = {
   India: [
@@ -72,13 +73,16 @@ const ServicesSection = () => {
               className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
             >
               {(["India", "UAE"] as const).map((r) => (
-                <motion.a
+                <Link
                   key={r}
-                  href={r === "India" ? "/services/india" : "/services/uae"}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                  className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-[#00C2A8]/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
+                  to={r === "India" ? "/services/india" : "/services/uae"}
+                  className="block"
                 >
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-[#00C2A8]/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
+                  >
                   {/* Background Image */}
                   <div 
                     className="absolute inset-0 bg-cover bg-center"
@@ -115,7 +119,8 @@ const ServicesSection = () => {
                       </motion.span>
                     </div>
                   </div>
-                </motion.a>
+                </motion.div>
+                </Link>
               ))}
             </motion.div>
           )}

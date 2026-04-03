@@ -128,14 +128,14 @@ const founders = [
     role: "Co-Founder · Virtual CFO & Finance Advisory",
     exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"],
     desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.",
-    img: "/src/assets/zaid.png",
+    img: "/zaid.png",
   },
   {
     name: "Samee Shaikh",
     role: "Business Development · Compliance & UAE Advisory",
     exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"],
     desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.",
-    img: "/src/assets/samee.png",
+    img: "/samee.png",
   },
 ];
 
@@ -259,8 +259,8 @@ const ClientsSection = () => {
                   
                   {/* Icon with gradient background */}
                   <div className="relative mb-6">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${s.gradient} p-[2px] shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
-                      <div className="w-full h-full rounded-2xl bg-white flex items-center justify-center">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${s.gradient} p-[3px] shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
+                      <div className="w-full h-full rounded-[13px] bg-white flex items-center justify-center">
                         <s.Icon className="w-8 h-8 text-[#09285A] group-hover:scale-110 transition-transform duration-300" strokeWidth={2} />
                       </div>
                     </div>
