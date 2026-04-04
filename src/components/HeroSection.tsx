@@ -1,25 +1,36 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 36 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] as const },
+// Slide in from left with fade
+const slideInLeft = (delay = 0) => ({
+  initial: { opacity: 0, x: -120 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
 
-const popIn = (delay = 0) => ({
-  initial: { opacity: 0, scale: 0.80, y: 16 },
-  animate: { opacity: 1, scale: 1, y: 0 },
-  transition: { duration: 0.58, delay, ease: [0.34, 1.56, 0.64, 1] as const },
+// Slide in from right with fade
+const slideInRight = (delay = 0) => ({
+  initial: { opacity: 0, x: 120 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
 
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasVisited, setHasVisited] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.65;
+    
+    // Check if user has visited before
+    const visited = sessionStorage.getItem('heroAnimationPlayed');
+    if (visited) {
+      setHasVisited(true);
+    } else {
+      sessionStorage.setItem('heroAnimationPlayed', 'true');
+    }
   }, []);
 
   return (
@@ -203,32 +214,56 @@ const HeroSection = () => {
         }} />
 
         <div className="ss-layout">
-          {/* ── LEFT ── */}
-          <div className="ss-left">
-            <motion.div {...fadeUp(0.05)}>
+          {/* ── LEFT: Slide in from left ── */}
+          <motion.div 
+            className="ss-left"
+            initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={hasVisited ? { duration: 0 } : { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <motion.div 
+              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               <div className="ss-badge">
                 <span className="ss-dot" />
                 Trusted Advisory · UAE &amp; India
               </div>
             </motion.div>
 
-            <h1 className="ss-h1">
-              <motion.span {...fadeUp(0.16)} style={{ display: "block" }}>
+            <motion.h1 
+              className="ss-h1"
+              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <span style={{ display: "block" }}>
                 Strategic Expertise
-              </motion.span>
-              <motion.span {...fadeUp(0.30)} style={{ display: "block" }}>
+              </span>
+              <span style={{ display: "block" }}>
                 From Dedicated{" "}
                 <span className="ss-h1-grad">Advisors</span>
-              </motion.span>
-            </h1>
+              </span>
+            </motion.h1>
 
-            <motion.p className="ss-desc" {...fadeUp(0.44)}>
+            <motion.p 
+              className="ss-desc"
+              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               At ScaleSight, we deliver tailored, insight-driven advisory to help
               businesses see clearly, stay compliant, and grow confidently.
             </motion.p>
 
-            <div className="ss-btns">
-              <motion.a href="#contact" className="ss-btn-primary" {...popIn(0.58)}>
+            <motion.div 
+              className="ss-btns"
+              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <a href="#contact" className="ss-btn-primary">
                 Get Started
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
@@ -236,23 +271,18 @@ const HeroSection = () => {
                 >
                   <ArrowRight size={16} />
                 </motion.span>
-              </motion.a>
-              <motion.div {...popIn(0.70)}>
-                <Link to="/services/uae" className="ss-btn-ghost">UAE Services</Link>
-              </motion.div>
-              <motion.div {...popIn(0.82)}>
-                <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
-              </motion.div>
-            </div>
-            {/* Stat cards removed as requested */}
-          </div>
+              </a>
+              <Link to="/services/uae" className="ss-btn-ghost">UAE Services</Link>
+              <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
+            </motion.div>
+          </motion.div>
 
-          {/* ── RIGHT: masked video ── */}
+          {/* ── RIGHT: Slide in from right ── */}
           <motion.div
             className="ss-right"
-            initial={{ opacity: 0, x: 50 }}
+            initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <div className="ss-video-wrap">
               <video
