@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
-    <div className="fixed bottom-6 z-[100] flex flex-col items-end gap-3" style={{ right: "1.5rem", willChange: "transform", transform: "translateZ(0)" }}>
+    <div ref={containerRef} className="fixed bottom-6 z-[100] flex flex-col items-end gap-3" style={{ right: "1.5rem", willChange: "transform", transform: "translateZ(0)" }}>
       <AnimatePresence>
         {isOpen && (
           <motion.div

@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 
 const heroImages = [
   "/India Services/Image 1.jpg",
-  "/India Services/Image 2.png",
-  "/India Services/Image 3.png",
-  "/India Services/Image 4.png",
+  "/India Services/Image 2.jpg",
+  "/India Services/Image 3.jpg",
+  "/India Services/Image 4.jpg",
 ];
 
 const services = [
