@@ -24,7 +24,6 @@ const AnimatedRoutes = () => {
   const location = useLocation();
   return (
     <>
-      <ScrollToTop />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
@@ -58,6 +57,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <AnimatedRoutes />
           <FloatingContact />
         </BrowserRouter>

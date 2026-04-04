@@ -7,17 +7,19 @@ import ContactSection from "@/components/ContactSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 
-const Index = () => (
-  <div className="scroll-smooth">
-    <Navbar />
-    <HeroSection />
-    <ClientsSection />
-    <ServicesSection />
-    <TestimonialsSection />
-    <ContactSection showInfoCards={false} />
-    <FAQSection />
-    <Footer />
-  </div>
-);
+const Index = () => {
+  return (
+    <div className="scroll-smooth">
+      <Navbar />
+      <HeroSection />
+      <ClientsSection />
+      <ServicesSection />
+      <TestimonialsSection />
+      <ContactSection showInfoCards={false} />
+      <FAQSection />
+      <Footer />
+    </div>
+  );
+};
 
 export default Index;
