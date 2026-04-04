@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -21,6 +23,11 @@ const FloatingContact = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  const handleGetInTouch = () => {
+    setIsOpen(false);
+    navigate('/contact');
+  };
 
   return (
     <div ref={containerRef} className="fixed bottom-6 z-[100] flex flex-col items-end gap-3" style={{ right: "1.5rem", willChange: "transform", transform: "translateZ(0)" }}>
@@ -50,12 +57,12 @@ const FloatingContact = () => {
               hello@scalesight.com
             </a>
 
-            <a href="#contact" onClick={() => setIsOpen(false)} className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors text-primary font-medium text-sm">
+            <button onClick={handleGetInTouch} className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors text-primary font-medium text-sm">
               <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#5EE4CF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
               </svg>
               Get in Touch
-            </a>
+            </button>
 
             <div className="flex items-center gap-4 mt-3 pt-3 border-t border-gray-100 w-full justify-center">
               <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">

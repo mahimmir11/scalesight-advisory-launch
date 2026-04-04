@@ -19,7 +19,7 @@ const slideInRight = (delay = 0) => ({
 
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hasVisited, setHasVisited] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.65;
@@ -27,8 +27,11 @@ const HeroSection = () => {
     // Check if user has visited before
     const visited = sessionStorage.getItem('heroAnimationPlayed');
     if (visited) {
-      setHasVisited(true);
+      // Already visited - skip animation
+      setShouldAnimate(false);
     } else {
+      // First visit - play animation and mark as visited
+      setShouldAnimate(true);
       sessionStorage.setItem('heroAnimationPlayed', 'true');
     }
   }, []);
@@ -217,14 +220,14 @@ const HeroSection = () => {
           {/* ── LEFT: Slide in from left ── */}
           <motion.div 
             className="ss-left"
-            initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+            initial={shouldAnimate ? { opacity: 0, x: -120 } : { opacity: 1, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={hasVisited ? { duration: 0 } : { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={shouldAnimate ? { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
           >
             <motion.div 
-              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              initial={shouldAnimate ? { opacity: 0, x: -120 } : { opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={shouldAnimate ? { duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
             >
               <div className="ss-badge">
                 <span className="ss-dot" />
@@ -234,9 +237,9 @@ const HeroSection = () => {
 
             <motion.h1 
               className="ss-h1"
-              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              initial={shouldAnimate ? { opacity: 0, x: -120 } : { opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={shouldAnimate ? { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
             >
               <span style={{ display: "block" }}>
                 Strategic Expertise
@@ -249,9 +252,9 @@ const HeroSection = () => {
 
             <motion.p 
               className="ss-desc"
-              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              initial={shouldAnimate ? { opacity: 0, x: -120 } : { opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={shouldAnimate ? { duration: 0.9, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
             >
               At ScaleSight, we deliver tailored, insight-driven advisory to help
               businesses see clearly, stay compliant, and grow confidently.
@@ -259,11 +262,11 @@ const HeroSection = () => {
 
             <motion.div 
               className="ss-btns"
-              initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
+              initial={shouldAnimate ? { opacity: 0, x: -120 } : { opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={shouldAnimate ? { duration: 0.9, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
             >
-              <a href="#contact" className="ss-btn-primary">
+              <Link to="/contact" className="ss-btn-primary">
                 Get Started
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
@@ -271,7 +274,7 @@ const HeroSection = () => {
                 >
                   <ArrowRight size={16} />
                 </motion.span>
-              </a>
+              </Link>
               <Link to="/services/uae" className="ss-btn-ghost">UAE Services</Link>
               <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
             </motion.div>
@@ -280,9 +283,9 @@ const HeroSection = () => {
           {/* ── RIGHT: Slide in from right ── */}
           <motion.div
             className="ss-right"
-            initial={hasVisited ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
+            initial={shouldAnimate ? { opacity: 0, x: 120 } : { opacity: 1, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={hasVisited ? { duration: 0 } : { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={shouldAnimate ? { duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] } : { duration: 0 }}
           >
             <div className="ss-video-wrap">
               <video
