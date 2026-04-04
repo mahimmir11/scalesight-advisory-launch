@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { Building2, Rocket, TrendingUp, Users, Target, Eye, BarChart3 } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import ScrollParticles from "./ScrollParticles";
 
 /* ── Count-up hook ── */
 function useCountUp(target: number, inView: boolean, duration = 900) {
@@ -99,6 +100,7 @@ const ClientsSection = () => {
   const aboutInView = useInView(aboutRef, { once: false, margin: "-100px" });
   const foundersRef = useRef<HTMLDivElement>(null);
   const foundersInView = useInView(foundersRef, { once: true, margin: "-80px" });
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -131,7 +133,8 @@ const ClientsSection = () => {
         .ss-all-white { background-color: #ffffff !important; }
       `}</style>
 
-      <div className="relative overflow-hidden ss-all-white">
+      <div className="relative overflow-hidden ss-all-white" ref={sectionRef}>
+        <ScrollParticles containerRef={sectionRef} />
         <ScrollLine left="8%" delay={0} />
         <ScrollLine left="25%" delay={1.4} />
         <ScrollLine left="50%" delay={0.7} />

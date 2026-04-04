@@ -25,7 +25,6 @@ const HeroSection = () => {
   return (
     <>
       <style>{`
-        /* ══ ROOT ══ */
         .ss-hero {
           position: relative;
           overflow: hidden;
@@ -42,8 +41,6 @@ const HeroSection = () => {
             #5cb4e4 100%
           );
         }
-
-        /* smoky white top-half haze */
         .ss-smoke {
           position: absolute;
           inset: 0;
@@ -59,8 +56,31 @@ const HeroSection = () => {
             transparent 68%
           );
         }
-
-        /* ══ TWO-COLUMN LAYOUT ══ */
+        .ss-bottom-mist {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 52%;
+          pointer-events: none;
+          z-index: 5;
+          background: linear-gradient(
+            to top,
+            rgba(255,255,255,1.0) 0%,
+            rgba(240,248,255,0.97) 8%,
+            rgba(224,242,254,0.88) 18%,
+            rgba(214,237,253,0.70) 30%,
+            rgba(204,232,252,0.45) 44%,
+            rgba(194,230,249,0.20) 58%,
+            transparent 76%
+          );
+        }
+        .ss-right-mist {
+          position: absolute;
+          top: 0; right: 0; bottom: 0;
+          width: 10%;
+          pointer-events: none;
+          z-index: 4;
+          background: linear-gradient(to left, rgba(240,248,255,0.80) 0%, rgba(224,242,254,0.40) 40%, transparent 100%);
+        }
         .ss-layout {
           position: relative;
           z-index: 10;
@@ -73,8 +93,6 @@ const HeroSection = () => {
           justify-content: space-between;
           padding: clamp(32px, 5vw, 72px) clamp(28px, 5.5vw, 80px);
         }
-
-        /* LEFT col */
         .ss-left {
           flex: 0 0 46%;
           max-width: 46%;
@@ -82,8 +100,6 @@ const HeroSection = () => {
           flex-direction: column;
           align-items: flex-start;
         }
-
-        /* RIGHT col */
         .ss-right {
           flex: 0 0 54%;
           max-width: 54%;
@@ -92,205 +108,85 @@ const HeroSection = () => {
           justify-content: center;
           position: relative;
         }
-
-        /* ══ VIDEO WRAPPER — the mask lives here ══ */
         .ss-video-wrap {
           position: relative;
           width: clamp(340px, 52vw, 740px);
-          /*
-            The wrapper is intentionally TALLER than you'd expect so the
-            radial mask can fade the very top/bottom edges of the video
-            frame fully to transparent.
-          */
           aspect-ratio: 16/11;
-          margin-top: -50px;   /* push illustration into upper half */
-
-          /*
-            MASK — radial gradient:
-            • Opaque in the center ellipse (the people / table area)
-            • Fully transparent at all four edges → removes frame + white bg
-            The gradient is on the alpha channel so it clips the video itself.
-          */
+          margin-top: -50px;
           -webkit-mask-image: radial-gradient(
             ellipse 72% 68% at 50% 52%,
-            black 28%,
-            rgba(0,0,0,0.95) 38%,
-            rgba(0,0,0,0.80) 50%,
-            rgba(0,0,0,0.40) 62%,
-            rgba(0,0,0,0.10) 74%,
-            transparent 86%
+            black 28%, rgba(0,0,0,0.95) 38%, rgba(0,0,0,0.80) 50%,
+            rgba(0,0,0,0.40) 62%, rgba(0,0,0,0.10) 74%, transparent 86%
           );
           mask-image: radial-gradient(
             ellipse 72% 68% at 50% 52%,
-            black 28%,
-            rgba(0,0,0,0.95) 38%,
-            rgba(0,0,0,0.80) 50%,
-            rgba(0,0,0,0.40) 62%,
-            rgba(0,0,0,0.10) 74%,
-            transparent 86%
+            black 28%, rgba(0,0,0,0.95) 38%, rgba(0,0,0,0.80) 50%,
+            rgba(0,0,0,0.40) 62%, rgba(0,0,0,0.10) 74%, transparent 86%
           );
         }
-
         .ss-video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          /*
-            mix-blend-mode: multiply removes the remaining white
-            areas inside the video (background sky, table surface etc.)
-            by blending them with the page colour behind.
-          */
+          width: 100%; height: 100%;
+          object-fit: cover; display: block;
           mix-blend-mode: multiply;
-          border-radius: 0;   /* no border-radius — mask handles edges */
-          border: none;
-          outline: none;
-          background: transparent;
+          border-radius: 0; border: none; outline: none; background: transparent;
         }
-
-        /* ══ TEXT ══ */
         .ss-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 5px 14px;
-          border-radius: 100px;
-          background: rgba(45,212,191,0.12);
-          border: 1px solid rgba(45,212,191,0.38);
-          color: #0d9488;
-          font-size: 11.5px;
-          font-family: 'Space Grotesk', sans-serif;
-          font-weight: 600;
-          letter-spacing: 0.04em;
-          margin-bottom: 20px;
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 5px 14px; border-radius: 100px;
+          background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.38);
+          color: #0d9488; font-size: 11.5px; font-family: 'Space Grotesk', sans-serif;
+          font-weight: 600; letter-spacing: 0.04em; margin-bottom: 20px;
         }
         .ss-dot {
           width: 6px; height: 6px; border-radius: 50%;
-          background: #2dd4bf;
-          box-shadow: 0 0 6px rgba(45,212,191,0.75);
-          flex-shrink: 0;
+          background: #2dd4bf; box-shadow: 0 0 6px rgba(45,212,191,0.75); flex-shrink: 0;
         }
         .ss-h1 {
-          margin: 0 0 16px 0;
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: clamp(1.75rem, 3.4vw, 3.1rem);
-          font-weight: 800;
-          line-height: 1.1;
-          letter-spacing: -0.022em;
-          color: #0b1d3a;
+          margin: 0 0 16px 0; font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(1.75rem, 3.4vw, 3.1rem); font-weight: 800;
+          line-height: 1.1; letter-spacing: -0.022em; color: #0b1d3a;
         }
         .ss-h1-grad {
           background: linear-gradient(118deg, #0b1d3a 0%, #1565a8 44%, #2dd4bf 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .ss-desc {
           font-family: 'Space Grotesk', sans-serif;
           font-size: clamp(0.88rem, 1.15vw, 1rem);
-          color: #2c4f6b;
-          line-height: 1.7;
-          max-width: 460px;
-          margin: 0 0 30px 0;
+          color: #2c4f6b; line-height: 1.7; max-width: 460px; margin: 0 0 30px 0;
         }
-        .ss-btns {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          align-items: center;
-          margin-bottom: 38px;
-        }
+        .ss-btns { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
         .ss-btn-primary {
-          display: inline-flex;
-          align-items: center;
-          gap: 9px;
-          padding: 12px 28px;
-          border-radius: 12px;
+          display: inline-flex; align-items: center; gap: 9px;
+          padding: 12px 28px; border-radius: 12px;
           background: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
-          color: #fff;
-          font-family: 'Space Grotesk', sans-serif;
-          font-weight: 700;
-          font-size: 0.9rem;
-          letter-spacing: 0.01em;
+          color: #fff; font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+          font-size: 0.9rem; letter-spacing: 0.01em;
           box-shadow: 0 4px 20px rgba(45,212,191,0.38);
-          text-decoration: none;
-          border: none;
-          cursor: pointer;
+          text-decoration: none; border: none; cursor: pointer;
           transition: box-shadow 0.2s, transform 0.2s;
         }
-        .ss-btn-primary:hover {
-          box-shadow: 0 8px 30px rgba(45,212,191,0.54);
-          transform: scale(1.03);
-        }
+        .ss-btn-primary:hover { box-shadow: 0 8px 30px rgba(45,212,191,0.54); transform: scale(1.03); }
         .ss-btn-ghost {
-          display: inline-flex;
-          align-items: center;
-          padding: 11px 24px;
-          border-radius: 12px;
-          background: rgba(255,255,255,0.68);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          color: #0b1d3a;
-          font-family: 'Space Grotesk', sans-serif;
-          font-weight: 700;
-          font-size: 0.9rem;
-          border: 1.5px solid rgba(11,29,58,0.22);
-          text-decoration: none;
-          transition: all 0.2s;
-          box-shadow: 0 2px 10px rgba(11,29,58,0.06);
+          display: inline-flex; align-items: center; padding: 11px 24px; border-radius: 12px;
+          background: rgba(255,255,255,0.68); backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px); color: #0b1d3a;
+          font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem;
+          border: 1.5px solid rgba(11,29,58,0.22); text-decoration: none;
+          transition: all 0.2s; box-shadow: 0 2px 10px rgba(11,29,58,0.06);
         }
-        .ss-btn-ghost:hover {
-          background: rgba(255,255,255,0.9);
-          border-color: rgba(11,29,58,0.4);
-        }
-        .ss-stats {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 28px;
-          align-items: center;
-        }
-        .ss-stat-num {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: clamp(1.2rem, 1.7vw, 1.45rem);
-          font-weight: 800;
-          color: #0b1d3a;
-          line-height: 1;
-        }
-        .ss-stat-label {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: 0.72rem;
-          color: #3a6080;
-          font-weight: 500;
-          line-height: 1.3;
-          max-width: 62px;
-        }
+        .ss-btn-ghost:hover { background: rgba(255,255,255,0.9); border-color: rgba(11,29,58,0.4); }
         .ss-caret {
-          position: absolute;
-          bottom: 22px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 20;
+          position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20;
         }
-
-        /* ══ MOBILE ══ */
         @media (max-width: 768px) {
           .ss-layout {
-            flex-direction: column;
-            align-items: flex-start;
-            padding-bottom: 24px;
-            min-height: unset;
-            padding-top: clamp(24px, 6vw, 48px);
+            flex-direction: column; align-items: flex-start;
+            padding-bottom: 24px; min-height: unset; padding-top: clamp(24px, 6vw, 48px);
           }
           .ss-left  { flex: unset; max-width: 100%; width: 100%; }
-          .ss-right {
-            flex: unset; max-width: 100%; width: 100%;
-            justify-content: center;
-            margin-top: 8px;
-          }
-          .ss-video-wrap {
-            width: clamp(260px, 92vw, 460px) !important;
-            margin-top: 0 !important;
-          }
+          .ss-right { flex: unset; max-width: 100%; width: 100%; justify-content: center; margin-top: 8px; }
+          .ss-video-wrap { width: clamp(260px, 92vw, 460px) !important; margin-top: 0 !important; }
           .ss-btns { flex-direction: column; align-items: stretch; }
           .ss-btn-primary, .ss-btn-ghost { justify-content: center; }
           .ss-h1 { font-size: clamp(1.55rem, 7vw, 2.2rem); }
@@ -298,19 +194,15 @@ const HeroSection = () => {
       `}</style>
 
       <section id="hero" className="ss-hero">
-
-        {/* Smoky white overlay */}
         <div aria-hidden className="ss-smoke" />
-
-        {/* Top-left white bloom */}
+        <div aria-hidden className="ss-bottom-mist" />
+        <div aria-hidden className="ss-right-mist" />
         <div aria-hidden style={{
           position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
           background: "radial-gradient(ellipse 55% 50% at 5% 0%, rgba(255,255,255,0.65) 0%, transparent 70%)",
         }} />
 
-        {/* ══ LAYOUT ══ */}
         <div className="ss-layout">
-
           {/* ── LEFT ── */}
           <div className="ss-left">
             <motion.div {...fadeUp(0.05)}>
@@ -352,19 +244,7 @@ const HeroSection = () => {
                 <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
               </motion.div>
             </div>
-
-            <motion.div className="ss-stats" {...fadeUp(0.96)}>
-              {[
-                { num: "500+", label: "Clients Served" },
-                { num: "12+",  label: "Years Experience" },
-                { num: "98%",  label: "Satisfaction Rate" },
-              ].map(({ num, label }) => (
-                <div key={label} style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                  <span className="ss-stat-num">{num}</span>
-                  <span className="ss-stat-label">{label}</span>
-                </div>
-              ))}
-            </motion.div>
+            {/* Stat cards removed as requested */}
           </div>
 
           {/* ── RIGHT: masked video ── */}
@@ -385,7 +265,6 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Scroll chevron */}
         <motion.div
           className="ss-caret"
           initial={{ opacity: 0 }}

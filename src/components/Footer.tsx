@@ -44,19 +44,19 @@ const Footer = () => (
           <h4 className="text-gray-900 font-semibold mb-5 text-base tracking-wide">Contact</h4>
           <ul className="space-y-4 text-sm text-gray-700 font-light">
             <li className="flex items-start gap-3">
-              {/* Phone */}
-              <svg className="w-5 h-5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {/* Phone - Green */}
+              <svg className="w-5 h-5 shrink-0 mt-0.5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
               </svg>
-              <span className="leading-relaxed">+00 00000 00000</span>
+              <a href="tel:+000000000000" className="leading-relaxed hover:text-green-600 transition-colors">+00 00000 00000</a>
             </li>
             <li className="flex items-start gap-3">
-              {/* Mail */}
-              <svg className="w-5 h-5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {/* Mail - Blue */}
+              <svg className="w-5 h-5 shrink-0 mt-0.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="M2 7l10 7 10-7"/>
               </svg>
-              <span className="leading-relaxed">hello@scalesight.com</span>
+              <a href="mailto:hello@scalesight.com" className="leading-relaxed hover:text-blue-600 transition-colors">hello@scalesight.com</a>
             </li>
             <li className="flex items-start gap-3">
               {/* Location */}

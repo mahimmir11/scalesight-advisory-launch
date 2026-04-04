@@ -97,7 +97,7 @@ const ServicesSection = () => {
                   {/* Content with relative positioning to appear above background */}
                   <div className="relative z-10 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-3xl md:text-4xl font-bold text-white group-hover:text-[#00C2A8] transition-colors drop-shadow-lg mb-6">
+                      <h3 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg mb-6" style={{ color: '#FFFFFF' }}>
                         {regionInfo[r].label}
                       </h3>
                       <p className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md">{regionInfo[r].tagline}</p>
