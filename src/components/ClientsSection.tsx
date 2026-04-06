@@ -1,6 +1,6 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Building2, Rocket, TrendingUp, Users, Target, Eye, BarChart3 } from "lucide-react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import ScrollParticles from "./ScrollParticles";
 
 /* ── Count-up hook ── */
@@ -64,7 +64,403 @@ const FloatingOrb = ({ size, top, left, delay, duration }: { size: number; top: 
   />
 );
 
+/* ── Animated Blobs for "Who We Work With" section ── */
+const AnimatedBlob = ({
+  color, size, x, y, duration, delay,
+}: { color: string; size: number; x: string; y: string; duration: number; delay: number }) => (
+  <motion.div
+    className="pointer-events-none absolute rounded-full blur-3xl"
+    style={{
+      width: size,
+      height: size,
+      left: x,
+      top: y,
+      background: color,
+      opacity: 0.18,
+    }}
+    animate={{
+      x: [0, 40, -30, 20, -10, 0],
+      y: [0, -30, 20, -40, 15, 0],
+      scale: [1, 1.15, 0.9, 1.1, 0.95, 1],
+    }}
+    transition={{
+      duration,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+/* ── 3D Tilt Card ── */
 const ease = [0.19, 1, 0.22, 1] as const;
+
+const clientCards = [
+  {
+    Icon: Rocket,
+    label: "Startups",
+    desc: "Early-stage companies needing financial structure and clarity to grow fast.",
+    gradient: "from-blue-500 to-cyan-500",
+    glowColor: "rgba(59,130,246,0.35)",
+    blobColor: "radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(6,182,212,0.15) 60%, transparent 80%)",
+    accentColor: "#3B82F6",
+    sweepColor: "rgba(147,210,255,0.18)",
+  },
+  {
+    Icon: Building2,
+    label: "SMEs",
+    desc: "Established businesses scaling their operations with confidence.",
+    gradient: "from-purple-500 to-pink-500",
+    glowColor: "rgba(168,85,247,0.35)",
+    blobColor: "radial-gradient(circle, rgba(168,85,247,0.3) 0%, rgba(236,72,153,0.15) 60%, transparent 80%)",
+    accentColor: "#A855F7",
+    sweepColor: "rgba(230,180,255,0.18)",
+  },
+  {
+    Icon: TrendingUp,
+    label: "Growing Businesses",
+    desc: "Companies expanding across borders and entering new markets.",
+    gradient: "from-emerald-500 to-teal-500",
+    glowColor: "rgba(16,185,129,0.35)",
+    blobColor: "radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(20,184,166,0.15) 60%, transparent 80%)",
+    accentColor: "#10B981",
+    sweepColor: "rgba(150,255,220,0.18)",
+  },
+];
+
+const useMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
+
+interface TiltCardProps {
+  card: typeof clientCards[0];
+  index: number;
+  sectionInView: boolean;
+}
+
+const TiltCard = ({ card, index, sectionInView }: TiltCardProps) => {
+  const isMobile = useMobile();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const glowX = useMotionValue(50);
+  const glowY = useMotionValue(50);
+
+  const springConfig = { stiffness: 200, damping: 20 };
+  const springRotateX = useSpring(rotateX, springConfig);
+  const springRotateY = useSpring(rotateY, springConfig);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    rotateX.set(-dy * 12);
+    rotateY.set(dx * 12);
+    glowX.set(((e.clientX - rect.left) / rect.width) * 100);
+    glowY.set(((e.clientY - rect.top) / rect.height) * 100);
+  }, [isMobile, rotateX, rotateY, glowX, glowY]);
+
+  const handleMouseLeave = useCallback(() => {
+    rotateX.set(0);
+    rotateY.set(0);
+    glowX.set(50);
+    glowY.set(50);
+    setIsHovered(false);
+  }, [rotateX, rotateY, glowX, glowY]);
+
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const id = Date.now();
+    setRipples(prev => [...prev, { id, x, y }]);
+    setTimeout(() => setRipples(prev => prev.filter(r => r.id !== id)), 700);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 60, scale: 0.9 }}
+      animate={sectionInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{
+        delay: index * 0.15,
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      style={{ perspective: 1000 }}
+    >
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        style={{
+          rotateX: isMobile ? 0 : springRotateX,
+          rotateY: isMobile ? 0 : springRotateY,
+          transformStyle: "preserve-3d",
+        }}
+        animate={isHovered ? { y: -10 } : { y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="relative rounded-2xl overflow-hidden cursor-pointer"
+        css-var-glow-color={card.glowColor}
+      >
+        {/* Card background */}
+        <div
+          className="absolute inset-0 rounded-2xl transition-all duration-500"
+          style={{
+            background: "#ffffff",
+            border: isHovered
+              ? `2px solid ${card.accentColor}55`
+              : "2px solid #cbd5e1",
+            boxShadow: isHovered
+              ? `0 20px 60px -8px ${card.glowColor}, 0 0 0 1px ${card.accentColor}30, inset 0 1px 0 rgba(255,255,255,0.8)`
+              : "0 2px 20px rgba(9,40,90,0.06)",
+          }}
+        />
+
+        {/* Gradient glow spotlight on hover */}
+        {isHovered && !isMobile && (
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              background: `radial-gradient(circle 200px at ${glowX.get()}% ${glowY.get()}%, ${card.sweepColor}, transparent 70%)`,
+            }}
+          />
+        )}
+
+        {/* Gradient sweep on hover */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          initial={{ x: "-100%", opacity: 0 }}
+          animate={isHovered ? { x: "100%", opacity: 1 } : { x: "-100%", opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          style={{
+            background: `linear-gradient(105deg, transparent 40%, ${card.sweepColor} 50%, transparent 60%)`,
+          }}
+        />
+
+        {/* Ripple effects */}
+        {ripples.map(ripple => (
+          <motion.div
+            key={ripple.id}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              left: ripple.x,
+              top: ripple.y,
+              transform: "translate(-50%, -50%)",
+              background: `${card.accentColor}30`,
+            }}
+            initial={{ width: 0, height: 0, opacity: 0.8 }}
+            animate={{ width: 300, height: 300, opacity: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          />
+        ))}
+
+        {/* Card content */}
+        <div className="relative z-10 p-8">
+          {/* Floating triangle decoration */}
+          <div className="absolute top-4 right-4">
+            <motion.div
+              animate={{
+                x: [-4, 4, -4],
+                y: [0, -4, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                width: 0,
+                height: 0,
+                borderLeft: "5px solid transparent",
+                borderRight: "5px solid transparent",
+                borderBottom: `9px solid ${card.accentColor}`,
+                opacity: isHovered ? 0.9 : 0.45,
+                filter: isHovered ? `drop-shadow(0 0 6px ${card.accentColor})` : "none",
+                transition: "opacity 0.3s, filter 0.3s",
+              }}
+            />
+          </div>
+
+          {/* Floating dot */}
+          <motion.div
+            className="absolute bottom-6 right-6 rounded-full"
+            style={{
+              width: 6,
+              height: 6,
+              background: card.accentColor,
+              opacity: 0.4,
+            }}
+            animate={{
+              y: [0, -8, 0],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 1.4, 1],
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
+          />
+
+          {/* Icon with 3D pop effect */}
+          <motion.div
+            className="mb-6"
+            animate={isHovered ? { scale: 1.12, y: -4 } : { scale: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <div
+              className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} p-[3px] shadow-md`}
+              style={{
+                boxShadow: isHovered ? `0 8px 24px ${card.glowColor}` : undefined,
+                transition: "box-shadow 0.3s",
+              }}
+            >
+              <div className="w-full h-full rounded-[13px] bg-white flex items-center justify-center">
+                <card.Icon
+                  className="w-8 h-8"
+                  style={{ color: card.accentColor }}
+                  strokeWidth={2}
+                />
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.h3
+            className="text-2xl font-bold mb-3 transition-colors duration-300"
+            style={{ color: isHovered ? card.accentColor : "#09285A" }}
+          >
+            {card.label}
+          </motion.h3>
+
+          <p className="text-gray-600 text-base leading-relaxed mb-4">
+            {card.desc}
+          </p>
+
+          {/* Animated bottom bar */}
+          <motion.div
+            className="h-0.5 rounded-full mt-4"
+            style={{ background: `linear-gradient(90deg, ${card.accentColor}, transparent)` }}
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={isHovered ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          />
+        </div>
+
+        {/* Bottom accent bar (always present, intensifies on hover) */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[3px] rounded-b-2xl"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${card.accentColor}, transparent)`,
+          }}
+          animate={isHovered ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+/* ── Parallax wrapper ── */
+const ParallaxSection = ({ children, offset = 30 }: { children: React.ReactNode; offset?: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [-offset, offset]);
+  return (
+    <motion.div ref={ref} style={{ y }}>
+      {children}
+    </motion.div>
+  );
+};
+
+/* ── Who We Work With Section (upgraded) ── */
+const WhoWeWorkWith = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  return (
+    <section className="relative z-10 py-28 px-6 overflow-hidden" style={{ background: "#ffffff" }}>
+      {/* Animated background blobs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <AnimatedBlob color="radial-gradient(circle, rgba(59,130,246,0.35) 0%, transparent 70%)" size={500} x="-8%" y="-10%" duration={14} delay={0} />
+        <AnimatedBlob color="radial-gradient(circle, rgba(168,85,247,0.28) 0%, transparent 70%)" size={400} x="60%" y="20%" duration={18} delay={2} />
+        <AnimatedBlob color="radial-gradient(circle, rgba(16,185,129,0.25) 0%, transparent 70%)" size={350} x="30%" y="55%" duration={12} delay={4} />
+        <AnimatedBlob color="radial-gradient(circle, rgba(6,182,212,0.22) 0%, transparent 70%)" size={280} x="80%" y="70%" duration={16} delay={1} />
+        <AnimatedBlob color="radial-gradient(circle, rgba(236,72,153,0.18) 0%, transparent 70%)" size={320} x="10%" y="65%" duration={20} delay={3} />
+        {/* Grid noise texture */}
+        <div
+          className="absolute inset-0 opacity-[0.022]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #09285A 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Heading */}
+        <ParallaxSection offset={15}>
+          <div className="text-center mb-20">
+            <motion.span
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease }}
+              className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-4"
+            >
+              Our Clientele
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, delay: 0.1, ease }}
+              className="text-5xl md:text-6xl font-bold text-[#09285A] leading-tight mb-5"
+              style={{ letterSpacing: "-0.025em" }}
+            >
+              Who We Work With
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.25, ease }}
+              className="text-gray-500 text-lg max-w-2xl mx-auto"
+            >
+              We serve ambitious teams that demand clarity and results.
+            </motion.p>
+          </div>
+        </ParallaxSection>
+
+        {/* Cards grid */}
+        <div
+          ref={sectionRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10"
+        >
+          {clientCards.map((card, i) => (
+            <TiltCard key={card.label} card={card} index={i} sectionInView={isInView} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─────────────────────────── rest of ClientsSection ─────────────────────────── */
 
 const whyItems = [
   { Icon: Users, title: "Founder-Led", desc: "You work directly with the founders — not a junior associate. Every insight, every strategy, every call comes from senior-level expertise with a vested interest in your growth." },
@@ -89,12 +485,6 @@ const founders = [
   { name: "Samee Shaikh", role: "Business Development · Compliance & UAE Advisory", exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"], desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.", img: "/samee.png" },
 ];
 
-const clientCards = [
-  { Icon: Rocket, label: "Startups", desc: "Early-stage companies needing financial structure and clarity to grow fast.", gradient: "from-blue-500 to-cyan-500" },
-  { Icon: Building2, label: "SMEs", desc: "Established businesses scaling their operations with confidence.", gradient: "from-purple-500 to-pink-500" },
-  { Icon: TrendingUp, label: "Growing Businesses", desc: "Companies expanding across borders and entering new markets.", gradient: "from-emerald-500 to-teal-500" },
-];
-
 const ClientsSection = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
   const aboutInView = useInView(aboutRef, { once: false, margin: "-100px" });
@@ -105,31 +495,6 @@ const ClientsSection = () => {
   return (
     <>
       <style>{`
-        .ss-client-card {
-          background: #ffffff;
-          border-radius: 20px;
-          padding: 2rem;
-          height: 100%;
-          position: relative;
-          overflow: hidden;
-          border: 2px solid #cbd5e1;
-          box-shadow: 0 2px 20px rgba(9,40,90,0.06);
-          transition: all 0.3s ease;
-        }
-        .ss-client-card:hover {
-          border-color: #00C2A8;
-          box-shadow: 0 8px 40px rgba(0,194,168,0.15);
-          transform: translateY(-4px);
-        }
-        .ss-client-card .ss-card-accent {
-          position: absolute;
-          bottom: 0; left: 0; right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, transparent, #00C2A8, transparent);
-          opacity: 0;
-          transition: opacity 0.4s;
-        }
-        .ss-client-card:hover .ss-card-accent { opacity: 1; }
         .ss-all-white { background-color: #ffffff !important; }
       `}</style>
 
@@ -145,77 +510,8 @@ const ClientsSection = () => {
         <FloatingOrb size={160} top="55%" left="82%" delay={1.2} duration={15} />
         <FloatingOrb size={110} top="75%" left="38%" delay={3.5} duration={9} />
 
-        {/* ══ WHO WE WORK WITH ══ */}
-        <section className="relative z-10 py-28 px-6 ss-all-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <motion.span
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease }}
-                className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-4"
-              >
-                Our Clientele
-              </motion.span>
-              <motion.h2
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.85, delay: 0.1, ease }}
-                className="text-5xl md:text-6xl font-bold text-[#09285A] leading-tight mb-5"
-                style={{ letterSpacing: "-0.025em" }}
-              >
-                Who We Work With
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.25, ease }}
-                className="text-gray-500 text-lg max-w-2xl mx-auto"
-              >
-                We serve ambitious teams that demand clarity and results.
-              </motion.p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
-              {clientCards.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.05 }}
-                  transition={{ delay: i * 0.12, duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
-                >
-                  <div className="ss-client-card">
-                    {/* Triangle decoration */}
-                    <div style={{ position: "absolute", top: 16, right: 16 }}>
-                      <motion.div
-                        animate={{ x: [-6, 6, -6], rotate: [0, 180, 360] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderBottom: "9px solid #00C2A8", opacity: 0.55 }}
-                      />
-                    </div>
-
-                    {/* Icon */}
-                    <div className="mb-6">
-                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${s.gradient} p-[3px] shadow-md`}>
-                        <div className="w-full h-full rounded-[13px] bg-white flex items-center justify-center">
-                          <s.Icon className="w-8 h-8 text-[#09285A]" strokeWidth={2} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <h3 className="text-2xl font-bold text-[#09285A] mb-3">{s.label}</h3>
-                    <p className="text-gray-600 text-base leading-relaxed">{s.desc}</p>
-                    <div className="ss-card-accent" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ══ WHO WE WORK WITH (UPGRADED) ══ */}
+        <WhoWeWorkWith />
 
         {/* ══ ABOUT US ══ */}
         <section ref={aboutRef} className="relative z-10 py-28 px-6 ss-all-white">
