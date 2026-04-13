@@ -1,10 +1,10 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   FileText, ShieldCheck, TrendingUp, Briefcase,
   CheckCircle, Clock, Eye, Users, ArrowRight
 } from "lucide-react";
-import officeTeamImg from "../assets/office-team.jpg";
+import officeTeamImg from "../assets/office-team.png";
 
 const ease = [0.19, 1, 0.22, 1] as const;
 
@@ -182,7 +182,19 @@ const WhoWeAre = () => {
         </div>
 
         <motion.div {...fromRight(0.1)} className="relative">
-          <motion.div style={{ y }} className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+          <motion.div 
+            style={{ y }} 
+            className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]"
+            animate={{
+              rotate: [0, -1, 1, -0.5, 0.5, 0],
+              y: [0, -5, 5, -3, 3, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
             <img src={officeTeamImg} alt="ScaleSight team" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/40 to-transparent" />
           </motion.div>
@@ -204,75 +216,245 @@ const WhoWeAre = () => {
   );
 };
 
-/* ── SECTION 3: Accordion Hover (bookeraccounting.com style) ── */
+/* ── SECTION 3: Accordion (Mobile-friendly with auto-open on scroll) ── */
 const AccordionExpertise = () => {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [autoOpened, setAutoOpened] = useState<Set<number>>(new Set());
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Auto-open items one by one when scrolled into view
+  useEffect(() => {
+    const observers = accordionItems.map((_, i) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !autoOpened.has(i)) {
+              // Auto-open this item after a delay
+              setTimeout(() => {
+                setOpenIndex(i);
+                setAutoOpened(prev => new Set(prev).add(i));
+                
+                // Auto-close after 3 seconds
+                setTimeout(() => {
+                  setOpenIndex(prev => prev === i ? null : prev);
+                }, 3000);
+              }, i * 400); // Stagger the auto-open
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      if (itemRefs.current[i]) {
+        observer.observe(itemRefs.current[i]!);
+      }
+
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [autoOpened]);
+
+  const toggleItem = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <section className="py-24 px-6 bg-[#F8FAFC]">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-24 px-6 bg-[#F8FAFC] relative overflow-hidden">
+      {/* Ambient background elements */}
+      <div className="absolute top-20 right-10 w-[400px] h-[400px] bg-[#00C2A8]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-[350px] h-[350px] bg-[#6C63FF]/5 rounded-full blur-[100px] pointer-events-none" />
+      
+      <div className="max-w-5xl mx-auto relative z-10">
         <motion.div {...fadeUp(0)} className="mb-14">
-          <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00C2A8] mb-3">Core Expertise</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#0B1F3A]" style={{ letterSpacing: "-0.025em" }}>
+          <motion.p 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease }}
+            className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00C2A8] mb-3"
+          >
+            Core Expertise
+          </motion.p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1, ease }}
+            className="text-4xl md:text-5xl font-bold text-[#0B1F3A]" 
+            style={{ letterSpacing: "-0.025em" }}
+          >
             What We Excel At
-          </h2>
+          </motion.h2>
         </motion.div>
 
-        <div className="divide-y divide-gray-200">
+        <div className="space-y-3">
           {accordionItems.map((item, i) => {
-            const isHovered = hovered === i;
+            const isOpen = openIndex === i;
             return (
               <motion.div
                 key={item.num}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                ref={el => itemRefs.current[i] = el}
+                initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6, ease }}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                className="group cursor-default py-6"
+                transition={{ delay: i * 0.12, duration: 0.7, ease }}
+                className="group cursor-pointer relative"
+                onClick={() => toggleItem(i)}
               >
-                {/* Always visible row */}
-                <div className="flex items-center justify-between gap-6">
-                  <div className="flex items-center gap-6">
-                    <span
-                      className="text-sm font-bold transition-colors duration-300"
-                      style={{ color: isHovered ? "#00C2A8" : "#9CA3AF", fontVariantNumeric: "tabular-nums" }}
-                    >
-                      {item.num}
-                    </span>
-                    <h3
-                      className="text-xl md:text-2xl font-bold transition-colors duration-300"
-                      style={{ color: isHovered ? "#00C2A8" : "#0B1F3A" }}
-                    >
-                      {item.title}
-                    </h3>
-                  </div>
+                {/* Background card with gradient border effect */}
+                <motion.div
+                  className="relative bg-white rounded-2xl overflow-hidden border transition-all duration-500"
+                  style={{
+                    borderColor: isOpen ? "#00C2A8" : "#E5E7EB",
+                    boxShadow: isOpen 
+                      ? "0 20px 40px rgba(0, 194, 168, 0.15), 0 0 0 1px rgba(0, 194, 168, 0.1)" 
+                      : "0 2px 8px rgba(0, 0, 0, 0.04)"
+                  }}
+                  animate={{
+                    scale: isOpen ? 1.02 : 1,
+                  }}
+                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  {/* Gradient overlay when open */}
                   <motion.div
-                    animate={{ rotate: isHovered ? 45 : 0, opacity: isHovered ? 1 : 0.3 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    style={{ color: isHovered ? "#00C2A8" : "#0B1F3A" }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
-                </div>
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(0, 194, 168, 0.03) 0%, rgba(108, 99, 255, 0.02) 100%)"
+                    }}
+                    animate={{ opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.4 }}
+                  />
 
-                {/* Expandable description */}
-                <AnimatePresence>
-                  {isHovered && (
+                  {/* Content */}
+                  <div className="relative p-6 md:p-8">
+                    {/* Always visible row */}
+                    <div className="flex items-center justify-between gap-6">
+                      <div className="flex items-center gap-6 flex-1">
+                        {/* Number badge */}
+                        <motion.div
+                          className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
+                          style={{
+                            background: isOpen 
+                              ? "linear-gradient(135deg, #00C2A8 0%, #0ea5e9 100%)" 
+                              : "#F8FAFC"
+                          }}
+                          animate={{
+                            rotate: isOpen ? [0, -5, 5, 0] : 0,
+                          }}
+                          transition={{ duration: 0.6, ease: "easeInOut" }}
+                        >
+                          <motion.span
+                            className="text-sm font-bold relative z-10"
+                            style={{ 
+                              color: isOpen ? "#FFFFFF" : "#9CA3AF",
+                              fontVariantNumeric: "tabular-nums" 
+                            }}
+                            animate={{
+                              scale: isOpen ? 1.1 : 1,
+                            }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {item.num}
+                          </motion.span>
+                          
+                          {/* Animated background circle */}
+                          <motion.div
+                            className="absolute inset-0 rounded-xl"
+                            style={{
+                              background: "radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%)"
+                            }}
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ 
+                              scale: isOpen ? 1.5 : 0,
+                              opacity: isOpen ? 1 : 0
+                            }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        </motion.div>
+
+                        {/* Title */}
+                        <motion.h3
+                          className="text-xl md:text-2xl font-bold transition-colors duration-300"
+                          style={{ color: isOpen ? "#00C2A8" : "#0B1F3A" }}
+                          animate={{
+                            x: isOpen ? 8 : 0,
+                          }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                        >
+                          {item.title}
+                        </motion.h3>
+                      </div>
+
+                      {/* Arrow icon */}
+                      <motion.div
+                        className="shrink-0"
+                        animate={{ 
+                          rotate: isOpen ? 90 : 0,
+                          scale: isOpen ? 1.2 : 1,
+                        }}
+                        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                        style={{ color: isOpen ? "#00C2A8" : "#9CA3AF" }}
+                      >
+                        <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
+                      </motion.div>
+                    </div>
+
+                    {/* Expandable description */}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: "auto", opacity: 1, marginTop: 16 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <motion.div
+                            initial={{ y: -10 }}
+                            animate={{ y: 0 }}
+                            exit={{ y: -10 }}
+                            transition={{ duration: 0.3, delay: 0.1 }}
+                            className="pl-0 md:pl-[calc(3rem+1.5rem)] pr-0 md:pr-12"
+                          >
+                            <motion.div
+                              className="h-px w-full bg-gradient-to-r from-[#00C2A8]/30 via-[#00C2A8]/10 to-transparent mb-4"
+                              initial={{ scaleX: 0, originX: 0 }}
+                              animate={{ scaleX: 1 }}
+                              transition={{ duration: 0.5, delay: 0.1 }}
+                            />
+                            <motion.p 
+                              className="text-gray-600 text-base leading-relaxed"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.4, delay: 0.2 }}
+                            >
+                              {item.desc}
+                            </motion.p>
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Shine effect when opened */}
+                  {isOpen && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pt-3 pl-[calc(1rem+24px+24px)] text-gray-500 text-base leading-relaxed max-w-2xl">
-                        {item.desc}
-                      </p>
-                    </motion.div>
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)",
+                      }}
+                      initial={{ x: "-100%" }}
+                      animate={{ x: "200%" }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeInOut",
+                      }}
+                    />
                   )}
-                </AnimatePresence>
+                </motion.div>
               </motion.div>
             );
           })}

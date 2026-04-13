@@ -3,20 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 
-// Slide in from left with fade
-const slideInLeft = (delay = 0) => ({
-  initial: { opacity: 0, x: -120 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] },
-});
-
-// Slide in from right with fade
-const slideInRight = (delay = 0) => ({
-  initial: { opacity: 0, x: 120 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] },
-});
-
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldAnimate, setShouldAnimate] = useState(true);
@@ -24,16 +10,8 @@ const HeroSection = () => {
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.65;
     
-    // Check if user has visited before
-    const visited = sessionStorage.getItem('heroAnimationPlayed');
-    if (visited) {
-      // Already visited - skip animation
-      setShouldAnimate(false);
-    } else {
-      // First visit - play animation and mark as visited
-      setShouldAnimate(true);
-      sessionStorage.setItem('heroAnimationPlayed', 'true');
-    }
+    // Always animate on mount
+    setShouldAnimate(true);
   }, []);
 
   return (
@@ -181,15 +159,27 @@ const HeroSection = () => {
           transition: box-shadow 0.2s, transform 0.2s;
         }
         .ss-btn-primary:hover { box-shadow: 0 8px 30px rgba(45,212,191,0.54); transform: scale(1.03); }
-        .ss-btn-ghost {
-          display: inline-flex; align-items: center; padding: 11px 24px; border-radius: 12px;
-          background: rgba(255,255,255,0.68); backdrop-filter: blur(12px);
+        .ss-btn-secondary {
+          display: inline-flex; align-items: center; gap: 9px;
+          padding: 12px 28px; border-radius: 12px;
+          background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px); color: #0b1d3a;
-          font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem;
-          border: 1.5px solid rgba(11,29,58,0.22); text-decoration: none;
-          transition: all 0.2s; box-shadow: 0 2px 10px rgba(11,29,58,0.06);
+          font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+          font-size: 0.9rem; letter-spacing: 0.01em;
+          border: 2px solid rgba(45,212,191,0.3);
+          box-shadow: 0 4px 20px rgba(11,29,58,0.12);
+          cursor: pointer; text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .ss-btn-ghost:hover { background: rgba(255,255,255,0.9); border-color: rgba(11,29,58,0.4); }
+        .ss-btn-secondary:hover { 
+          background: rgba(255,255,255,1); 
+          border-color: rgba(45,212,191,0.6);
+          box-shadow: 0 8px 30px rgba(45,212,191,0.25);
+          transform: translateY(-2px) scale(1.05);
+        }
+        .ss-btn-secondary:active {
+          transform: translateY(0) scale(0.98);
+        }
         .ss-caret {
           position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20;
         }
@@ -275,8 +265,41 @@ const HeroSection = () => {
                   <ArrowRight size={16} />
                 </motion.span>
               </Link>
-              <Link to="/services/uae" className="ss-btn-ghost">UAE Services</Link>
-              <Link to="/services/india" className="ss-btn-ghost">India Services</Link>
+              <motion.button 
+                onClick={() => {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                className="ss-btn-secondary"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98, y: 0 }}
+                animate={{ 
+                  y: [0, -8, 0],
+                }}
+                transition={{
+                  y: {
+                    repeat: Infinity,
+                    duration: 2.5,
+                    ease: "easeInOut",
+                    repeatDelay: 0.5
+                  }
+                }}
+              >
+                Services
+                <motion.span
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: 3, 
+                    ease: "linear",
+                    repeatDelay: 2
+                  }}
+                >
+                  ✨
+                </motion.span>
+              </motion.button>
             </motion.div>
           </motion.div>
 
