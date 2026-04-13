@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const Contact = () => (
   <div className="min-h-screen flex flex-col bg-white">
-    <Navbar heroId="contact-hero" keepDarkText={true} />
+    <Navbar />
     <main className="flex-1">
       {/* Hero Section with Background Image - starts from top */}
       <div
