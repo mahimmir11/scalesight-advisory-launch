@@ -11,39 +11,37 @@ const links = [
   { label: "Contact Us", to: "/contact" },
 ];
 
-const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: boolean } = {}) => {
+const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [isInHero, setIsInHero] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
+  // Check if we're on the contact page
+  const isContactPage = location.pathname === "/contact";
+
+  // ✅ SCROLL-BASED TRANSPARENT → WHITE TRANSITION (only on Contact page)
   useEffect(() => {
-    // Reset scrolled state on route change based on current scroll position
-    setScrolled(window.scrollY > 50);
+    if (!isContactPage) {
+      setIsScrolled(true); // Always white on non-contact pages
+      return;
+    }
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setScrolled(scrollY > 50);
-
-      // Check if we're still in the hero section
-      if (heroId) {
-        const heroElement = document.getElementById(heroId);
-        if (heroElement) {
-          const heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
-          const navbarHeight = 70;
-          setIsInHero(scrollY + navbarHeight < heroBottom);
-        }
+      
+      // Transition threshold: 10-30px scroll
+      if (scrollY > 20) {
+        setIsScrolled(true); // WHITE NAVBAR
+      } else {
+        setIsScrolled(false); // TRANSPARENT NAVBAR
       }
     };
 
-    handleScroll(); // Initial check
+    handleScroll(); // run once on load
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, [location.pathname, heroId]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname, isContactPage]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -51,27 +49,21 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
 
   const isActive = (to: string) => location.pathname === to;
 
-  // When keepDarkText is true: always use dark text, transparent bg in hero, white bg when scrolled out
-  // When keepDarkText is false: transparent bg with white text in hero, white bg with dark text when scrolled out
-  const isTransparent = !!heroId && isInHero;
-  const useDarkText = keepDarkText || !isTransparent;
-
-  const textColor = useDarkText ? "text-[#09285A]" : "text-white";
-  const linkColor = useDarkText
-    ? "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
-    : "text-white/90 hover:text-white hover:bg-white/15";
+  // Text color stays consistent (dark text always)
+  const textColor = "text-[#09285A]";
+  const linkColor = "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isTransparent
-          ? "bg-transparent border-b border-transparent shadow-none"
-          : "bg-white shadow-sm border-b border-gray-100"
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100"
+          : "bg-transparent border-b border-transparent shadow-none"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-[70px] flex items-center justify-between">
 
-        {/* Logo + Name */}
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img src="/logo.png" alt="ScaleSight" className="h-10 w-auto" />
           <span className={`text-lg font-bold tracking-tight leading-none transition-colors duration-300 ${textColor}`}>
@@ -79,7 +71,7 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
           </span>
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-1">
           {links.map((l) => (
             <Link
@@ -96,40 +88,39 @@ const Navbar = ({ heroId, keepDarkText }: { heroId?: string; keepDarkText?: bool
           ))}
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className={`md:hidden p-2 transition-colors duration-300 ${textColor}`}
-          aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="md:hidden bg-[#09285A] flex flex-col overflow-hidden"
+            transition={{ duration: 0.18 }}
+            className="md:hidden bg-[#09285A] flex flex-col"
           >
             {links.map((l, i) => (
               <motion.div
                 key={l.to}
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.04, duration: 0.15 }}
+                transition={{ delay: i * 0.04 }}
               >
                 <Link
                   to={l.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center justify-between px-6 py-3.5 text-sm font-semibold transition-colors ${
+                  className={`flex items-center justify-between px-6 py-3.5 text-sm font-semibold ${
                     isActive(l.to)
                       ? "text-[#5EE4CF] bg-white/10"
-                      : "text-white/75 hover:text-white hover:bg-white/8"
+                      : "text-white/75 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   <span>{l.label}</span>

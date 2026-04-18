@@ -48,22 +48,109 @@ const steps = [
   { num: "04", title: "Optimize",    desc: "Continuous improvement as your business scales." },
 ];
 
-/* ── SECTION 1: Hero — dark navy like ContactSection, wave at bottom ── */
+/* ── SECTION 1: Hero — animated gradient like CTA, wave at bottom ── */
 const OpeningSection = () => (
-  <section className="relative overflow-hidden bg-[#0B1F3A] px-6 pt-20 pb-0">
-    {/* Ambient glows */}
-    <div className="absolute top-0 left-1/4 w-[500px] h-[400px] bg-[#00C2A8]/10 rounded-full blur-[120px] pointer-events-none" />
-    <div className="absolute top-0 right-1/4 w-[400px] h-[350px] bg-[#6C63FF]/8 rounded-full blur-[100px] pointer-events-none" />
-    {/* Dot grid */}
-    <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-      style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
+  <section className="relative overflow-hidden px-6 pt-20 pb-0">
+    {/* Animated gradient background - same as CTA section */}
+    <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-secondary" />
+    
+    {/* Animated background blobs */}
+    <motion.div
+      animate={{ 
+        x: [0, 30, 0],
+        y: [0, -20, 0],
+        scale: [1, 1.1, 1]
+      }}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-10 left-10 w-96 h-96 bg-white/10 rounded-full blur-3xl"
+    />
+    <motion.div
+      animate={{ 
+        x: [0, -40, 0],
+        y: [0, 30, 0],
+        scale: [1, 1.2, 1]
+      }}
+      transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-3xl"
+    />
+    <motion.div
+      animate={{ 
+        x: [0, 20, 0],
+        y: [0, -30, 0],
+        scale: [1, 0.9, 1]
+      }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+      className="absolute top-1/2 left-1/3 w-80 h-80 bg-white/5 rounded-full blur-3xl"
+    />
+
+    {/* Floating geometric elements */}
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+      <motion.div
+        animate={{ 
+          y: [0, -30, 0],
+          rotate: [0, 180, 360],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 right-1/4 w-16 h-16 border-2 border-white rounded-xl"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, 40, 0],
+          rotate: [0, -90, 0],
+          opacity: [0.2, 0.5, 0.2]
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        className="absolute bottom-32 left-20 w-12 h-12 border-2 border-white/60 rounded-lg"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, -20, 0],
+          x: [0, 20, 0],
+          opacity: [0.4, 0.7, 0.4]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute top-1/3 left-1/4 w-8 h-8 bg-white rounded-full"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, 25, 0],
+          rotate: [0, 120, 240, 360],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute top-40 left-1/2 w-10 h-10 border-2 border-white/70"
+        style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}
+      />
+      <motion.div
+        animate={{ 
+          y: [0, -35, 0],
+          x: [0, -15, 0],
+          opacity: [0.2, 0.5, 0.2]
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="absolute bottom-1/4 right-1/3 w-14 h-14 border-2 border-white/50 rounded-full"
+      />
+    </div>
+
+    {/* Subtle grid pattern overlay */}
+    <div className="absolute inset-0 opacity-5">
+      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="about-grid-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="white" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#about-grid-pattern)" />
+      </svg>
+    </div>
 
     <div className="relative z-10 max-w-5xl mx-auto text-center pb-24">
       <motion.p
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease }}
-        className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-6"
+        className="text-[11px] font-bold tracking-[0.35em] uppercase text-secondary mb-6"
       >
         About Us
       </motion.p>
@@ -77,27 +164,27 @@ const OpeningSection = () => (
       >
         Precision.{" "}
         <span className="relative inline-block">
-          <span className="text-[#00C2A8]">Compliance.</span>
+          <span className="text-secondary">Compliance.</span>
           <motion.span
-            className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[#00C2A8]/50"
+            className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-secondary/50"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.9, duration: 0.8, ease }}
           />
         </span>{" "}
-        <span className="text-[#6C63FF]">Growth.</span>
+        <span className="text-white/90">Growth.</span>
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.35, ease }}
-        className="text-white/55 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
+        className="text-white/80 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
       >
         Your financial clarity partner — built for businesses that demand accuracy, speed, and strategic insight.
       </motion.p>
 
-      {/* Stat row — like ContactSection info blocks */}
+      {/* Stat row */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -109,13 +196,13 @@ const OpeningSection = () => (
           { v: "5+",   l: "Years Experience" },
           { v: "500+", l: "Filings Completed" },
         ].map((s) => (
-          <div key={s.l} className="flex items-center gap-3 bg-white/8 border border-white/10 px-5 py-3 rounded-xl backdrop-blur-sm">
-            <div className="w-8 h-8 rounded-lg bg-[#00C2A8]/20 flex items-center justify-center shrink-0">
-              <div className="w-2 h-2 rounded-full bg-[#00C2A8]" />
+          <div key={s.l} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 px-5 py-3 rounded-xl">
+            <div className="w-8 h-8 rounded-lg bg-secondary/30 flex items-center justify-center shrink-0">
+              <div className="w-2 h-2 rounded-full bg-secondary" />
             </div>
             <div className="text-left">
               <p className="text-white font-bold text-base leading-none">{s.v}</p>
-              <p className="text-white/40 text-[10px] uppercase tracking-wider mt-0.5">{s.l}</p>
+              <p className="text-white/60 text-[10px] uppercase tracking-wider mt-0.5">{s.l}</p>
             </div>
           </div>
         ))}
@@ -128,16 +215,16 @@ const OpeningSection = () => (
         transition={{ delay: 0.9 }}
         className="flex flex-col items-center gap-2"
       >
-        <span className="text-white/25 text-[10px] uppercase tracking-widest">Scroll to explore</span>
+        <span className="text-white/40 text-[10px] uppercase tracking-widest">Scroll to explore</span>
         <motion.div
-          className="w-px h-10 bg-gradient-to-b from-[#00C2A8]/60 to-transparent"
+          className="w-px h-10 bg-gradient-to-b from-secondary/60 to-transparent"
           animate={{ scaleY: [0, 1, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         />
       </motion.div>
     </div>
 
-    {/* Wave divider */}
+    {/* Wave divider - kept as is */}
     <div className="relative z-10 -mb-px">
       <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
         <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="white"/>

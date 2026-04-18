@@ -7,21 +7,37 @@ const Contact = () => (
   <div className="min-h-screen flex flex-col bg-white">
     <Navbar />
     <main className="flex-1">
-      {/* Hero Section with Background Image - starts from top */}
+
+      {/* Hero — full viewport, transparent navbar blends here */}
       <div
         id="contact-hero"
-        className="relative bg-cover bg-center bg-no-repeat overflow-hidden"
-        style={{
-          backgroundImage: "url('/contact.png')",
-          minHeight: "100vh",
-        }}
+        className="relative overflow-hidden"
+        style={{ minHeight: "100vh" }}
       >
-        {/* Light overlay for text visibility - very subtle */}
-        <div className="absolute inset-0 bg-white/50" />
+        {/* Background image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/contact.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            // Fallback gradient if image missing
+            background: "url('/contact.png') center/cover no-repeat, linear-gradient(135deg, #c8eef5 0%, #a8dff0 50%, #88cfe8 100%)",
+          }}
+        />
 
-        {/* Hero Content */}
-        <div className="relative h-full flex items-center justify-center px-6 pt-[70px]" style={{ minHeight: "100vh" }}>
-          <div className="text-center max-w-4xl mx-auto">
+        {/* Subtle overlay so text is readable */}
+        <div className="absolute inset-0 bg-white/40" />
+
+        {/* Hero content — padded top by navbar height */}
+        <div
+          className="relative z-10 flex items-center justify-center px-6"
+          style={{ minHeight: "100vh", paddingTop: "70px" }}
+        >
+          <div className="text-center max-w-4xl mx-auto py-24">
+
+            {/* Pill badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -32,6 +48,7 @@ const Contact = () => (
               Contact Us
             </motion.div>
 
+            {/* Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -54,6 +71,7 @@ const Contact = () => (
               </span>
             </motion.h1>
 
+            {/* Subtext */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -64,17 +82,19 @@ const Contact = () => (
               Ready to transform your ideas into powerful business solutions? Get in touch
               with our team and let's discuss how we can help elevate your business.
             </motion.p>
+
           </div>
         </div>
 
-        {/* Smooth gradient transition to white */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white" />
+        {/* Fade bottom to white */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-white z-10" />
       </div>
 
-      {/* Contact Content on White Background */}
+      {/* Contact form */}
       <div className="bg-white">
         <ContactSection />
       </div>
+
     </main>
     <Footer />
   </div>
