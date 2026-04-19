@@ -299,19 +299,7 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* Bottom CTA hint */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center text-xs text-muted-blue/60 font-medium mt-10"
-        >
-          Still have questions?{" "}
-          <a href="#contact" className="text-primary/70 font-bold hover:text-primary transition-colors underline underline-offset-2">
-            Let's talk →
-          </a>
-        </motion.p>
+
       </div>
     </section>
   );

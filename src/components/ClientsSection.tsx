@@ -46,14 +46,6 @@ const StatItem = ({
   );
 };
 
-const ScrollLine = ({ left, delay }: { left: string; delay: number }) => (
-  <motion.div
-    className="pointer-events-none absolute top-0 bottom-0 w-px"
-    style={{ left, background: "linear-gradient(to bottom,transparent,rgba(94,228,207,0.28),rgba(45,212,191,0.38),transparent)" }}
-    animate={{ scaleY: [0, 1, 1, 0] }}
-    transition={{ duration: 5, delay, repeat: Infinity, ease: "easeInOut" }}
-  />
-);
 
 const FloatingOrb = ({ size, top, left, delay, duration }: { size: number; top: string; left: string; delay: number; duration: number }) => (
   <motion.div
@@ -469,15 +461,15 @@ const whyItems = [
   { Icon: BarChart3, title: "Insight-Driven", desc: "Every recommendation is grounded in real data and deep analytical thinking. We don't guess — we measure, model, and advise with precision so your business always moves forward with confidence." },
 ];
 
-const skillColors: Record<string, { bg: string; text: string; border: string }> = {
-  "FP&A": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "Valuation": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "Virtual CFO": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "India & UK Taxation": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "Internal Audit": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "Compliance Advisory": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "IFRS": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
-  "Stock & Process Audits": { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" },
+const skillColors: Record<string, { gradient: string; text: string; border: string }> = {
+  "FP&A":                { gradient: "linear-gradient(135deg, rgba(45,212,191,0.15), rgba(14,165,233,0.1))",  text: "#0e7490", border: "rgba(45,212,191,0.35)" },
+  "Valuation":           { gradient: "linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.1))",  text: "#6d28d9", border: "rgba(139,92,246,0.3)"  },
+  "Virtual CFO":         { gradient: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(45,212,191,0.1))",  text: "#047857", border: "rgba(16,185,129,0.3)"  },
+  "India & UK Taxation": { gradient: "linear-gradient(135deg, rgba(249,115,22,0.12), rgba(251,191,36,0.1))",  text: "#b45309", border: "rgba(249,115,22,0.3)"  },
+  "Internal Audit":      { gradient: "linear-gradient(135deg, rgba(239,68,68,0.12),  rgba(249,115,22,0.1))",  text: "#b91c1c", border: "rgba(239,68,68,0.3)"   },
+  "Compliance Advisory": { gradient: "linear-gradient(135deg, rgba(45,212,191,0.15), rgba(99,102,241,0.1))",  text: "#0e7490", border: "rgba(45,212,191,0.35)" },
+  "IFRS":                { gradient: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(14,165,233,0.1))",  text: "#4338ca", border: "rgba(99,102,241,0.35)" },
+  "Stock & Process Audits": { gradient: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(45,212,191,0.1))", text: "#047857", border: "rgba(16,185,129,0.3)" },
 };
 
 const founders = [
@@ -500,11 +492,6 @@ const ClientsSection = () => {
 
       <div className="relative overflow-hidden ss-all-white" ref={sectionRef}>
         <ScrollParticles containerRef={sectionRef} />
-        <ScrollLine left="8%" delay={0} />
-        <ScrollLine left="25%" delay={1.4} />
-        <ScrollLine left="50%" delay={0.7} />
-        <ScrollLine left="74%" delay={2} />
-        <ScrollLine left="92%" delay={0.4} />
         <FloatingOrb size={340} top="2%" left="58%" delay={0} duration={13} />
         <FloatingOrb size={200} top="28%" left="3%" delay={2.5} duration={10} />
         <FloatingOrb size={160} top="55%" left="82%" delay={1.2} duration={15} />
@@ -515,8 +502,6 @@ const ClientsSection = () => {
 
         {/* ══ ABOUT US ══ */}
         <section ref={aboutRef} className="relative z-10 py-28 px-6 ss-all-white">
-          <ScrollLine left="15%" delay={0.6} />
-          <ScrollLine left="85%" delay={1.8} />
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-center">
 
@@ -623,7 +608,6 @@ const ClientsSection = () => {
 
         {/* ══ WHY SCALESIGHT ══ */}
         <section className="relative z-10 py-28 px-6 ss-all-white">
-          <ScrollLine left="50%" delay={1} />
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 32 }}
@@ -639,27 +623,77 @@ const ClientsSection = () => {
               <p className="mt-4 text-gray-500 text-lg">What sets us apart from traditional accounting firms.</p>
             </motion.div>
 
-            <div className="space-y-14">
-              {whyItems.map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.16, duration: 0.85, ease }}
-                  className="flex items-start gap-8 group"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: "#F3F4F6" }}>
-                      <item.Icon className="w-8 h-8 text-[#09285A]" strokeWidth={1.8} />
+            <div className="space-y-6">
+              {whyItems.map((item, i) => {
+                const fromRight = i % 2 === 0;
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: fromRight ? 120 : -120 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -3, transition: { duration: 0.25 } }}
+                    className="group relative"
+                  >
+                    {/* Animated gradient border using pseudo-element trick */}
+                    <div className="relative rounded-2xl p-[1.5px] overflow-hidden"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(45,212,191,0.6) 0%, rgba(99,102,241,0.4) 40%, rgba(14,165,233,0.5) 70%, rgba(45,212,191,0.6) 100%)",
+                      }}
+                    >
+                      {/* Shimmer sweep animation on the border */}
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.9) 50%, transparent 80%)",
+                          backgroundSize: "200% 100%",
+                        }}
+                        animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: i * 0.6 }}
+                      />
+
+                      {/* White card inside */}
+                      <div className="relative bg-white rounded-[14px] flex items-start gap-6 p-6 overflow-hidden">
+                        {/* Subtle inner glow on hover */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                          style={{
+                            background: fromRight
+                              ? "linear-gradient(135deg, rgba(45,212,191,0.04) 0%, transparent 60%)"
+                              : "linear-gradient(225deg, rgba(99,102,241,0.04) 0%, transparent 60%)"
+                          }}
+                        />
+
+                        {/* Icon */}
+                        <motion.div
+                          whileHover={{ scale: 1.12, rotate: fromRight ? 8 : -8 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
+                          style={{
+                            background: "linear-gradient(135deg, rgba(45,212,191,0.1), rgba(99,102,241,0.08))",
+                            border: "1px solid rgba(45,212,191,0.25)"
+                          }}
+                        >
+                          <item.Icon className="w-7 h-7 text-[#09285A]" strokeWidth={1.8} />
+                        </motion.div>
+
+                        {/* Text */}
+                        <div className="flex-1 pt-0.5 relative z-10">
+                          <h3 className="text-xl font-bold text-[#09285A] mb-1.5 group-hover:text-[#00C2A8] transition-colors duration-300">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                        </div>
+
+                        {/* Number watermark */}
+                        <span className="absolute top-3 right-5 text-5xl font-bold select-none pointer-events-none text-gray-50 group-hover:text-[#00C2A8]/8 transition-colors duration-500">
+                          0{i + 1}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <h3 className="text-2xl font-bold text-[#09285A] mb-1">{item.title}</h3>
-                    <p className="text-gray-500 text-base leading-relaxed max-w-2xl">{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -740,17 +774,30 @@ const ClientsSection = () => {
 
                   <div className="flex flex-wrap gap-2 justify-center">
                     {f.exp.map((tag, j) => {
-                      const sc = skillColors[tag] ?? { bg: "#FFFFFF", text: "#000000", border: "#E5E7EB" };
+                      const sc = skillColors[tag] ?? { gradient: "linear-gradient(135deg, rgba(45,212,191,0.1), rgba(99,102,241,0.08))", text: "#000000", border: "rgba(45,212,191,0.3)" };
                       return (
                         <motion.span
                           key={tag}
-                          initial={{ opacity: 0, scale: 0.6, y: 10 }}
-                          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.22 + 0.85 + j * 0.08, duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
-                          whileHover={{ scale: 1.08, y: -2 }}
-                          className="px-3.5 py-1.5 rounded-full text-xs font-semibold border cursor-default transition-all"
-                          style={{ backgroundColor: sc.bg, color: sc.text, borderColor: sc.border }}
+                          initial={{ opacity: 0, scale: 0.85, y: 8 }}
+                          whileInView={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
+                          viewport={{ once: false, amount: 0.5 }}
+                          transition={{
+                            opacity: { delay: i * 0.22 + 0.85 + j * 0.08, duration: 0.4 },
+                            scale:   { delay: i * 0.22 + 0.85 + j * 0.08, duration: 0.4 },
+                            y: {
+                              delay: i * 0.22 + 0.85 + j * 0.15,
+                              duration: 1.2,
+                              repeat: Infinity,
+                              repeatType: "loop",
+                              ease: "easeInOut",
+                            }
+                          }}
+                          className="px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-default"
+                          style={{
+                            background: sc.gradient,
+                            color: "#000000",
+                            border: `1px solid ${sc.border}`,
+                          }}
                         >
                           {tag}
                         </motion.span>
@@ -765,8 +812,6 @@ const ClientsSection = () => {
 
         {/* ══ ZOHO PARTNERSHIP ══ */}
         <section className="relative z-10 py-24 px-6 ss-all-white" style={{ borderTop: "1px solid #f1f5f9" }}>
-          <ScrollLine left="33%" delay={0.9} />
-          <ScrollLine left="67%" delay={2.2} />
           <div className="max-w-3xl mx-auto text-center">
             <motion.p
               initial={{ opacity: 0, y: 16 }}

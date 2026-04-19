@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 
@@ -162,24 +162,34 @@ const HeroSection = () => {
         .ss-btn-secondary {
           display: inline-flex; align-items: center; gap: 9px;
           padding: 12px 28px; border-radius: 12px;
-          background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px); color: #0b1d3a;
+          background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px); color: #0b1d3a;
           font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-          font-size: 0.9rem; letter-spacing: 0.01em;
-          border: 2px solid rgba(45,212,191,0.3);
-          box-shadow: 0 4px 20px rgba(11,29,58,0.12);
-          cursor: pointer; text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase;
+          border: 1.5px solid rgba(45,212,191,0.35);
+          box-shadow: 0 4px 20px rgba(11,29,58,0.10), inset 0 1px 0 rgba(255,255,255,0.9);
+          cursor: pointer; text-decoration: none; position: relative; overflow: hidden;
+          transition: color 0.25s, border-color 0.25s, box-shadow 0.25s;
         }
+        .ss-btn-secondary::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(110deg, transparent 30%, rgba(45,212,191,0.18) 50%, transparent 70%);
+          transform: translateX(-100%);
+          transition: transform 0.55s ease;
+        }
+        .ss-btn-secondary:hover::before { transform: translateX(100%); }
         .ss-btn-secondary:hover { 
-          background: rgba(255,255,255,1); 
-          border-color: rgba(45,212,191,0.6);
-          box-shadow: 0 8px 30px rgba(45,212,191,0.25);
-          transform: translateY(-2px) scale(1.05);
+          border-color: rgba(45,212,191,0.7);
+          box-shadow: 0 8px 28px rgba(45,212,191,0.28), inset 0 1px 0 rgba(255,255,255,0.9);
+          color: #0d9488;
         }
-        .ss-btn-secondary:active {
-          transform: translateY(0) scale(0.98);
+        .ss-btn-secondary:active { transform: scale(0.97); }
+        .ss-btn-secondary .ss-svc-arrow {
+          display: inline-flex; align-items: center;
+          transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
         }
+        .ss-btn-secondary:hover .ss-svc-arrow { transform: translateY(3px); }
         .ss-caret {
           position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 20;
         }
@@ -273,32 +283,16 @@ const HeroSection = () => {
                   }
                 }}
                 className="ss-btn-secondary"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98, y: 0 }}
-                animate={{ 
-                  y: [0, -8, 0],
-                }}
+                whileTap={{ scale: 0.97 }}
+                animate={{ y: [0, -6, 0] }}
                 transition={{
-                  y: {
-                    repeat: Infinity,
-                    duration: 2.5,
-                    ease: "easeInOut",
-                    repeatDelay: 0.5
-                  }
+                  y: { repeat: Infinity, duration: 2.8, ease: "easeInOut", repeatDelay: 0.8 }
                 }}
               >
-                Services
-                <motion.span
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ 
-                    repeat: Infinity, 
-                    duration: 3, 
-                    ease: "linear",
-                    repeatDelay: 2
-                  }}
-                >
-                  ✨
-                </motion.span>
+                Our Services
+                <span className="ss-svc-arrow">
+                  <ChevronDown size={15} strokeWidth={2.5} />
+                </span>
               </motion.button>
             </motion.div>
           </motion.div>
