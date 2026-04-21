@@ -48,109 +48,86 @@ const steps = [
   { num: "04", title: "Optimize",    desc: "Continuous improvement as your business scales." },
 ];
 
-/* ── SECTION 1: Hero — animated gradient like CTA, wave at bottom ── */
+/* ── Floating particles for About hero ─────────────────── */
+const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 3 + 1.5,
+  duration: Math.random() * 8 + 6,
+  delay: Math.random() * 4,
+  opacity: Math.random() * 0.5 + 0.2,
+}));
+
+/* ── SECTION 1: Hero — medium gradient + particles ──────── */
 const OpeningSection = () => (
   <section className="relative overflow-hidden px-6 pt-20 pb-0">
-    {/* Animated gradient background - same as CTA section */}
-    <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-secondary" />
-    
-    {/* Animated background blobs */}
-    <motion.div
-      animate={{ 
-        x: [0, 30, 0],
-        y: [0, -20, 0],
-        scale: [1, 1.1, 1]
+    {/* Medium-tone gradient — slate-blue to teal, not too dark */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background: "linear-gradient(135deg, #1e4d7b 0%, #1a6b8a 40%, #0e9e8e 100%)",
       }}
-      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-10 left-10 w-96 h-96 bg-white/10 rounded-full blur-3xl"
-    />
-    <motion.div
-      animate={{ 
-        x: [0, -40, 0],
-        y: [0, 30, 0],
-        scale: [1, 1.2, 1]
-      }}
-      transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-3xl"
-    />
-    <motion.div
-      animate={{ 
-        x: [0, 20, 0],
-        y: [0, -30, 0],
-        scale: [1, 0.9, 1]
-      }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-      className="absolute top-1/2 left-1/3 w-80 h-80 bg-white/5 rounded-full blur-3xl"
     />
 
-    {/* Floating geometric elements */}
-    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-      <motion.div
-        animate={{ 
-          y: [0, -30, 0],
-          rotate: [0, 180, 360],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 right-1/4 w-16 h-16 border-2 border-white rounded-xl"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, 40, 0],
-          rotate: [0, -90, 0],
-          opacity: [0.2, 0.5, 0.2]
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-32 left-20 w-12 h-12 border-2 border-white/60 rounded-lg"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, -20, 0],
-          x: [0, 20, 0],
-          opacity: [0.4, 0.7, 0.4]
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute top-1/3 left-1/4 w-8 h-8 bg-white rounded-full"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, 25, 0],
-          rotate: [0, 120, 240, 360],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute top-40 left-1/2 w-10 h-10 border-2 border-white/70"
-        style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}
-      />
-      <motion.div
-        animate={{ 
-          y: [0, -35, 0],
-          x: [0, -15, 0],
-          opacity: [0.2, 0.5, 0.2]
-        }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-        className="absolute bottom-1/4 right-1/3 w-14 h-14 border-2 border-white/50 rounded-full"
-      />
-    </div>
+    {/* Soft animated blobs */}
+    <motion.div
+      animate={{ x: [0, 40, 0], y: [0, -25, 0], scale: [1, 1.15, 1] }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[100px]"
+      style={{ background: "rgba(255,255,255,0.08)" }}
+    />
+    <motion.div
+      animate={{ x: [0, -30, 0], y: [0, 30, 0], scale: [1, 1.2, 1] }}
+      transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[80px]"
+      style={{ background: "rgba(14,158,142,0.25)" }}
+    />
 
-    {/* Subtle grid pattern overlay */}
-    <div className="absolute inset-0 opacity-5">
-      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="about-grid-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="white" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#about-grid-pattern)" />
-      </svg>
-    </div>
+    {/* Moving sparkle particles */}
+    {PARTICLES.map((p) => (
+      <motion.div
+        key={p.id}
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          left: `${p.x}%`,
+          top: `${p.y}%`,
+          width: p.size,
+          height: p.size,
+          background: p.id % 3 === 0 ? "#5EE4CF" : p.id % 3 === 1 ? "#ffffff" : "#a5f3eb",
+          opacity: p.opacity,
+          boxShadow: `0 0 ${p.size * 2}px ${p.size}px ${p.id % 2 === 0 ? "rgba(94,228,207,0.6)" : "rgba(255,255,255,0.4)"}`,
+        }}
+        animate={{
+          y: [0, -30, 0, 20, 0],
+          x: [0, 15, -10, 5, 0],
+          opacity: [p.opacity, p.opacity * 1.8, p.opacity * 0.4, p.opacity * 1.5, p.opacity],
+          scale: [1, 1.4, 0.8, 1.2, 1],
+        }}
+        transition={{
+          duration: p.duration,
+          delay: p.delay,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+    ))}
+
+    {/* Dot grid overlay */}
+    <div
+      className="absolute inset-0 opacity-[0.06] pointer-events-none"
+      style={{
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
+        backgroundSize: "36px 36px",
+      }}
+    />
 
     <div className="relative z-10 max-w-5xl mx-auto text-center pb-24">
       <motion.p
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease }}
-        className="text-[11px] font-bold tracking-[0.35em] uppercase text-secondary mb-6"
+        className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#5EE4CF] mb-6"
       >
         About Us
       </motion.p>
@@ -164,9 +141,9 @@ const OpeningSection = () => (
       >
         Precision.{" "}
         <span className="relative inline-block">
-          <span className="text-secondary">Compliance.</span>
+          <span className="text-[#5EE4CF]">Compliance.</span>
           <motion.span
-            className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-secondary/50"
+            className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[#5EE4CF]/50"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.9, duration: 0.8, ease }}
@@ -179,34 +156,10 @@ const OpeningSection = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.35, ease }}
-        className="text-white/80 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
+        className="text-white/75 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
       >
         Your financial clarity partner — built for businesses that demand accuracy, speed, and strategic insight.
       </motion.p>
-
-      {/* Stat row */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5, ease }}
-        className="flex flex-wrap justify-center gap-4 mb-14"
-      >
-        {[
-          { v: "100+", l: "Clients Served" },
-          { v: "5+",   l: "Years Experience" },
-          { v: "500+", l: "Filings Completed" },
-        ].map((s) => (
-          <div key={s.l} className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 px-5 py-3 rounded-xl">
-            <div className="w-8 h-8 rounded-lg bg-secondary/30 flex items-center justify-center shrink-0">
-              <div className="w-2 h-2 rounded-full bg-secondary" />
-            </div>
-            <div className="text-left">
-              <p className="text-white font-bold text-base leading-none">{s.v}</p>
-              <p className="text-white/60 text-[10px] uppercase tracking-wider mt-0.5">{s.l}</p>
-            </div>
-          </div>
-        ))}
-      </motion.div>
 
       {/* Scroll cue */}
       <motion.div
@@ -215,19 +168,19 @@ const OpeningSection = () => (
         transition={{ delay: 0.9 }}
         className="flex flex-col items-center gap-2"
       >
-        <span className="text-white/40 text-[10px] uppercase tracking-widest">Scroll to explore</span>
+        <span className="text-white/35 text-[10px] uppercase tracking-widest">Scroll to explore</span>
         <motion.div
-          className="w-px h-10 bg-gradient-to-b from-secondary/60 to-transparent"
+          className="w-px h-10 bg-gradient-to-b from-[#5EE4CF]/60 to-transparent"
           animate={{ scaleY: [0, 1, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         />
       </motion.div>
     </div>
 
-    {/* Wave divider - kept as is */}
+    {/* Wave divider */}
     <div className="relative z-10 -mb-px">
-      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
-        <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="white"/>
+      <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
+        <path d="M0,0 C180,80 360,100 540,60 C720,20 900,80 1080,60 C1260,40 1380,80 1440,70 L1440,100 L0,100 Z" fill="white"/>
       </svg>
     </div>
   </section>
@@ -256,16 +209,8 @@ const WhoWeAre = () => {
             We combine deep financial expertise with modern tools to deliver clarity, compliance, and measurable growth.
           </motion.p>
           <motion.p {...fromLeft(0.25)} className="text-gray-500 text-base leading-relaxed mb-10">
-            Founder-led. Client-first. Built for businesses across India &amp; UAE that refuse to settle for ordinary advisory.
+            Founder-led. Client-first. Built for businesses across the globe that refuse to settle for ordinary advisory.
           </motion.p>
-          <motion.div {...fromLeft(0.35)} className="flex flex-wrap gap-3">
-            {[["100+","Clients"],["5+","Years"],["500+","Filings"]].map(([v,l]) => (
-              <div key={l} className="flex items-center gap-2 bg-[#F8FAFC] border border-gray-100 px-4 py-2.5 rounded-full">
-                <span className="text-lg font-bold text-[#0B1F3A]">{v}</span>
-                <span className="text-xs text-gray-400 uppercase tracking-wider">{l}</span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         <motion.div {...fromRight(0.1)} className="relative">
@@ -284,17 +229,6 @@ const WhoWeAre = () => {
           >
             <img src={officeTeamImg} alt="ScaleSight team" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/40 to-transparent" />
-          </motion.div>
-          {/* Only bottom-left badge — 98% removed */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.7, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.6, ease }}
-            className="absolute -bottom-6 -left-6 bg-[#0B1F3A] text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10"
-          >
-            <p className="text-2xl font-bold text-[#00C2A8]">100+</p>
-            <p className="text-[10px] text-white/50 uppercase tracking-widest mt-0.5">Clients Served</p>
           </motion.div>
           <div className="absolute -z-10 -bottom-10 -right-10 w-72 h-72 bg-[#00C2A8]/15 rounded-full blur-3xl" />
         </motion.div>
@@ -672,11 +606,8 @@ const AboutSection = () => (
   <>
     <OpeningSection />
     <WhoWeAre />
-    <AccordionExpertise />
-    <ProcessSection />
-    <WhyTrustUs />
-    <ClosingStatement />
   </>
 );
 
+export { ProcessSection };
 export default AboutSection;

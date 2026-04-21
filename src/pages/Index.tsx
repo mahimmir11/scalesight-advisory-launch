@@ -1,25 +1,21 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import ClientsSection from "@/components/ClientsSection";
 import ServicesSection from "@/components/ServicesSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import FloatingContact from "@/components/FloatingContact";
 
-const Index = () => {
-  return (
-    <div className="scroll-smooth">
-      <Navbar />
-      <HeroSection />
-      <ClientsSection />
-      <ServicesSection />
-      <TestimonialsSection />
-      <ContactSection showInfoCards={false} />
-      <FAQSection />
-      <Footer />
-    </div>
-  );
-};
+const Index = () => (
+  <div className="scroll-smooth">
+    <Navbar />
+    <HeroSection />
+    <ServicesSection />
+    <ContactSection />
+    <FAQSection />
+    <Footer />
+    <FloatingContact />
+  </div>
+);
 
 export default Index;

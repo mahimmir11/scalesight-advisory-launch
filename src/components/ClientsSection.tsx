@@ -412,7 +412,7 @@ const WhoWeWorkWith = () => {
               transition={{ duration: 0.7, ease }}
               className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-4"
             >
-              Our Clientele
+              Who We Serve
             </motion.span>
 
             <motion.h2
@@ -456,7 +456,7 @@ const WhoWeWorkWith = () => {
 
 const whyItems = [
   { Icon: Users, title: "Founder-Led", desc: "You work directly with the founders — not a junior associate. Every insight, every strategy, every call comes from senior-level expertise with a vested interest in your growth." },
-  { Icon: Target, title: "Small Business Focused", desc: "We've designed our entire advisory framework for growing SMEs and startups — not Fortune 500 companies. Agile, relevant, and always aligned with what actually matters to your business." },
+  { Icon: Target, title: "Growing Business Focused", desc: "We've designed our entire advisory framework for ambitious, scaling companies — agile, forward-thinking, and always aligned with what actually drives growth." },
   { Icon: Eye, title: "Clarity Over Complexity", desc: "Finance can be overwhelming. We strip away the jargon and give you clear, actionable answers. No fluff, no confusion — just the information you need to make confident decisions." },
   { Icon: BarChart3, title: "Insight-Driven", desc: "Every recommendation is grounded in real data and deep analytical thinking. We don't guess — we measure, model, and advise with precision so your business always moves forward with confidence." },
 ];
@@ -473,13 +473,11 @@ const skillColors: Record<string, { gradient: string; text: string; border: stri
 };
 
 const founders = [
-  { name: "Zaid Shaikh", role: "Co-Founder · Virtual CFO & Finance Advisory", exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"], desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.", img: "/zaid.png" },
+  { name: "Zaid Shaikh", role: "Managing Partner · Virtual CFO & Finance Advisory", exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"], desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.", img: "/zaid.png" },
   { name: "Samee Shaikh", role: "Business Development · Compliance & UAE Advisory", exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"], desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.", img: "/samee.png" },
 ];
 
 const ClientsSection = () => {
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const aboutInView = useInView(aboutRef, { once: false, margin: "-100px" });
   const foundersRef = useRef<HTMLDivElement>(null);
   const foundersInView = useInView(foundersRef, { once: true, margin: "-80px" });
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -499,112 +497,6 @@ const ClientsSection = () => {
 
         {/* ══ WHO WE WORK WITH (UPGRADED) ══ */}
         <WhoWeWorkWith />
-
-        {/* ══ ABOUT US ══ */}
-        <section ref={aboutRef} className="relative z-10 py-28 px-6 ss-all-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-
-              <motion.div
-                initial={{ opacity: 0, x: -56, filter: "blur(10px)" }}
-                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, ease }}
-                className="relative"
-              >
-                <motion.div
-                  animate={aboutInView ? { x: [0, 4, -3, 5, -2, 3, 0], y: [0, -3, 2, -4, 3, -2, 0], rotate: [0, 0.5, -0.3, 0.4, -0.5, 0.2, 0] } : {}}
-                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative rounded-3xl overflow-hidden shadow-2xl"
-                  style={{ aspectRatio: "4/3" }}
-                >
-                  <img src="/why-partner.png" alt="About ScaleSight" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/30 to-transparent" />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.6, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6, duration: 0.7, ease }}
-                  className="absolute -bottom-6 -right-6 bg-[#09285A] text-white px-6 py-4 rounded-2xl shadow-2xl border border-white/10"
-                >
-                  <p className="text-2xl font-bold text-[#00C2A8]">100+</p>
-                  <p className="text-[10px] text-white/50 uppercase tracking-widest mt-0.5">Clients Served</p>
-                </motion.div>
-                <div className="absolute -z-10 -bottom-10 -left-10 w-72 h-72 bg-[#00C2A8]/10 rounded-full blur-3xl" />
-              </motion.div>
-
-              <div>
-                <motion.span
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, ease }}
-                  className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-5"
-                >
-                  About Us
-                </motion.span>
-
-                <div className="mb-6 leading-tight">
-                  {"More than accountants. We are strategists.".split(" ").map((word, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-                      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.05 + i * 0.06, duration: 0.5, ease }}
-                      className={`inline-block mr-[0.28em] text-4xl md:text-5xl font-bold ${["We", "are", "strategists."].includes(word) ? "text-[#00C2A8]" : "text-[#09285A]"}`}
-                      style={{ letterSpacing: "-0.025em" }}
-                    >
-                      {word}
-                    </motion.span>
-                  ))}
-                </div>
-
-                <motion.p
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.8, ease }}
-                  className="text-gray-500 text-base leading-relaxed mb-5"
-                >
-                  At ScaleSight, we combine deep financial expertise with cutting-edge AI tools
-                  to deliver clarity, compliance, and measurable growth. We don't just crunch
-                  numbers — we translate them into actionable insights that fuel better decisions.
-                </motion.p>
-
-                <motion.p
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.7, duration: 0.8, ease }}
-                  className="text-gray-500 text-base leading-relaxed mb-10"
-                >
-                  Founder-led. Client-first. Built for businesses across India & UAE that refuse
-                  to settle for ordinary advisory. Every engagement is built on trust,
-                  transparency, and a relentless focus on your success.
-                </motion.p>
-
-                <div className="flex gap-10 mb-10">
-                  <StatItem value={100} suffix="+" label="Clients" delay={0.1} />
-                  <StatItem value={5} suffix="+" label="Years" delay={0.25} />
-                  <StatItem value={500} suffix="+" label="Filings" delay={0.4} />
-                </div>
-
-                <motion.a
-                  href="/about"
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.9, duration: 0.6, ease }}
-                  className="inline-flex items-center gap-2 bg-[#09285A] text-white px-8 py-3.5 rounded-full font-bold text-sm hover:bg-[#00C2A8] hover:text-[#09285A] transition-all shadow-md"
-                >
-                  Learn More About Us →
-                </motion.a>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ══ WHY SCALESIGHT ══ */}
         <section className="relative z-10 py-28 px-6 ss-all-white">

@@ -129,8 +129,8 @@ const Footer = () => (
       <div className="pt-6 border-t border-gray-300 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-600 font-light">
         <p>© {new Date().getFullYear()} ScaleSight Global Advisory. All rights reserved.</p>
         <div className="flex gap-5">
-          <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
+          <a href="/privacy-policy" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
+          <a href="/terms-of-service" className="hover:text-gray-900 transition-colors">Terms of Service</a>
         </div>
       </div>
     </div>

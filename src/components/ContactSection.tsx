@@ -17,50 +17,6 @@ const socials = [
       </svg>
     ),
   },
-  {
-    label: "Instagram",
-    handle: "@scalesight",
-    sub: "Behind the scenes & updates",
-    href: "https://instagram.com/scalesight",
-    bg: "bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]",
-    solidBg: "linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7)",
-    hoverText: "View our latest posts →",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" strokeWidth="1.8" />
-        <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.8" />
-        <circle cx="17.5" cy="6.5" r="1.2" fill="white" />
-      </svg>
-    ),
-  },
-  {
-    label: "Facebook",
-    handle: "ScaleSight",
-    sub: "News & announcements",
-    href: "https://facebook.com/scalesight",
-    bg: "bg-[#1877F2]",
-    solidBg: "#1877F2",
-    hoverText: "Like our page →",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-        <path fill="white" d="M15.5 8H13V6.5c0-.6.4-.5 1-.5h1.5V4H13c-1.7 0-3 1.3-3 3v1H8v2.5h2V20h2.5v-9.5H15l.5-2.5z" />
-      </svg>
-    ),
-  },
-  {
-    label: "X (Twitter)",
-    handle: "@scalesight",
-    sub: "Thoughts & industry news",
-    href: "https://twitter.com/scalesight",
-    bg: "bg-black",
-    solidBg: "#000000",
-    hoverText: "Follow us on X →",
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="white">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.988l4.26 5.632 4.746-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-      </svg>
-    ),
-  },
 ];
 
 const countryCodes = [
@@ -384,19 +340,13 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h2 
+          <h2
             className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              letterSpacing: "-0.01em",
-            }}
+            style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.01em" }}
           >
             <span className="text-[#09285A]">Contact </span>
             <span className="text-[#00C2A8]">Us</span>
           </h2>
-          <p className="text-gray-500 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Ready to elevate your business? Get in touch with our team of experts and let's discuss how we can help you achieve your financial goals.
-          </p>
         </motion.div>
 
         {/* ── Info cards ── */}
@@ -538,14 +488,7 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
               </div>
             </a>
 
-            <div ref={socialsRef}>
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Also find us on</p>
-              <div className="grid grid-cols-1 gap-3">
-                {socials.map((s, i) => (
-                  <SocialCard key={s.label} s={s} index={i} blinkIndex={blinkIndex} />
-                ))}
-              </div>
-            </div>
+            <div ref={socialsRef} />
           </motion.div>
         </div>
 
