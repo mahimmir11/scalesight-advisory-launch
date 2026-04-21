@@ -209,7 +209,7 @@ const WhoWeAre = () => {
             We combine deep financial expertise with modern tools to deliver clarity, compliance, and measurable growth.
           </motion.p>
           <motion.p {...fromLeft(0.25)} className="text-gray-500 text-base leading-relaxed mb-10">
-            Founder-led. Client-first. Built for businesses across India &amp; UAE that refuse to settle for ordinary advisory.
+            Founder-led. Client-first. Built for businesses across the globe that refuse to settle for ordinary advisory.
           </motion.p>
         </div>
 
@@ -606,8 +606,8 @@ const AboutSection = () => (
   <>
     <OpeningSection />
     <WhoWeAre />
-    <ProcessSection />
   </>
 );
 
+export { ProcessSection };
 export default AboutSection;

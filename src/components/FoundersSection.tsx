@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const founders = [
   {
     name: "Zaid Shaikh",
-    role: "Co-Founder · Virtual CFO & Finance Advisory",
+    role: "Managing Partner · Virtual CFO & Finance Advisory",
     exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"],
     desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.",
     img: "/zaid.png",

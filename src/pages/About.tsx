@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import AboutSection from "@/components/AboutSection";
+import AboutSection, { ProcessSection } from "@/components/AboutSection";
 import ClientsSection from "@/components/ClientsSection";
 import Footer from "@/components/Footer";
 
@@ -9,6 +9,7 @@ const About = () => (
     <main className="flex-1">
       <AboutSection />
       <ClientsSection />
+      <ProcessSection />
     </main>
     <Footer />
   </div>

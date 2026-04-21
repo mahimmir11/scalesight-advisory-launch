@@ -412,7 +412,7 @@ const WhoWeWorkWith = () => {
               transition={{ duration: 0.7, ease }}
               className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-4"
             >
-              Our Clientele
+              Who We Serve
             </motion.span>
 
             <motion.h2
@@ -456,7 +456,7 @@ const WhoWeWorkWith = () => {
 
 const whyItems = [
   { Icon: Users, title: "Founder-Led", desc: "You work directly with the founders — not a junior associate. Every insight, every strategy, every call comes from senior-level expertise with a vested interest in your growth." },
-  { Icon: Target, title: "Small Business Focused", desc: "We've designed our entire advisory framework for growing SMEs and startups — not Fortune 500 companies. Agile, relevant, and always aligned with what actually matters to your business." },
+  { Icon: Target, title: "Growing Business Focused", desc: "We've designed our entire advisory framework for ambitious, scaling companies — agile, forward-thinking, and always aligned with what actually drives growth." },
   { Icon: Eye, title: "Clarity Over Complexity", desc: "Finance can be overwhelming. We strip away the jargon and give you clear, actionable answers. No fluff, no confusion — just the information you need to make confident decisions." },
   { Icon: BarChart3, title: "Insight-Driven", desc: "Every recommendation is grounded in real data and deep analytical thinking. We don't guess — we measure, model, and advise with precision so your business always moves forward with confidence." },
 ];
@@ -473,7 +473,7 @@ const skillColors: Record<string, { gradient: string; text: string; border: stri
 };
 
 const founders = [
-  { name: "Zaid Shaikh", role: "Co-Founder · Virtual CFO & Finance Advisory", exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"], desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.", img: "/zaid.png" },
+  { name: "Zaid Shaikh", role: "Managing Partner · Virtual CFO & Finance Advisory", exp: ["FP&A", "Valuation", "Virtual CFO", "India & UK Taxation"], desc: "Strategic, insight-driven, and focused on moving the needle for high-growth founders.", img: "/zaid.png" },
   { name: "Samee Shaikh", role: "Business Development · Compliance & UAE Advisory", exp: ["Internal Audit", "Compliance Advisory", "IFRS", "Stock & Process Audits"], desc: "Compliance-focused, detail-oriented, and trust-led — ensuring global operations remain bulletproof.", img: "/samee.png" },
 ];
 

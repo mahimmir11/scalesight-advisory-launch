@@ -33,9 +33,9 @@ const Contact = () => (
         {/* Hero content — padded top by navbar height */}
         <div
           className="relative z-10 flex items-center justify-center px-6"
-          style={{ minHeight: "100vh", paddingTop: "70px" }}
+          style={{ minHeight: "100vh", paddingTop: "35px", paddingBottom: "70px" }}
         >
-          <div className="text-center max-w-4xl mx-auto py-24">
+          <div className="text-center max-w-4xl mx-auto">
 
             {/* Pill badge */}
             <motion.div
