@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { CheckCircle2, ArrowRight, FileText, Shield, BarChart3, Search, Workflow, TrendingUp, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const heroImages = [
   "/UAE Services/Image 1.png",
@@ -158,6 +159,15 @@ const UAEServices = () => {
   const [current, setCurrent] = useState(0);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const handleTalk = () => {
+    navigate("/contact");
+    setTimeout(() => {
+      const el = document.getElementById("contact-form");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 300);
+  };
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -257,7 +267,7 @@ const UAEServices = () => {
                 href="/contact"
                 className="inline-flex items-center gap-2 border-2 border-primary text-primary px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-300"
               >
-                Get in Touch
+                Have a Talk
               </a>
             </motion.div>
 
@@ -603,15 +613,15 @@ const UAEServices = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
-              <motion.a
-                href="/contact"
+              <motion.button
+                onClick={handleTalk}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 rounded-full font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 group"
               >
-                Schedule a Consultation
+                Have a Talk
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
+              </motion.button>
 
               <motion.a
                 href="tel:+971XXXXXXXX"
