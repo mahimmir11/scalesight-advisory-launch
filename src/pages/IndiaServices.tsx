@@ -220,7 +220,7 @@ const IndiaServices = () => {
         <Navbar />
 
         {/* ── Hero ── */}
-        <section className="pt-[70px] bg-white">
+        <section className="pt-[76px] bg-white">
           <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <motion.div

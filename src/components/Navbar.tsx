@@ -16,32 +16,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Check if we're on the contact page
-  const isContactPage = location.pathname === "/contact";
-
-  // ✅ SCROLL-BASED TRANSPARENT → WHITE TRANSITION (only on Contact page)
   useEffect(() => {
-    if (!isContactPage) {
-      setIsScrolled(true); // Always white on non-contact pages
-      return;
-    }
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      
-      // Transition threshold: 10-30px scroll
-      if (scrollY > 20) {
-        setIsScrolled(true); // WHITE NAVBAR
-      } else {
-        setIsScrolled(false); // TRANSPARENT NAVBAR
-      }
-    };
-
-    handleScroll(); // run once on load
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [location.pathname, isContactPage]);
+    setIsScrolled(true); // Always white on all pages
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -61,14 +38,11 @@ const Navbar = () => {
           : "bg-transparent shadow-none"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 h-[70px] flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <img src="/logo.png" alt="ScaleSight" className="h-10 w-auto" />
-          <span className={`text-lg font-bold tracking-tight leading-none transition-colors duration-300 ${textColor}`}>
-            ScaleSight
-          </span>
+        <Link to="/" className="flex items-center shrink-0">
+          <img src="/fulllogo1.png" alt="ScaleSight" className="h-14 w-auto" />
         </Link>
 
         {/* Desktop Menu */}

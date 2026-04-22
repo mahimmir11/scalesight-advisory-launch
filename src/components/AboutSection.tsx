@@ -61,7 +61,7 @@ const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
 
 /* ── SECTION 1: Hero — medium gradient + particles ──────── */
 const OpeningSection = () => (
-  <section className="relative overflow-hidden px-6 pt-20 pb-0">
+  <section className="relative overflow-hidden px-6 pt-[76px] pb-0">
     {/* Medium-tone gradient — slate-blue to teal, not too dark */}
     <div
       className="absolute inset-0"
@@ -177,12 +177,6 @@ const OpeningSection = () => (
       </motion.div>
     </div>
 
-    {/* Wave divider */}
-    <div className="relative z-10 -mb-px">
-      <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
-        <path d="M0,0 C180,80 360,100 540,60 C720,20 900,80 1080,60 C1260,40 1380,80 1440,70 L1440,100 L0,100 Z" fill="white"/>
-      </svg>
-    </div>
   </section>
 );
 

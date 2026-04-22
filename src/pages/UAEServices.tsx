@@ -214,7 +214,7 @@ const UAEServices = () => {
       {/* Hero — split layout with parallax */}
       <motion.section
         style={{ y: heroY, opacity: heroOpacity }}
-        className="pt-[70px] bg-transparent relative z-10"
+        className="pt-[76px] bg-transparent relative z-10"
       >
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
           {/* Left — text */}

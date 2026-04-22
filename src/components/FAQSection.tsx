@@ -144,7 +144,7 @@ const FAQItem = ({
         transition-all duration-300
         ${isOpen
           ? "shadow-[0_4px_32px_rgba(0,0,0,0.09)] border-2 border-primary/20"
-          : "border border-primary/8 hover:border-primary/18 hover:shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
+          : "border border-gray-200 hover:border-primary/30 hover:shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
         }
         bg-card
       `}
