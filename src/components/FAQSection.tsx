@@ -139,16 +139,33 @@ const FAQItem = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.07, duration: 0.45, ease: "easeOut" }}
-      className={`
-        relative rounded-2xl overflow-hidden
-        transition-all duration-300
-        ${isOpen
-          ? "shadow-[0_4px_32px_rgba(0,0,0,0.09)] border-2 border-primary/20"
-          : "border border-gray-200 hover:border-primary/30 hover:shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
-        }
-        bg-card
-      `}
+      className="relative rounded-2xl overflow-hidden bg-card group/item"
+      style={{
+        border: isOpen ? "2px solid #4b5563" : "2px solid #6b7280",
+        boxShadow: isOpen 
+          ? "0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(75,85,99,0.1)" 
+          : "0 2px 12px rgba(0,0,0,0.06)",
+        transition: "all 0.3s ease",
+      }}
     >
+      {/* Shimmer/shine effect overlay */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+          transform: "translateX(-100%)",
+        }}
+        animate={{
+          transform: isOpen ? "translateX(-100%)" : ["translateX(-100%)", "translateX(200%)"],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: isOpen ? 0 : Infinity,
+          repeatDelay: 3,
+          ease: "easeInOut",
+        }}
+      />
+
       {/* Left accent bar — only visible when open */}
       <motion.div
         className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/60 via-primary/30 to-transparent rounded-l-2xl"
@@ -161,7 +178,21 @@ const FAQItem = ({
       {/* Question row */}
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-6 py-5 text-left group"
+        className="w-full flex items-center justify-between px-6 py-5 text-left group/btn relative z-10"
+        onMouseEnter={(e) => {
+          const parent = e.currentTarget.closest('.group\\/item') as HTMLElement;
+          if (parent && !isOpen) {
+            parent.style.borderColor = '#4b5563';
+            parent.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(75,85,99,0.15)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          const parent = e.currentTarget.closest('.group\\/item') as HTMLElement;
+          if (parent && !isOpen) {
+            parent.style.borderColor = '#6b7280';
+            parent.style.boxShadow = '0 2px 12px rgba(0,0,0,0.06)';
+          }
+        }}
       >
         {/* Number badge */}
         <span
@@ -170,7 +201,7 @@ const FAQItem = ({
             text-xs font-bold mr-4 transition-all duration-300
             ${isOpen
               ? "bg-primary text-white"
-              : "bg-primary/8 text-primary/50 group-hover:bg-primary/14"
+              : "bg-primary/8 text-primary/50 group-hover/btn:bg-primary/14"
             }
           `}
         >
@@ -180,7 +211,7 @@ const FAQItem = ({
         <span
           className={`
             font-bold text-sm md:text-[15px] leading-snug flex-1 pr-4 transition-colors duration-200
-            ${isOpen ? "text-primary" : "text-primary/80 group-hover:text-primary"}
+            ${isOpen ? "text-primary" : "text-primary/80 group-hover/btn:text-primary"}
           `}
         >
           {faq.q}
@@ -192,7 +223,7 @@ const FAQItem = ({
           className={`
             flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center
             transition-colors duration-200
-            ${isOpen ? "bg-primary/10" : "bg-primary/5 group-hover:bg-primary/8"}
+            ${isOpen ? "bg-primary/10" : "bg-primary/5 group-hover/btn:bg-primary/8"}
           `}
         >
           <ChevronDown

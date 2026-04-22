@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { CheckCircle2, ArrowRight, FileText, Shield, BarChart3, Search, Workflow, TrendingUp, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 const heroImages = [
   "/UAE Services/Image 1.png",
@@ -159,15 +158,6 @@ const UAEServices = () => {
   const [current, setCurrent] = useState(0);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-
-  const handleTalk = () => {
-    navigate("/contact");
-    setTimeout(() => {
-      const el = document.getElementById("contact-form");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 300);
-  };
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -272,33 +262,6 @@ const UAEServices = () => {
             </motion.div>
 
             {/* Stats row */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="flex gap-8 mt-12 pt-8 border-t border-gray-100"
-            >
-              {([
-                ["5+", "Years in UAE", TrendingUp],
-                ["100+", "Clients Served", Users],
-                ["100%", "Compliance Rate", Award]
-              ] as [string, string, LucideIcon][]).map(([val, label, Icon]) => {
-                return (
-                  <motion.div
-                    key={label}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
-                    className="group cursor-default"
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <Icon className="w-4 h-4 text-secondary group-hover:scale-110 transition-transform" />
-                      <div className="text-2xl font-bold text-primary group-hover:text-secondary transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{val}</div>
-                    </div>
-                    <div className="text-xs text-muted-foreground">{label}</div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
           </div>
 
           {/* Right — image slideshow */}
@@ -613,44 +576,16 @@ const UAEServices = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
-              <motion.button
-                onClick={handleTalk}
+              <motion.a
+                href="/contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 rounded-full font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 group"
               >
                 Have a Talk
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-
-              <motion.a
-                href="tel:+971XXXXXXXX"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-white hover:text-primary transition-all duration-300"
-              >
-                Call Us Now
               </motion.a>
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-wrap gap-8 justify-center mt-16 pt-12 border-t border-white/20"
-            >
-              {[
-                ["5+", "Years Experience"],
-                ["100+", "Happy Clients"],
-                ["24/7", "Support Available"]
-              ].map(([val, label]) => (
-                <div key={label} className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">{val}</div>
-                  <div className="text-sm text-white/80">{label}</div>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
         </div>
       </section>

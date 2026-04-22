@@ -59,45 +59,64 @@ const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
   opacity: Math.random() * 0.5 + 0.2,
 }));
 
-/* ── SECTION 1: Hero — medium gradient + particles ──────── */
-const OpeningSection = () => (
-  <section className="relative overflow-hidden px-6 pt-[76px] pb-0">
-    {/* Medium-tone gradient — slate-blue to teal, not too dark */}
-    <div
-      className="absolute inset-0"
-      style={{
-        background: "linear-gradient(135deg, #1e4d7b 0%, #1a6b8a 40%, #0e9e8e 100%)",
-      }}
-    />
+/* ── SECTION 1: Hero — centered, animated ──────── */
+const OpeningSection = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
-    {/* Soft animated blobs */}
-    <motion.div
-      animate={{ x: [0, 40, 0], y: [0, -25, 0], scale: [1, 1.15, 1] }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[100px]"
-      style={{ background: "rgba(255,255,255,0.08)" }}
-    />
-    <motion.div
-      animate={{ x: [0, -30, 0], y: [0, 30, 0], scale: [1, 1.2, 1] }}
-      transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-      className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[80px]"
-      style={{ background: "rgba(14,158,142,0.25)" }}
-    />
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !inView) setInView(true);
+      },
+      { threshold: 0.3 }
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, [inView]);
 
-    {/* Moving sparkle particles */}
-    {PARTICLES.map((p) => (
-      <motion.div
-        key={p.id}
-        className="absolute rounded-full pointer-events-none"
+  return (
+    <section
+      ref={heroRef}
+      className="relative overflow-hidden px-6 flex items-center justify-center"
+      style={{ minHeight: "85vh", paddingTop: "76px" }}
+    >
+      {/* Gradient background */}
+      <div
+        className="absolute inset-0"
         style={{
-          left: `${p.x}%`,
-          top: `${p.y}%`,
-          width: p.size,
-          height: p.size,
-          background: p.id % 3 === 0 ? "#5EE4CF" : p.id % 3 === 1 ? "#ffffff" : "#a5f3eb",
-          opacity: p.opacity,
-          boxShadow: `0 0 ${p.size * 2}px ${p.size}px ${p.id % 2 === 0 ? "rgba(94,228,207,0.6)" : "rgba(255,255,255,0.4)"}`,
+          background: "linear-gradient(135deg, #1e4d7b 0%, #1a6b8a 40%, #0e9e8e 100%)",
         }}
+      />
+
+      {/* Animated blobs */}
+      <motion.div
+        animate={{ x: [0, 40, 0], y: [0, -25, 0], scale: [1, 1.15, 1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[100px]"
+        style={{ background: "rgba(255,255,255,0.08)" }}
+      />
+      <motion.div
+        animate={{ x: [0, -30, 0], y: [0, 30, 0], scale: [1, 1.2, 1] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[80px]"
+        style={{ background: "rgba(14,158,142,0.25)" }}
+      />
+
+      {/* Sparkle particles */}
+      {PARTICLES.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            background: p.id % 3 === 0 ? "#5EE4CF" : p.id % 3 === 1 ? "#ffffff" : "#a5f3eb",
+            opacity: p.opacity,
+            boxShadow: `0 0 ${p.size * 2}px ${p.size}px ${p.id % 2 === 0 ? "rgba(94,228,207,0.6)" : "rgba(255,255,255,0.4)"}`,
+          }}
         animate={{
           y: [0, -30, 0, 20, 0],
           x: [0, 15, -10, 5, 0],
@@ -122,20 +141,21 @@ const OpeningSection = () => (
       }}
     />
 
-    <div className="relative z-10 max-w-5xl mx-auto text-center pb-24">
+    {/* Centered content */}
+    <div className="relative z-10 max-w-4xl mx-auto text-center">
       <motion.p
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease }}
+        initial={{ opacity: 0, y: -16 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#5EE4CF] mb-6"
       >
         About Us
       </motion.p>
 
       <motion.h1
-        initial={{ opacity: 0, x: -70, filter: "blur(10px)" }}
-        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.95, delay: 0.1, ease }}
+        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+        animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+        transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
         className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-[1.05] mb-6"
         style={{ letterSpacing: "-0.03em" }}
       >
@@ -145,8 +165,8 @@ const OpeningSection = () => (
           <motion.span
             className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[#5EE4CF]/50"
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.9, duration: 0.8, ease }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ delay: 0.75, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           />
         </span>{" "}
         <span className="text-white/90">Growth.</span>
@@ -154,9 +174,9 @@ const OpeningSection = () => (
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.35, ease }}
-        className="text-white/75 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
       >
         Your financial clarity partner — built for businesses that demand accuracy, speed, and strategic insight.
       </motion.p>
@@ -164,21 +184,18 @@ const OpeningSection = () => (
       {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9 }}
-        className="flex flex-col items-center gap-2"
+        animate={inView ? { opacity: 0.6, y: [0, 8, 0] } : {}}
+        transition={{ delay: 1.2, duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="inline-block"
       >
-        <span className="text-white/35 text-[10px] uppercase tracking-widest">Scroll to explore</span>
-        <motion.div
-          className="w-px h-10 bg-gradient-to-b from-[#5EE4CF]/60 to-transparent"
-          animate={{ scaleY: [0, 1, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5EE4CF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </motion.div>
     </div>
-
   </section>
 );
+};
 
 /* ── SECTION 2: Who We Are — 98% badge removed ─────────── */
 const WhoWeAre = () => {

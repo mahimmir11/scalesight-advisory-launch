@@ -7,7 +7,7 @@ const emailHref = `mailto:Info@scalesight.in?subject=${prefilledSubject}&body=${
 const Footer = () => (
   <footer className="relative">
     <div
-      className="text-gray-900 pt-14 pb-6 px-6 relative bg-white rounded-t-[80px] md:rounded-t-[120px]"
+      className="text-gray-900 pt-14 pb-6 px-6 relative bg-white"
       style={{
         backgroundImage: "url('/footer.png')",
         backgroundSize: "cover",
@@ -88,7 +88,7 @@ const Footer = () => (
           <div className="flex items-center gap-3">
 
             {/* WhatsApp */}
-            <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+            <a href="https://wa.me/919023120410" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
               className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
               <svg className="w-6 h-6" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="12" fill="#25D366"/>
@@ -96,36 +96,8 @@ const Footer = () => (
               </svg>
             </a>
 
-            {/* Instagram */}
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-              className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <defs>
-                  <radialGradient id="ig-footer" cx="30%" cy="107%" r="150%">
-                    <stop offset="0%" stopColor="#fdf497"/>
-                    <stop offset="45%" stopColor="#fd5949"/>
-                    <stop offset="60%" stopColor="#d6249f"/>
-                    <stop offset="90%" stopColor="#285AEB"/>
-                  </radialGradient>
-                </defs>
-                <rect width="24" height="24" rx="6" fill="url(#ig-footer)"/>
-                <rect x="6.5" y="6.5" width="11" height="11" rx="3" fill="none" stroke="white" strokeWidth="1.5"/>
-                <circle cx="12" cy="12" r="3" fill="none" stroke="white" strokeWidth="1.5"/>
-                <circle cx="17" cy="7" r="1" fill="white"/>
-              </svg>
-            </a>
-
-            {/* Facebook */}
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-              className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
-              <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="12" fill="#1877F2"/>
-                <path fill="white" d="M15.5 8H13V6.5c0-.6.4-.5 1-.5h1.5V4H13c-1.7 0-3 1.3-3 3v1H8v2.5h2V20h2.5v-9.5H15l.5-2.5z"/>
-              </svg>
-            </a>
-
             {/* LinkedIn */}
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+            <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
               className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
               <svg className="w-6 h-6" viewBox="0 0 24 24">
                 <rect width="24" height="24" rx="4" fill="#0A66C2"/>

@@ -74,37 +74,102 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18 }}
-            className="md:hidden bg-[#09285A] flex flex-col"
-          >
-            {links.map((l, i) => (
-              <motion.div
-                key={l.to}
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.04 }}
-              >
-                <Link
-                  to={l.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center justify-between px-6 py-3.5 text-sm font-semibold ${
-                    isActive(l.to)
-                      ? "text-[#5EE4CF] bg-white/10"
-                      : "text-white/75 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  <span>{l.label}</span>
-                  {isActive(l.to) && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5EE4CF]" />
-                  )}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+              style={{ top: "76px" }}
+              onClick={() => setMobileOpen(false)}
+            />
+
+            {/* Menu panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden fixed left-0 right-0 z-50 mx-4 mt-2 rounded-2xl overflow-hidden shadow-2xl"
+              style={{
+                top: "76px",
+                background: "linear-gradient(135deg, #0B1F3A 0%, #1565a8 100%)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(94,228,207,0.2)",
+              }}
+            >
+              {/* Decorative gradient overlay */}
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle at top right, rgba(94,228,207,0.4) 0%, transparent 60%)",
+                }}
+              />
+
+              {/* Menu items */}
+              <div className="relative py-3">
+                {links.map((l, i) => (
+                  <motion.div
+                    key={l.to}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Link
+                      to={l.to}
+                      onClick={() => setMobileOpen(false)}
+                      className={`
+                        relative flex items-center justify-between px-6 py-4 text-base font-semibold
+                        transition-all duration-200 group
+                        ${isActive(l.to)
+                          ? "text-[#5EE4CF] bg-white/15"
+                          : "text-white/85 hover:text-white hover:bg-white/10"
+                        }
+                      `}
+                    >
+                      {/* Left accent bar for active item */}
+                      {isActive(l.to) && (
+                        <motion.div
+                          layoutId="mobile-active-indicator"
+                          className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full"
+                          style={{ background: "#5EE4CF" }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                      )}
+
+                      <span className="relative z-10">{l.label}</span>
+
+                      {/* Active dot indicator */}
+                      {isActive(l.to) ? (
+                        <motion.span
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2 h-2 rounded-full bg-[#5EE4CF] shadow-lg"
+                          style={{ boxShadow: "0 0 8px rgba(94,228,207,0.6)" }}
+                        />
+                      ) : (
+                        <motion.svg
+                          className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="9 18 15 12 9 6" />
+                        </motion.svg>
+                      )}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Bottom decorative element */}
+              <div className="h-1 bg-gradient-to-r from-[#5EE4CF] via-[#2dd4bf] to-[#0ea5e9]" />
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>

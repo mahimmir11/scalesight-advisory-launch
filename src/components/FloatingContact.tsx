@@ -23,7 +23,33 @@ const LinkedInIcon = () => (
 const FloatingContact = () => {
   const [open, setOpen] = useState(false);
   const [waOpen, setWaOpen] = useState(false);
+  const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  // Welcome animation sequence on first visit
+  useEffect(() => {
+    // Check if this is the first visit (only on homepage)
+    const isHomePage = window.location.pathname === "/" || window.location.pathname === "/index.html";
+    const hasSeenWelcome = sessionStorage.getItem("floatingContactWelcomePlayed");
+    
+    if (isHomePage && !hasSeenWelcome && !hasPlayedWelcome) {
+      setHasPlayedWelcome(true);
+      sessionStorage.setItem("floatingContactWelcomePlayed", "true");
+      
+      // Timeline:
+      // 0s: Open floating button
+      setTimeout(() => setOpen(true), 500);
+      
+      // 2s: Expand WhatsApp
+      setTimeout(() => setWaOpen(true), 2000);
+      
+      // 4s: Close WhatsApp
+      setTimeout(() => setWaOpen(false), 4000);
+      
+      // 4.3s: Close floating button
+      setTimeout(() => setOpen(false), 4300);
+    }
+  }, [hasPlayedWelcome]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -62,8 +88,12 @@ const FloatingContact = () => {
 
               {/* WhatsApp row — expands sub-panel */}
               <div>
-                <button
+                <motion.button
                   onClick={() => setWaOpen(!waOpen)}
+                  animate={{
+                    scale: waOpen ? 1 : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 transition-all duration-200"
                   style={{
                     background: waOpen ? "#f0fdf4" : "white",
@@ -84,7 +114,7 @@ const FloatingContact = () => {
                   >
                     ▾
                   </motion.span>
-                </button>
+                </motion.button>
 
                 {/* Sub-numbers */}
                 <AnimatePresence>
@@ -176,12 +206,20 @@ const FloatingContact = () => {
         onClick={() => { setOpen(!open); if (open) setWaOpen(false); }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.96 }}
-        animate={{ y: open ? 0 : [0, -5, 0] }}
-        transition={{ y: { duration: 2.2, repeat: open ? 0 : Infinity, ease: "easeInOut" } }}
+        animate={{ 
+          y: open ? 0 : [0, -5, 0],
+          scale: hasPlayedWelcome && !open ? 1 : (open ? 1 : [1, 1.08, 1])
+        }}
+        transition={{ 
+          y: { duration: 2.2, repeat: open ? 0 : Infinity, ease: "easeInOut" },
+          scale: { duration: 0.8, repeat: open ? 0 : Infinity, ease: "easeInOut" }
+        }}
         className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-semibold shadow-lg"
         style={{
           background: "linear-gradient(135deg, #09285A 0%, #0ea5e9 100%)",
-          boxShadow: "0 6px 24px rgba(9,40,90,0.30)",
+          boxShadow: open 
+            ? "0 8px 32px rgba(9,40,90,0.45), 0 0 0 4px rgba(14,165,233,0.15)" 
+            : "0 6px 24px rgba(9,40,90,0.30)",
           fontFamily: "'Space Grotesk', sans-serif",
         }}
       >
