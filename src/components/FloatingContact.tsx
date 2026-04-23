@@ -20,36 +20,38 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const FloatingContact = () => {
+// "wait"   → nothing shown
+// "teaser" → corner button + teaser card shown
+// "idle"   → corner button only, normal state
+type Phase = "wait" | "teaser" | "idle";
+
+interface Props {
+  splashDone?: boolean;
+}
+
+const FloatingContact = ({ splashDone = true }: Props) => {
   const [open, setOpen] = useState(false);
   const [waOpen, setWaOpen] = useState(false);
-  const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
+  const [phase, setPhase] = useState<Phase>("wait");
   const ref = useRef<HTMLDivElement>(null);
 
-  // Welcome animation sequence on first visit
   useEffect(() => {
-    // Check if this is the first visit (only on homepage)
-    const isHomePage = window.location.pathname === "/" || window.location.pathname === "/index.html";
-    const hasSeenWelcome = sessionStorage.getItem("floatingContactWelcomePlayed");
-    
-    if (isHomePage && !hasSeenWelcome && !hasPlayedWelcome) {
-      setHasPlayedWelcome(true);
-      sessionStorage.setItem("floatingContactWelcomePlayed", "true");
-      
-      // Timeline:
-      // 0s: Open floating button
-      setTimeout(() => setOpen(true), 500);
-      
-      // 2s: Expand WhatsApp
-      setTimeout(() => setWaOpen(true), 2000);
-      
-      // 4s: Close WhatsApp
-      setTimeout(() => setWaOpen(false), 4000);
-      
-      // 4.3s: Close floating button
-      setTimeout(() => setOpen(false), 4300);
+    if (!splashDone) return;
+
+    const seen = sessionStorage.getItem("fcSeen");
+    if (seen) {
+      setPhase("idle");
+      return;
     }
-  }, [hasPlayedWelcome]);
+    sessionStorage.setItem("fcSeen", "1");
+
+    // 4s after splash: show corner button + teaser
+    const t1 = setTimeout(() => setPhase("teaser"), 4000);
+    // hide teaser after 4s, go idle
+    const t2 = setTimeout(() => setPhase("idle"), 8000);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [splashDone]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -63,170 +65,172 @@ const FloatingContact = () => {
   }, []);
 
   return (
-    <div ref={ref} className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+    <>
+      {/* ══ CORNER CONTAINER — only during "teaser" and "idle" phases ══ */}
+      {(phase === "teaser" || phase === "idle") && (
+        <div ref={ref} className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
 
-      {/* ── Popup card ── */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.95 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-white rounded-2xl overflow-hidden"
-            style={{
-              width: "290px",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06)",
-            }}
-          >
-            {/* Logo header */}
-            <div className="px-4 pt-4 pb-3 border-b border-gray-100 flex items-center justify-center">
-              <img src="/fulllogo1.png" alt="ScaleSight" className="h-8 w-auto" />
-            </div>
+          {/* Full popup card */}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 16, scale: 0.95 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl overflow-hidden"
+                style={{
+                  width: "290px",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06)",
+                }}
+              >
+                <div className="px-4 pt-4 pb-3 border-b border-gray-100 flex items-center justify-center">
+                  <img src="/fulllogo1.png" alt="ScaleSight" className="h-8 w-auto" />
+                </div>
 
-            <div className="px-3 py-3 space-y-2">
+                <div className="px-3 py-3 space-y-2">
+                  <div>
+                    <motion.button
+                      onClick={() => setWaOpen(!waOpen)}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 transition-all duration-200"
+                      style={{
+                        background: waOpen ? "#f0fdf4" : "white",
+                        borderColor: waOpen ? "#25D36640" : "#f3f4f6",
+                      }}
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-[#25D366] flex items-center justify-center shrink-0 text-white">
+                        <WaIcon />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className="text-xs text-gray-400 font-medium">WhatsApp</p>
+                        <p className="text-sm font-bold text-[#0B1F3A]">Chat with us</p>
+                      </div>
+                      <motion.span animate={{ rotate: waOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="text-gray-400 text-xs">▾</motion.span>
+                    </motion.button>
 
-              {/* WhatsApp row — expands sub-panel */}
-              <div>
-                <motion.button
-                  onClick={() => setWaOpen(!waOpen)}
-                  animate={{
-                    scale: waOpen ? 1 : 1,
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 transition-all duration-200"
-                  style={{
-                    background: waOpen ? "#f0fdf4" : "white",
-                    borderColor: waOpen ? "#25D36640" : "#f3f4f6",
-                  }}
-                >
-                  <div className="w-10 h-10 rounded-lg bg-[#25D366] flex items-center justify-center shrink-0 text-white">
+                    <AnimatePresence>
+                      {waOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.22, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-1.5 ml-2 space-y-1.5">
+                            <a href="https://wa.me/919023120410" target="_blank" rel="noopener noreferrer"
+                              className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0fdf4] border border-[#25D36630] hover:bg-[#dcfce7] transition-colors">
+                              <span className="text-lg leading-none">🇮🇳</span>
+                              <div>
+                                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">India</p>
+                                <p className="text-sm font-bold text-[#0B1F3A]">+91 90231 20410</p>
+                              </div>
+                            </a>
+                            <a href="https://wa.me/971552543007" target="_blank" rel="noopener noreferrer"
+                              className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0fdf4] border border-[#25D36630] hover:bg-[#dcfce7] transition-colors">
+                              <span className="text-lg leading-none">🇦🇪</span>
+                              <div>
+                                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">UAE</p>
+                                <p className="text-sm font-bold text-[#0B1F3A]">+971 55 254 3007</p>
+                              </div>
+                            </a>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <a href={emailHref}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border-2 border-gray-100 hover:border-[#0B1F3A]/20 transition-all">
+                    <div className="w-10 h-10 rounded-lg bg-[#0B1F3A] flex items-center justify-center shrink-0">
+                      <Mail className="w-5 h-5 text-white" strokeWidth={2} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-400 font-medium">Email Us</p>
+                      <p className="text-sm font-bold text-[#0B1F3A]">Info@scalesight.in</p>
+                    </div>
+                  </a>
+
+                  <a href="/contact"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border-2 border-gray-100 hover:border-[#00C2A8]/30 transition-all">
+                    <div className="w-10 h-10 rounded-lg bg-[#00C2A8] flex items-center justify-center shrink-0">
+                      <MessageCircle className="w-5 h-5 text-white" strokeWidth={2} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-[#0B1F3A]">Get in Touch</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div className="px-4 pb-4 pt-1">
+                  <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#0A66C2] text-white text-sm font-semibold hover:bg-[#0958a8] transition-colors">
+                    <LinkedInIcon />
+                    ScaleSight on LinkedIn
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Teaser mini-card */}
+          <AnimatePresence>
+            {phase === "teaser" && !open && (
+              <motion.div
+                key="teaser-card"
+                initial={{ opacity: 0, y: 12, scale: 0.88 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.94 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-2xl overflow-hidden pointer-events-none"
+                style={{
+                  width: "260px",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.13), 0 0 0 1px rgba(0,0,0,0.05)",
+                }}
+              >
+                <div className="px-5 py-4 flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#09285A] to-[#0ea5e9] flex items-center justify-center shrink-0 text-white">
                     <WaIcon />
                   </div>
-                  <div className="flex-1 text-left">
-                    <p className="text-xs text-gray-400 font-medium">WhatsApp</p>
-                    <p className="text-sm font-bold text-[#0B1F3A]">Chat with us</p>
+                  <div>
+                    <p className="text-xs text-gray-400 font-medium">Need help?</p>
+                    <p className="text-[15px] font-bold text-[#0B1F3A] leading-tight">Talk to our advisors</p>
                   </div>
-                  <motion.span
-                    animate={{ rotate: waOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-gray-400 text-xs"
-                  >
-                    ▾
-                  </motion.span>
-                </motion.button>
-
-                {/* Sub-numbers */}
-                <AnimatePresence>
-                  {waOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.22, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-1.5 ml-2 space-y-1.5">
-                        <a
-                          href="https://wa.me/919023120410"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0fdf4] border border-[#25D36630] hover:bg-[#dcfce7] transition-colors"
-                        >
-                          <span className="text-lg leading-none">🇮🇳</span>
-                          <div>
-                            <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">India</p>
-                            <p className="text-sm font-bold text-[#0B1F3A]">+91 90231 20410</p>
-                          </div>
-                        </a>
-                        <a
-                          href="https://wa.me/971552543007"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#f0fdf4] border border-[#25D36630] hover:bg-[#dcfce7] transition-colors"
-                        >
-                          <span className="text-lg leading-none">🇦🇪</span>
-                          <div>
-                            <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">UAE</p>
-                            <p className="text-sm font-bold text-[#0B1F3A]">+971 55 254 3007</p>
-                          </div>
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Email */}
-              <a
-                href={emailHref}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border-2 border-gray-100 hover:border-[#0B1F3A]/20 transition-all"
-              >
-                <div className="w-10 h-10 rounded-lg bg-[#0B1F3A] flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-white" strokeWidth={2} />
                 </div>
-                <div>
-                  <p className="text-xs text-gray-400 font-medium">Email Us</p>
-                  <p className="text-sm font-bold text-[#0B1F3A]">Info@scalesight.in</p>
+                <div className="px-5 pb-4">
+                  <div className="h-px bg-gray-100 mb-2.5" />
+                  <p className="text-xs text-gray-500 leading-snug">
+                    🇮🇳 India &amp; 🇦🇪 UAE — tap the button to connect
+                  </p>
                 </div>
-              </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Get in Touch */}
-              <a
-                href="/contact"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border-2 border-gray-100 hover:border-[#00C2A8]/30 transition-all"
-              >
-                <div className="w-10 h-10 rounded-lg bg-[#00C2A8] flex items-center justify-center shrink-0">
-                  <MessageCircle className="w-5 h-5 text-white" strokeWidth={2} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-[#0B1F3A]">Get in Touch</p>
-                </div>
-              </a>
-            </div>
-
-            {/* LinkedIn */}
-            <div className="px-4 pb-4 pt-1">
-              <a
-                href="https://linkedin.com/company/scalesight"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#0A66C2] text-white text-sm font-semibold hover:bg-[#0958a8] transition-colors"
-              >
-                <LinkedInIcon />
-                ScaleSight on LinkedIn
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Trigger pill ── */}
-      <motion.button
-        onClick={() => { setOpen(!open); if (open) setWaOpen(false); }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.96 }}
-        animate={{ 
-          y: open ? 0 : [0, -5, 0],
-          scale: hasPlayedWelcome && !open ? 1 : (open ? 1 : [1, 1.08, 1])
-        }}
-        transition={{ 
-          y: { duration: 2.2, repeat: open ? 0 : Infinity, ease: "easeInOut" },
-          scale: { duration: 0.8, repeat: open ? 0 : Infinity, ease: "easeInOut" }
-        }}
-        className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-semibold shadow-lg"
-        style={{
-          background: "linear-gradient(135deg, #09285A 0%, #0ea5e9 100%)",
-          boxShadow: open 
-            ? "0 8px 32px rgba(9,40,90,0.45), 0 0 0 4px rgba(14,165,233,0.15)" 
-            : "0 6px 24px rgba(9,40,90,0.30)",
-          fontFamily: "'Space Grotesk', sans-serif",
-        }}
-      >
-        <WaIcon />
-        Contact Us
-      </motion.button>
-    </div>
+          {/* Corner trigger pill */}
+          <motion.button
+            key="corner-btn"
+            initial={{ opacity: 0, scale: 0.7, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            onClick={() => { setOpen(!open); if (open) setWaOpen(false); }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-semibold shadow-lg"
+            style={{
+              background: "linear-gradient(135deg, #09285A 0%, #0ea5e9 100%)",
+              boxShadow: open
+                ? "0 8px 32px rgba(9,40,90,0.45), 0 0 0 4px rgba(14,165,233,0.15)"
+                : "0 6px 24px rgba(9,40,90,0.30)",
+              fontFamily: "'Space Grotesk', sans-serif",
+            }}
+          >
+            <WaIcon />
+            Contact Us
+          </motion.button>
+        </div>
+      )}
+    </>
   );
 };
 
