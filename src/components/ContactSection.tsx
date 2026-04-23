@@ -307,6 +307,8 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
     name: "", email: "", phone: "", countryCode: "+91", service: "", message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [blinkIndex, setBlinkIndex] = useState<number | null>(null);
 
   const socialsRef = useRef<HTMLDivElement>(null);
@@ -323,9 +325,24 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
     return () => clearInterval(interval);
   }, [isInView]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to send. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -393,7 +410,7 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
                       <h3 className="text-xl font-bold text-[#09285A]">Message Sent!</h3>
                       <p className="text-gray-400 text-sm max-w-xs">Thanks for reaching out. We'll be in touch within 24 hours.</p>
                       <button
-                        onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", countryCode: "+91", service: "", message: "" }); }}
+                        onClick={() => { setSubmitted(false); setError(null); setForm({ name: "", email: "", phone: "", countryCode: "+91", service: "", message: "" }); }}
                         className="mt-2 text-sm text-[#09285A] font-semibold underline underline-offset-4"
                       >
                         Send another message
@@ -446,10 +463,13 @@ const ContactSection = ({ showInfoCards = true }: { showInfoCards?: boolean }) =
                           placeholder="Tell us about your business goals or how we can help..." />
                       </div>
 
-                      <button type="submit"
-                        className="w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-white"
+                      {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                      )}
+                      <button type="submit" disabled={loading}
+                        className="w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all text-white disabled:opacity-60 disabled:cursor-not-allowed"
                         style={{ background: "linear-gradient(135deg, hsl(172 72% 63%), hsl(184 84% 21%))", boxShadow: "0 8px 24px -4px rgba(94,228,207,0.35)" }}>
-                        Send Message <Send className="w-4 h-4" />
+                        {loading ? "Sending..." : <><span>Send Message</span><Send className="w-4 h-4" /></>}
                       </button>
                       <p className="text-center text-xs text-gray-400">We respect your privacy. No spam, ever.</p>
                     </form>
