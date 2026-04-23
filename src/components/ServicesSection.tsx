@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -40,25 +40,48 @@ const regionInfo = {
 
 const ServicesSection = () => {
   const [selected, setSelected] = useState<"India" | "UAE" | null>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const headingInView = useInView(headingRef, { once: true, margin: "-80px" });
+  const cardsInView = useInView(cardsRef, { once: true, margin: "-60px" });
 
   return (
     <section id="services" className="py-24 md:py-32 px-6 bg-card">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-primary mb-4"
+        <div ref={headingRef} className="text-center mb-16 overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            Specialized Expertise
-          </motion.h2>
-          <p className="text-lg text-muted-blue">
-            {selected
-              ? `Showing services for ${regionInfo[selected].label}`
-              : "Select a region to explore our tailored advisory frameworks."}
-          </p>
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-primary mb-4"
+              initial={{ opacity: 0, scale: 0.88, y: 20 }}
+              animate={headingInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Specialized Expertise
+            </motion.h2>
+            <motion.p
+              className="text-lg text-muted-blue"
+              initial={{ opacity: 0, y: 12 }}
+              animate={headingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.28, ease: "easeOut" }}
+            >
+              {selected
+                ? `Showing services for ${regionInfo[selected].label}`
+                : "Select a region to explore our tailored advisory frameworks."}
+            </motion.p>
+            {/* Animated underline */}
+            <motion.div
+              className="mx-auto mt-4 h-[3px] rounded-full bg-gradient-to-r from-transparent via-[#00C2A8] to-transparent"
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={headingInView ? { scaleX: 1, opacity: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ width: "120px" }}
+            />
+          </motion.div>
         </div>
 
         <AnimatePresence mode="wait">
@@ -66,58 +89,93 @@ const ServicesSection = () => {
           {!selected && (
             <motion.div
               key="region-cards"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
+              ref={cardsRef}
               className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
             >
-              {(["India", "UAE"] as const).map((r) => (
+              {(["India", "UAE"] as const).map((r, i) => (
                 <Link
                   key={r}
                   to={r === "India" ? "/services/india" : "/services/uae"}
                   className="block"
                 >
                   <motion.div
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, x: r === "India" ? -80 : 80, scale: 0.95 }}
+                    animate={cardsInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+                    transition={{
+                      duration: 0.75,
+                      delay: i * 0.12,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    whileHover={{ y: -6, scale: 1.03 }}
                     className="relative p-10 rounded-3xl border-2 border-primary/10 hover:border-[#00C2A8]/40 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden min-h-[360px]"
                   >
                   {/* Background Image */}
-                  <div 
+                  <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ 
+                    style={{
                       backgroundImage: `url('/${r === "India" ? "india1.png" : "uae.jpg"}')`,
                     }}
                   />
-                  
-                  {/* Dark overlay for better text readability */}
+
+                  {/* Dark overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/15 group-hover:from-black/25 group-hover:via-black/15 group-hover:to-black/10 transition-all" />
-                  
-                  {/* Content with relative positioning to appear above background */}
+
+                  {/* Shimmer sweep on entry */}
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none z-10"
+                    initial={{ x: "-100%", opacity: 0.6 }}
+                    animate={cardsInView ? { x: "150%", opacity: 0 } : {}}
+                    transition={{ duration: 0.9, delay: 0.3 + i * 0.15, ease: "easeOut" }}
+                    style={{
+                      background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%)",
+                    }}
+                  />
+
+                  {/* Content */}
                   <div className="relative z-10 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg mb-6" style={{ color: '#FFFFFF' }}>
+                      <motion.h3
+                        className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg mb-6"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={cardsInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.35 + i * 0.12, ease: "easeOut" }}
+                      >
                         {regionInfo[r].label}
-                      </h3>
-                      <p className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md">{regionInfo[r].tagline}</p>
-                      <p className="text-sm text-white/80 drop-shadow-md">{regionInfo[r].summary}</p>
+                      </motion.h3>
+                      <motion.p
+                        className="text-base text-white/90 leading-relaxed mb-1 drop-shadow-md"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={cardsInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.55, delay: 0.45 + i * 0.12, ease: "easeOut" }}
+                      >
+                        {regionInfo[r].tagline}
+                      </motion.p>
+                      <motion.p
+                        className="text-sm text-white/80 drop-shadow-md"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={cardsInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.5, delay: 0.52 + i * 0.12, ease: "easeOut" }}
+                      >
+                        {regionInfo[r].summary}
+                      </motion.p>
                     </div>
-                    <div className="flex items-start mt-6">
-                      <motion.span 
-                        animate={{
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
+                    <motion.div
+                      className="flex items-start mt-6"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={cardsInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.5, delay: 0.6 + i * 0.12, ease: "easeOut" }}
+                    >
+                      <motion.span
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         whileHover={{ scale: 1.1 }}
-                        className="inline-flex items-center gap-2 bg-white text-primary px-7 py-3.5 rounded-full text-base font-bold group-hover:bg-[#00C2A8] group-hover:text-white transition-colors shadow-lg hover:shadow-xl cursor-pointer">
+                        className="inline-flex items-center gap-2 bg-white text-primary px-7 py-3.5 rounded-full text-base font-bold group-hover:bg-[#00C2A8] group-hover:text-white transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+                      >
                         Show More Details <ArrowRight className="w-5 h-5" />
                       </motion.span>
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
                 </Link>

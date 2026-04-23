@@ -63,7 +63,7 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <AnimatedRoutes />
-          <FloatingContact />
+          <FloatingContact splashDone={!splash} />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

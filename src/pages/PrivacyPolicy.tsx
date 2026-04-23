@@ -78,7 +78,7 @@ Operating in: India & UAE`,
 const PrivacyPolicy = () => (
   <div className="min-h-screen flex flex-col bg-white">
     <Navbar />
-    <main className="flex-1 pt-[70px]">
+    <main className="flex-1 pt-[76px]">
       {/* Hero */}
       <div className="bg-[#0B1F3A] px-6 py-16 text-center">
         <motion.p
