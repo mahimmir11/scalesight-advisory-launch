@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     service: "gmail",
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASS,
+      pass: process.env.GMAIL_APP_PASS.replace(/\s/g, ""),
     },
   });
 
