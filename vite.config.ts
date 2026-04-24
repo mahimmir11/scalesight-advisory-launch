@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     historyApiFallback: true,
+    proxy: {
+      "/api": "http://localhost:3001",
+    },
   },
   preview: {
     host: "::",
