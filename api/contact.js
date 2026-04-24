@@ -1,6 +1,6 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -21,10 +21,7 @@ module.exports = async function handler(req, res) {
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: {
-        user: gmailUser,
-        pass: gmailPass,
-      },
+      auth: { user: gmailUser, pass: gmailPass },
     });
 
     const htmlBody = `
@@ -55,4 +52,4 @@ module.exports = async function handler(req, res) {
     console.error("Mail error:", err);
     return res.status(500).json({ error: err.message || "Failed to send email." });
   }
-};
+}
