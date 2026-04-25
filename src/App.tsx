@@ -22,13 +22,13 @@ import FloatingContact from "./components/FloatingContact";
 
 const queryClient = new QueryClient();
 
-const AnimatedRoutes = () => {
+const AnimatedRoutes = ({ splashDone }: { splashDone: boolean }) => {
   const location = useLocation();
   return (
     <>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/" element={<PageTransition><Index splashDone={splashDone} /></PageTransition>} />
           <Route path="/about" element={<PageTransition><About /></PageTransition>} />
           <Route path="/services/uae" element={<PageTransition><UAEServices /></PageTransition>} />
           <Route path="/services/india" element={<PageTransition><IndiaServices /></PageTransition>} />
@@ -62,7 +62,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <AnimatedRoutes />
+          <AnimatedRoutes splashDone={!splash} />
           <FloatingContact splashDone={!splash} />
         </BrowserRouter>
       </TooltipProvider>

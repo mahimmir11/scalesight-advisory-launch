@@ -6,10 +6,10 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 
-const Index = () => (
+const Index = ({ splashDone = true }: { splashDone?: boolean }) => (
   <div className="scroll-smooth">
     <Navbar />
-    <HeroSection />
+    <HeroSection splashDone={splashDone} />
     <ServicesSection />
     <ContactSection />
     <FAQSection />

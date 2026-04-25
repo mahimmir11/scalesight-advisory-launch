@@ -87,11 +87,11 @@ const ServicesSection = () => {
         <AnimatePresence mode="wait">
           {/* Region selection cards */}
           {!selected && (
+            <div ref={cardsRef}>
             <motion.div
               key="region-cards"
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              ref={cardsRef}
               className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
             >
               {(["India", "UAE"] as const).map((r, i) => (
@@ -181,10 +181,10 @@ const ServicesSection = () => {
                 </Link>
               ))}
             </motion.div>
+            </div>
           )}
 
-          {/* Service grid after region selected */}
-          {selected && (
+          {/* Service grid after region selected */}          {selected && (
             <motion.div
               key={`services-${selected}`}
               initial={{ opacity: 0, y: 20 }}

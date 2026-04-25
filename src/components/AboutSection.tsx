@@ -48,153 +48,244 @@ const steps = [
   { num: "04", title: "Optimize",    desc: "Continuous improvement as your business scales." },
 ];
 
-/* ── Floating particles for About hero ─────────────────── */
-const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 3 + 1.5,
-  duration: Math.random() * 8 + 6,
-  delay: Math.random() * 4,
-  opacity: Math.random() * 0.5 + 0.2,
-}));
+/* ── Floating particles for About hero — removed, using bg image now ── */
 
-/* ── SECTION 1: Hero — centered, animated ──────── */
+/* ── SECTION 1: Hero — split layout, light bg, left text + right framed image ── */
 const OpeningSection = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !inView) setInView(true);
-      },
-      { threshold: 0.3 }
-    );
-    if (heroRef.current) observer.observe(heroRef.current);
-    return () => observer.disconnect();
-  }, [inView]);
+    const t = setTimeout(() => setAnimate(true), 80);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section
-      ref={heroRef}
-      className="relative overflow-hidden px-6 flex items-center justify-center"
-      style={{ minHeight: "85vh", paddingTop: "76px" }}
-    >
-      {/* Gradient background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #1e4d7b 0%, #1a6b8a 40%, #0e9e8e 100%)",
-        }}
-      />
-
-      {/* Animated blobs */}
-      <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -25, 0], scale: [1, 1.15, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[100px]"
-        style={{ background: "rgba(255,255,255,0.08)" }}
-      />
-      <motion.div
-        animate={{ x: [0, -30, 0], y: [0, 30, 0], scale: [1, 1.2, 1] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[80px]"
-        style={{ background: "rgba(14,158,142,0.25)" }}
-      />
-
-      {/* Sparkle particles */}
-      {PARTICLES.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            background: p.id % 3 === 0 ? "#5EE4CF" : p.id % 3 === 1 ? "#ffffff" : "#a5f3eb",
-            opacity: p.opacity,
-            boxShadow: `0 0 ${p.size * 2}px ${p.size}px ${p.id % 2 === 0 ? "rgba(94,228,207,0.6)" : "rgba(255,255,255,0.4)"}`,
-          }}
-        animate={{
-          y: [0, -30, 0, 20, 0],
-          x: [0, 15, -10, 5, 0],
-          opacity: [p.opacity, p.opacity * 1.8, p.opacity * 0.4, p.opacity * 1.5, p.opacity],
-          scale: [1, 1.4, 0.8, 1.2, 1],
-        }}
-        transition={{
-          duration: p.duration,
-          delay: p.delay,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-    ))}
-
-    {/* Dot grid overlay */}
-    <div
-      className="absolute inset-0 opacity-[0.06] pointer-events-none"
+      className="relative w-full overflow-hidden"
       style={{
-        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
-        backgroundSize: "36px 36px",
+        minHeight: "100vh",
+        paddingTop: "76px",
+        background: "linear-gradient(135deg, #eaf4fb 0%, #f0faf8 50%, #e8f5f2 100%)",
+        borderRadius: "0 0 32px 32px",
       }}
-    />
+    >
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(9,40,90,0.07) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-    {/* Centered content */}
-    <div className="relative z-10 max-w-4xl mx-auto text-center">
-      <motion.p
-        initial={{ opacity: 0, y: -16 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#5EE4CF] mb-6"
-      >
-        About Us
-      </motion.p>
+      {/* Soft ambient blobs */}
+      <div className="absolute top-[-80px] left-[-80px] w-[420px] h-[420px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(0,194,168,0.12) 0%, transparent 70%)" }} />
+      <div className="absolute bottom-[-60px] right-[-60px] w-[380px] h-[380px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(9,40,90,0.08) 0%, transparent 70%)" }} />
 
-      <motion.h1
-        initial={{ opacity: 0, scale: 0.9, y: 30 }}
-        animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-        transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-        className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-[1.05] mb-6"
-        style={{ letterSpacing: "-0.03em" }}
-      >
-        Precision.{" "}
-        <span className="relative inline-block">
-          <span className="text-[#5EE4CF]">Compliance.</span>
-          <motion.span
-            className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[#5EE4CF]/50"
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ delay: 0.75, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </span>{" "}
-        <span className="text-white/90">Growth.</span>
-      </motion.h1>
+      {/* Main grid */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+        style={{ minHeight: "calc(100vh - 76px)" }}>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
-      >
-        Your financial clarity partner — built for businesses that demand accuracy, speed, and strategic insight.
-      </motion.p>
+        {/* LEFT — text */}
+        <div className="flex flex-col justify-center py-12 lg:py-0">
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 0.6, y: [0, 8, 0] } : {}}
-        transition={{ delay: 1.2, duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="inline-block"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5EE4CF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </motion.div>
-    </div>
-  </section>
-);
+          {/* "ABOUT US" label */}
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={animate ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'Manrope', sans-serif",
+              fontSize: "11px", fontWeight: 700,
+              letterSpacing: "0.28em", textTransform: "uppercase" as const,
+              color: "#00C2A8", marginBottom: "20px",
+            }}
+          >
+            About Us
+          </motion.p>
+
+          {/* Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
+            animate={animate ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'Manrope', sans-serif",
+              fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+              fontWeight: 800,
+              lineHeight: 1.08,
+              letterSpacing: "-0.03em",
+              color: "#09285A",
+              margin: "0 0 20px 0",
+            }}
+          >
+            Precision.
+            <br />
+            <span style={{ color: "#00C2A8" }}>Compliance.</span>
+            <br />
+            Growth.
+          </motion.h1>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={animate ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'Manrope', sans-serif",
+              fontSize: "clamp(0.875rem, 1.05vw, 0.95rem)",
+              color: "#4a5568",
+              lineHeight: 1.75,
+              maxWidth: "420px",
+              margin: "0 0 36px 0",
+              fontWeight: 400,
+            }}
+          >
+            Your financial clarity partner — built for businesses
+            <br />that demand accuracy, speed, and strategic insight.
+          </motion.p>
+
+          {/* Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={animate ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-wrap gap-3"
+          >
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold"
+              style={{
+                background: "#09285A", color: "#ffffff",
+                fontFamily: "'Manrope', sans-serif",
+                boxShadow: "0 4px 18px rgba(9,40,90,0.25)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(9,40,90,0.35)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 18px rgba(9,40,90,0.25)";
+              }}
+            >
+              Learn More →
+            </a>
+
+            <a
+              href="#services"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
+              style={{
+                background: "transparent", color: "#09285A",
+                border: "1.5px solid rgba(9,40,90,0.25)",
+                fontFamily: "'Manrope', sans-serif",
+                transition: "background 0.2s, border-color 0.2s, transform 0.2s",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(9,40,90,0.05)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.5)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.background = "transparent";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.25)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              Our Services
+            </a>
+          </motion.div>
+        </div>
+
+        {/* RIGHT — image in circular/rounded frame */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={animate ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center py-12 lg:py-0"
+        >
+          <div className="relative w-full max-w-[700px]">
+
+            {/* Outer glow ring */}
+            <div
+              className="absolute inset-[-18px] rounded-[48px] pointer-events-none"
+              style={{
+                background: "linear-gradient(135deg, rgba(0,194,168,0.18) 0%, rgba(9,40,90,0.10) 100%)",
+                filter: "blur(2px)",
+              }}
+            />
+
+            {/* Decorative circle behind image */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+              style={{
+                width: "88%", height: "88%",
+                background: "radial-gradient(circle, rgba(0,194,168,0.13) 0%, rgba(9,40,90,0.06) 60%, transparent 100%)",
+              }}
+            />
+
+            {/* Video card — looping, cropped to remove black borders */}
+            <div
+              className="relative rounded-[36px] overflow-hidden"
+              style={{
+                boxShadow: "0 24px 64px rgba(9,40,90,0.18), 0 0 0 1.5px rgba(0,194,168,0.25)",
+                background: "#e8f5f2",
+              }}
+            >
+              <video
+                src="/about.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto block"
+                style={{
+                  display: "block",
+                  /* crop left/right black borders — adjust % if needed */
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  clipPath: "inset(0 6% 0 6%)",
+                  width: "112%",
+                  marginLeft: "-6%",
+                }}
+              />
+            </div>
+
+            {/* Small floating badge — bottom left */}
+            <div
+              className="absolute -bottom-4 -left-4 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+              style={{
+                background: "#09285A",
+                boxShadow: "0 8px 24px rgba(9,40,90,0.3)",
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#00C2A8]" style={{ boxShadow: "0 0 6px #00C2A8" }} />
+              <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.05em" }}>
+                India &amp; UAE
+              </span>
+            </div>
+
+            {/* Small floating badge — top right */}
+            <div
+              className="absolute -top-4 -right-4 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+              style={{
+                background: "#00C2A8",
+                boxShadow: "0 8px 24px rgba(0,194,168,0.35)",
+              }}
+            >
+              <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.05em" }}>
+                Trusted Advisory
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+      </div>
+    </section>
+  );
 };
 
 /* ── SECTION 2: Who We Are — 98% badge removed ─────────── */
@@ -205,7 +296,7 @@ const WhoWeAre = () => {
 
   return (
     <section ref={ref} className="py-28 px-6 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1">
         <div>
           <motion.p {...fromLeft(0)} className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00C2A8] mb-4">
             Who We Are

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Send, Mail, MapPin, ExternalLink, CheckCircle2, MessageCircle } from "lucide-react";
 
 const countryCodes = [
@@ -76,6 +76,16 @@ const ContactTile = ({
             border: `1.5px solid ${hovered ? accent + "50" : "transparent"}`,
           }}
         >
+          {/* One-time row flash on scroll-in */}
+          {!blinked && isInView && (
+            <motion.span
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              initial={{ opacity: 0.22 }}
+              animate={{ opacity: 0 }}
+              transition={{ duration: 1.2, delay: delay + 0.2, ease: "easeOut" }}
+              style={{ background: accent }}
+            />
+          )}
           <motion.div
             className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full"
             style={{ background: accent }}
@@ -85,14 +95,34 @@ const ContactTile = ({
           <motion.div
             animate={
               !blinked && isInView
-                ? { scale: [1, 1.22, 1], boxShadow: [`0 0 0px ${accent}00`, `0 0 22px ${accent}cc`, `0 0 0px ${accent}00`] }
+                ? {
+                    scale: [1, 1.18, 1],
+                    opacity: [1, 0.85, 1],
+                  }
                 : { scale: hovered ? 1.08 : 1 }
             }
-            transition={!blinked && isInView ? { duration: 0.55, delay: delay + 0.35, ease: "easeInOut" } : { duration: 0.25 }}
-            className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-white"
+            transition={
+              !blinked && isInView
+                ? { duration: 0.9, delay: delay + 0.25, ease: "easeInOut" }
+                : { duration: 0.25 }
+            }
+            className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-white relative overflow-hidden"
             style={{ background: accent, boxShadow: hovered ? `0 6px 20px -4px ${accent}80` : "none" }}
           >
             {icon}
+            {/* One-time shine sweep on scroll-in */}
+            {!blinked && isInView && (
+              <motion.span
+                className="absolute inset-0 rounded-xl pointer-events-none"
+                initial={{ x: "-100%", opacity: 0.7 }}
+                animate={{ x: "150%", opacity: 0 }}
+                transition={{ duration: 0.9, delay: delay + 0.25, ease: "easeOut" }}
+                style={{
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)",
+                  width: "60%",
+                }}
+              />
+            )}
           </motion.div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
