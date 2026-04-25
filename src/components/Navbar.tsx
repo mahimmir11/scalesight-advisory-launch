@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const links = [
   { label: "Home", to: "/" },
@@ -13,31 +14,17 @@ const links = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    setIsScrolled(true); // Always white on all pages
-  }, [location.pathname]);
-
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
   const isActive = (to: string) => location.pathname === to;
 
-  // Text color stays consistent (dark text always)
-  const textColor = "text-[#09285A]";
   const linkColor = "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm"
-          : "bg-transparent shadow-none"
-      }`}
-    >
+    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
 
         {/* Logo */}
@@ -51,13 +38,26 @@ const Navbar = () => {
             <Link
               key={l.to}
               to={l.to}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                isActive(l.to)
-                  ? "bg-[#09285A] text-white"
-                  : linkColor
-              }`}
+              className={cn(
+                "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 overflow-hidden",
+                isActive(l.to) ? "text-white" : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
+              )}
             >
-              {l.label}
+              {/* Animated gradient background for active state */}
+              {isActive(l.to) && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 rounded-full -z-10"
+                  style={{ background: "#09285A" }}
+                  initial={{ scale: 0.75, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                >
+                  {/* one-time shine sweep */}
+                  <span className="nav-shine-sweep" />
+                </motion.span>
+              )}
+              <span className="relative z-10">{l.label}</span>
             </Link>
           ))}
         </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`md:hidden p-2 transition-colors duration-300 ${textColor}`}
+          className={`md:hidden p-2 transition-colors duration-300 text-[#09285A]`}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>

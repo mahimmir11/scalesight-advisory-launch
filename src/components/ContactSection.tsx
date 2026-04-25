@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Send, Mail, MapPin, ExternalLink, CheckCircle2, MessageCircle } from "lucide-react";
 
 const countryCodes = [
@@ -45,10 +45,19 @@ const ContactTile = ({
   href?: string; accent: string; delay: number; badge?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
+  const [blinked, setBlinked] = useState(false);
   const tileRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(tileRef, { once: true, margin: "-40px" });
   const Tag = href ? "a" : ("div" as React.ElementType);
   const tagProps = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
+
+  // trigger one-time icon blink when scrolled into view
+  useEffect(() => {
+    if (isInView && !blinked) {
+      const t = setTimeout(() => setBlinked(true), delay * 1000 + 400);
+      return () => clearTimeout(t);
+    }
+  }, [isInView, blinked, delay]);
 
   return (
     <div ref={tileRef}>
@@ -74,8 +83,12 @@ const ContactTile = ({
             transition={{ duration: 0.25 }}
           />
           <motion.div
-            animate={{ scale: hovered ? 1.08 : 1 }}
-            transition={{ duration: 0.25 }}
+            animate={
+              !blinked && isInView
+                ? { scale: [1, 1.22, 1], boxShadow: [`0 0 0px ${accent}00`, `0 0 22px ${accent}cc`, `0 0 0px ${accent}00`] }
+                : { scale: hovered ? 1.08 : 1 }
+            }
+            transition={!blinked && isInView ? { duration: 0.55, delay: delay + 0.35, ease: "easeInOut" } : { duration: 0.25 }}
             className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-white"
             style={{ background: accent, boxShadow: hovered ? `0 6px 20px -4px ${accent}80` : "none" }}
           >
@@ -114,8 +127,16 @@ const RegionBlock = ({
   flag: string; country: string; phone: string; waHref: string; delay: number;
 }) => {
   const [hovered, setHovered] = useState(false);
+  const [blinked, setBlinked] = useState(false);
   const blockRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(blockRef, { once: true, margin: "-40px" });
+
+  useEffect(() => {
+    if (isInView && !blinked) {
+      const t = setTimeout(() => setBlinked(true), delay * 1000 + 400);
+      return () => clearTimeout(t);
+    }
+  }, [isInView, blinked, delay]);
 
   return (
     <div ref={blockRef}>
@@ -140,9 +161,17 @@ const RegionBlock = ({
         }}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm">
+          <motion.div
+            animate={
+              !blinked && isInView
+                ? { scale: [1, 1.25, 1], filter: ["drop-shadow(0 0 0px #00C2A8)", "drop-shadow(0 0 10px #00C2A8cc)", "drop-shadow(0 0 0px #00C2A8)"] }
+                : { scale: hovered ? 1.08 : 1 }
+            }
+            transition={!blinked && isInView ? { duration: 0.55, delay: delay + 0.3, ease: "easeInOut" } : { duration: 0.2 }}
+            className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm"
+          >
             {flag}
-          </div>
+          </motion.div>
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#00C2A8] mb-0.5">{country}</p>
             <p className="text-[#09285A] font-extrabold text-base leading-tight">{phone}</p>
@@ -215,21 +244,39 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
           >
             Get in Touch
           </motion.p>
-          <motion.h2
-            className="text-4xl sm:text-5xl font-extrabold text-[#09285A] mb-4"
+
+          {/* Letter-by-letter blink-in for "Contact Us" */}
+          <h2
+            className="text-4xl sm:text-5xl font-extrabold mb-4 flex justify-center flex-wrap gap-x-[0.22em]"
             style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
-            initial={{ opacity: 0, scale: 0.85, y: 30 }}
-            animate={headingInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-            transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
-            Contact Us
-          </motion.h2>
+            {"Contact Us".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, color: "#00C2A8", textShadow: "0 0 18px rgba(0,194,168,0.9)" }}
+                animate={headingInView ? {
+                  opacity: 1,
+                  color: "#09285A",
+                  textShadow: "0 0 0px rgba(0,194,168,0)",
+                } : {}}
+                transition={{
+                  duration: 0.35,
+                  delay: 0.15 + i * 0.055,
+                  ease: "easeOut",
+                }}
+                style={{ display: char === " " ? "inline-block" : "inline", minWidth: char === " " ? "0.3em" : undefined }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </h2>
+
           <motion.div
             className="mx-auto h-[3px] rounded-full bg-gradient-to-r from-transparent via-[#00C2A8] to-transparent"
             style={{ width: "100px" }}
             initial={{ scaleX: 0, opacity: 0 }}
             animate={headingInView ? { scaleX: 1, opacity: 1 } : {}}
-            transition={{ duration: 0.65, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.65, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
 
@@ -239,9 +286,9 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
           {/* LEFT: Form */}
           <motion.div
             ref={formRef}
-            initial={{ opacity: 0, y: 60, scale: 0.97 }}
+            initial={{ opacity: 0, y: 80, scale: 0.93 }}
             animate={formInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1], type: "spring", stiffness: 120, damping: 18 }}
             className="lg:col-span-3 w-full"
           >
             <div

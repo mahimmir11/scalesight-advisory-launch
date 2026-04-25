@@ -20,7 +20,6 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-// "wait"   → nothing shown
 // "teaser" → corner button + teaser card shown
 // "idle"   → corner button only, normal state
 type Phase = "wait" | "teaser" | "idle";
@@ -34,23 +33,31 @@ const FloatingContact = ({ splashDone = true }: Props) => {
   const [waOpen, setWaOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>("wait");
   const ref = useRef<HTMLDivElement>(null);
+  const timerFired = useRef(false); // guard against StrictMode double-invoke
 
   useEffect(() => {
     if (!splashDone) return;
+    if (timerFired.current) return;
 
     const seen = sessionStorage.getItem("fcSeen");
     if (seen) {
       setPhase("idle");
       return;
     }
-    sessionStorage.setItem("fcSeen", "1");
 
-    // 4s after splash: show corner button + teaser
-    const t1 = setTimeout(() => setPhase("teaser"), 4000);
-    // hide teaser after 4s, go idle
-    const t2 = setTimeout(() => setPhase("idle"), 8000);
+    timerFired.current = true;
 
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    // Show teaser card after 10 seconds
+    const t1 = setTimeout(() => {
+      sessionStorage.setItem("fcSeen", "1");
+      setPhase("teaser");
+
+      // Auto-dismiss after 4 seconds — one appearance, never again
+      const t2 = setTimeout(() => setPhase("idle"), 4000);
+      return () => clearTimeout(t2);
+    }, 10000);
+
+    return () => clearTimeout(t1);
   }, [splashDone]);
 
   useEffect(() => {
@@ -66,9 +73,8 @@ const FloatingContact = ({ splashDone = true }: Props) => {
 
   return (
     <>
-      {/* ══ CORNER CONTAINER — only during "teaser" and "idle" phases ══ */}
-      {(phase === "teaser" || phase === "idle") && (
-        <div ref={ref} className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+      {/* ══ CORNER CONTAINER — always visible after splash ══ */}
+      <div ref={ref} className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
 
           {/* Full popup card */}
           <AnimatePresence>
@@ -189,7 +195,7 @@ const FloatingContact = ({ splashDone = true }: Props) => {
                 }}
               >
                 <div className="px-5 py-4 flex items-center gap-3.5">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#09285A] to-[#0ea5e9] flex items-center justify-center shrink-0 text-white">
+                  <div className="w-11 h-11 rounded-xl bg-[#25D366] flex items-center justify-center shrink-0 text-white">
                     <WaIcon />
                   </div>
                   <div>
@@ -207,29 +213,37 @@ const FloatingContact = ({ splashDone = true }: Props) => {
             )}
           </AnimatePresence>
 
-          {/* Corner trigger pill */}
+          {/* Corner trigger pill — dark glass with green glow border like reference */}
           <motion.button
             key="corner-btn"
             initial={{ opacity: 0, scale: 0.7, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             onClick={() => { setOpen(!open); if (open) setWaOpen(false); }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-semibold shadow-lg"
+            className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-semibold"
             style={{
-              background: "linear-gradient(135deg, #09285A 0%, #0ea5e9 100%)",
+              background: "rgba(8, 28, 36, 0.75)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              color: "#ffffff",
+              border: open
+                ? "1.5px solid rgba(74,222,128,0.9)"
+                : "1.5px solid rgba(74,222,128,0.55)",
               boxShadow: open
-                ? "0 8px 32px rgba(9,40,90,0.45), 0 0 0 4px rgba(14,165,233,0.15)"
-                : "0 6px 24px rgba(9,40,90,0.30)",
-              fontFamily: "'Space Grotesk', sans-serif",
+                ? "0 0 18px rgba(74,222,128,0.35), 0 4px 24px rgba(0,0,0,0.4)"
+                : "0 0 10px rgba(74,222,128,0.2), 0 4px 20px rgba(0,0,0,0.35)",
+              fontFamily: "'Manrope', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              transition: "box-shadow 0.25s, border-color 0.25s",
             }}
           >
-            <WaIcon />
+            <span style={{ color: "#4ade80" }}><WaIcon /></span>
             Contact Us
           </motion.button>
         </div>
-      )}
     </>
   );
 };
