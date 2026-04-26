@@ -1,3 +1,4 @@
+// #v2-local — ContactSection
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Send, Mail, MapPin, ExternalLink, CheckCircle2, MessageCircle } from "lucide-react";

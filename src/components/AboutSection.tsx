@@ -1,3 +1,4 @@
+// #v2-local — AboutSection
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import {

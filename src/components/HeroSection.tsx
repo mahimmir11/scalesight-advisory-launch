@@ -1,3 +1,4 @@
+// #v2-local — HeroSection
 import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";

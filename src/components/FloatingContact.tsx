@@ -1,3 +1,4 @@
+// #v2-local — FloatingContact
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Mail, MessageCircle } from "lucide-react";
