@@ -46,7 +46,7 @@ const ServicesSection = () => {
   const cardsInView = useInView(cardsRef, { once: true, margin: "-60px" });
 
   return (
-    <section id="services" className="py-24 md:py-32 px-6 bg-card">
+    <section id="services" className="py-24 md:py-32 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <div ref={headingRef} className="text-center mb-16 overflow-hidden">
