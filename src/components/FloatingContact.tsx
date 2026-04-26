@@ -214,27 +214,40 @@ const FloatingContact = ({ splashDone = true }: Props) => {
             )}
           </AnimatePresence>
 
-          {/* Corner trigger pill — dark glass with green glow border like reference */}
+          {/* Corner trigger pill — cleaner look with gentle bounce */}
           <motion.button
             key="corner-btn"
             initial={{ opacity: 0, scale: 0.7, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -6, 0],
+            }}
             onClick={() => { setOpen(!open); if (open) setWaOpen(false); }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{
+              opacity: { duration: 0.4 },
+              scale: { duration: 0.4 },
+              y: {
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatDelay: 0.3,
+              },
+            }}
             className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-semibold"
             style={{
-              background: "rgba(8, 28, 36, 0.75)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
+              background: "rgba(9, 40, 58, 0.92)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
               color: "#ffffff",
               border: open
-                ? "1.5px solid rgba(74,222,128,0.9)"
-                : "1.5px solid rgba(74,222,128,0.55)",
+                ? "2px solid rgba(74,222,128,0.85)"
+                : "2px solid rgba(74,222,128,0.6)",
               boxShadow: open
-                ? "0 0 18px rgba(74,222,128,0.35), 0 4px 24px rgba(0,0,0,0.4)"
-                : "0 0 10px rgba(74,222,128,0.2), 0 4px 20px rgba(0,0,0,0.35)",
+                ? "0 0 16px rgba(74,222,128,0.4), 0 6px 20px rgba(0,0,0,0.25)"
+                : "0 0 12px rgba(74,222,128,0.3), 0 4px 16px rgba(0,0,0,0.2)",
               fontFamily: "'Manrope', sans-serif",
               fontWeight: 600,
               fontSize: "0.9rem",
