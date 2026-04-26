@@ -3,13 +3,48 @@ import { motion, useInView } from "framer-motion";
 import { Send, Mail, MapPin, ExternalLink, CheckCircle2, MessageCircle } from "lucide-react";
 
 const countryCodes = [
-  { code: "+91", flag: "🇮🇳" },
-  { code: "+971", flag: "🇦🇪" },
-  { code: "+1", flag: "🇺🇸" },
-  { code: "+44", flag: "��" },
-  { code: "+61", flag: "🇦�" },
-  { code: "+65", flag: "🇬" },
+  { code: "+91",  flag: "🇮🇳", country: "IN" },
+  { code: "+971", flag: "🇦🇪", country: "AE" },
+  { code: "+1",   flag: "🇺🇸", country: "US" },
+  { code: "+44",  flag: "🇬🇧", country: "GB" },
+  { code: "+61",  flag: "🇦🇺", country: "AU" },
+  { code: "+65",  flag: "🇸🇬", country: "SG" },
+  { code: "+1",   flag: "🇨🇦", country: "CA" },
+  { code: "+64",  flag: "🇳🇿", country: "NZ" },
+  { code: "+49",  flag: "🇩🇪", country: "DE" },
+  { code: "+33",  flag: "🇫🇷", country: "FR" },
+  { code: "+39",  flag: "🇮🇹", country: "IT" },
+  { code: "+34",  flag: "🇪🇸", country: "ES" },
+  { code: "+31",  flag: "🇳🇱", country: "NL" },
+  { code: "+7",   flag: "🇷🇺", country: "RU" },
+  { code: "+86",  flag: "🇨🇳", country: "CN" },
+  { code: "+81",  flag: "🇯🇵", country: "JP" },
+  { code: "+82",  flag: "🇰🇷", country: "KR" },
+  { code: "+55",  flag: "🇧🇷", country: "BR" },
+  { code: "+52",  flag: "🇲🇽", country: "MX" },
+  { code: "+27",  flag: "🇿🇦", country: "ZA" },
+  { code: "+92",  flag: "🇵🇰", country: "PK" },
+  { code: "+880", flag: "🇧🇩", country: "BD" },
+  { code: "+94",  flag: "🇱🇰", country: "LK" },
+  { code: "+60",  flag: "🇲🇾", country: "MY" },
+  { code: "+66",  flag: "🇹🇭", country: "TH" },
+  { code: "+63",  flag: "🇵🇭", country: "PH" },
+  { code: "+62",  flag: "🇮🇩", country: "ID" },
+  { code: "+20",  flag: "🇪🇬", country: "EG" },
+  { code: "+234", flag: "🇳🇬", country: "NG" },
+  { code: "+254", flag: "🇰🇪", country: "KE" },
 ];
+
+async function detectCountryCode(): Promise<string> {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    const match = countryCodes.find((c) => c.country === data.country_code);
+    return match ? match.code : "+91";
+  } catch {
+    return "+91";
+  }
+}
 
 const services = [
   "Business Setup & Licensing",
@@ -237,8 +272,11 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
   const formInView = useInView(formRef, { once: true, margin: "-80px" });
   const isInView = useInView(sidebarRef, { once: true, margin: "-80px" });
 
-  // suppress unused warning for _showInfoCards
-  useEffect(() => {}, []);
+  useEffect(() => {
+    detectCountryCode().then((code) =>
+      setForm((prev) => ({ ...prev, countryCode: code }))
+    );
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -375,7 +413,7 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
                         <select value={form.countryCode} onChange={(e) => setForm({ ...form, countryCode: e.target.value })}
                           className="px-2 py-3 rounded-xl bg-white text-gray-900 text-sm focus:outline-none border-2 border-gray-400"
                           style={{ minWidth: "88px", maxWidth: "100px" }}>
-                          {countryCodes.map((c) => <option key={c.code} value={c.code}>{c.flag} {c.code}</option>)}
+                          {countryCodes.map((c) => <option key={c.country} value={c.code}>{c.flag} {c.code}</option>)}
                         </select>
                         <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
                           className="flex-1 min-w-0 px-4 py-3 rounded-xl bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm border-2 border-gray-400"
