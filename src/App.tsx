@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import SplashScreen from "./components/SplashScreen";
 import ScrollToTop from "./components/ScrollToTop";
+import SmoothScroll from "./components/SmoothScroll";
 import PageTransition from "./components/PageTransition";
 import Index from "./pages/Index.tsx";
 import About from "./pages/About.tsx";
@@ -61,6 +62,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SmoothScroll />
           <ScrollToTop />
           <AnimatedRoutes splashDone={!splash} />
           <FloatingContact splashDone={!splash} />
