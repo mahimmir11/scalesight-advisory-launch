@@ -92,7 +92,7 @@ const HeroSection = ({ splashDone = true }: Props) => {
         {/* Content */}
         <div
           className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-12 flex flex-col justify-center items-center text-center sm:items-start sm:text-left"
-          style={{ minHeight: "calc(95vh - 76px)", paddingTop: "2rem" }}
+          style={{ minHeight: "calc(95vh - 76px)" }}
         >
           <div className="max-w-[600px] w-full">
 

@@ -240,7 +240,7 @@ const IndiaServices = () => {
 
           {/* Main grid */}
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-            style={{ minHeight: "calc(95vh - 76px)", paddingTop: "2rem", paddingBottom: "3rem" }}>
+            style={{ minHeight: "calc(95vh - 76px)" }}>
 
             {/* LEFT — text */}
             <div className="flex flex-col justify-center py-12 lg:py-0">
@@ -392,12 +392,10 @@ const IndiaServices = () => {
                 >
                   <video
                     src="/india.mp4"
-                    poster="/india.png"
                     autoPlay
                     loop
                     muted
                     playsInline
-                    preload="metadata"
                     className="w-full h-full block"
                     style={{
                       display: "block",
