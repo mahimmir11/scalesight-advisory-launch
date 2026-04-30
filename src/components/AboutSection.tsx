@@ -64,7 +64,7 @@ const OpeningSection = () => {
     <section
       className="relative w-full overflow-hidden"
       style={{
-        minHeight: "100vh",
+        minHeight: "95vh",
         paddingTop: "76px",
         background: "linear-gradient(135deg, #eaf4fb 0%, #f0faf8 50%, #e8f5f2 100%)",
         borderRadius: "0 0 32px 32px",
@@ -87,7 +87,7 @@ const OpeningSection = () => {
 
       {/* Main grid */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-        style={{ minHeight: "calc(100vh - 76px)" }}>
+        style={{ minHeight: "calc(95vh - 76px)", paddingTop: "2rem", paddingBottom: "3rem" }}>
 
         {/* LEFT — text */}
         <div className="flex flex-col justify-center py-12 lg:py-0">

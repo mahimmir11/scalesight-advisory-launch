@@ -4,13 +4,6 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "fra
 import { CheckCircle2, ArrowRight, FileText, Shield, BarChart3, Search, Workflow, TrendingUp, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
-const heroImages = [
-  "/UAE Services/Image 1.png",
-  "/UAE Services/Image 2.png",
-  "/UAE Services/Image 3.png",
-  "/UAE Services/Image 4.png",
-];
-
 type ServiceType = {
   title: string;
   desc: string;
@@ -155,8 +148,8 @@ const whyChooseUs: WhyChooseUsType[] = [
 ];
 
 const UAEServices = () => {
-  const [current, setCurrent] = useState(0);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [animate, setAnimate] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -170,18 +163,19 @@ const UAEServices = () => {
     restDelta: 0.001
   });
 
-  const heroY = useTransform(smoothProgress, [0, 0.3], [0, -100]);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
   const backgroundY = useTransform(smoothProgress, [0, 1], [0, -200]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(timer);
+    const t = setTimeout(() => setAnimate(true), 80);
+    return () => clearTimeout(t);
   }, []);
 
   return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+      `}</style>
     <div ref={containerRef} className="min-h-screen flex flex-col bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div
@@ -201,113 +195,235 @@ const UAEServices = () => {
 
       <Navbar />
 
-      {/* Hero — split layout with parallax */}
-      <motion.section
-        style={{ y: heroY, opacity: heroOpacity }}
-        className="pt-[76px] bg-transparent relative z-10"
+      {/* Hero Section — Similar to About page with video */}
+      <section
+        className="relative w-full overflow-hidden"
+        style={{
+          minHeight: "95vh",
+          paddingTop: "76px",
+          background: "linear-gradient(135deg, #eaf4fb 0%, #e8f5f2 50%, #f0faf8 100%)",
+          borderRadius: "0 0 32px 32px",
+        }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left — text */}
-          <div className="relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-2 bg-primary/8 text-primary px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-6 backdrop-blur-sm"
-            >
-              🇦🇪 UAE
-            </motion.div>
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(9,40,90,0.06) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="text-5xl md:text-6xl font-bold text-primary leading-[1.08] mb-6"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
-            >
-              UAE <br />
-              <span className="text-secondary">Services</span>
-            </motion.h1>
+        {/* Soft ambient blobs */}
+        <div className="absolute top-[-80px] left-[-80px] w-[420px] h-[420px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(0,194,168,0.12) 0%, transparent 70%)" }} />
+        <div className="absolute bottom-[-60px] right-[-60px] w-[380px] h-[380px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(9,40,90,0.08) 0%, transparent 70%)" }} />
 
+        {/* Main grid */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          style={{ minHeight: "calc(95vh - 76px)", paddingTop: "2rem", paddingBottom: "3rem" }}>
+
+          {/* LEFT — text */}
+          <div className="flex flex-col justify-center py-12 lg:py-0">
+
+            {/* "UAE SERVICES" label */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-md"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={animate ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: "11px", fontWeight: 700,
+                letterSpacing: "0.28em", textTransform: "uppercase" as const,
+                color: "#00C2A8", marginBottom: "20px",
+              }}
             >
-              Expert advisory for the UAE regulatory landscape — from accounting and compliance
-              to IFRS reporting and internal audit support.
+              🇦🇪 UAE Services
             </motion.p>
 
+            {/* Heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 28 }}
+              animate={animate ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+                fontWeight: 800,
+                lineHeight: 1.08,
+                letterSpacing: "-0.03em",
+                color: "#09285A",
+                margin: "0 0 20px 0",
+              }}
+            >
+              Expert Financial
+              <br />
+              <span style={{ color: "#00C2A8" }}>Advisory</span>
+              <br />
+              for UAE
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={animate ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: "clamp(0.875rem, 1.05vw, 0.95rem)",
+                color: "#4a5568",
+                lineHeight: 1.75,
+                maxWidth: "480px",
+                margin: "0 0 36px 0",
+                fontWeight: 400,
+              }}
+            >
+              Navigate the UAE regulatory landscape with confidence — from accounting and compliance to IFRS reporting and internal audit support.
+            </motion.p>
+
+            {/* Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 14 }}
+              animate={animate ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-wrap gap-3"
             >
               <a
                 href="#uae-services-list"
-                className="inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-primary/90 hover:scale-105 transition-all duration-300 group shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold"
+                style={{
+                  background: "#09285A", color: "#ffffff",
+                  fontFamily: "'Manrope', sans-serif",
+                  boxShadow: "0 4px 18px rgba(9,40,90,0.25)",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(9,40,90,0.35)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 18px rgba(9,40,90,0.25)";
+                }}
               >
                 Explore Services
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4" />
               </a>
+
               <a
                 href="/contact"
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-300"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold"
+                style={{
+                  background: "transparent", color: "#09285A",
+                  border: "1.5px solid rgba(9,40,90,0.25)",
+                  fontFamily: "'Manrope', sans-serif",
+                  transition: "background 0.2s, border-color 0.2s, transform 0.2s",
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.background = "rgba(9,40,90,0.05)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.5)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.background = "transparent";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.25)";
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                }}
               >
                 Have a Talk
               </a>
             </motion.div>
-
-            {/* Stats row */}
           </div>
 
-          {/* Right — image slideshow */}
+          {/* RIGHT — Video card (similar to About page) */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            animate={animate ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center justify-center py-12 lg:py-0"
           >
-            <motion.div
-              whileHover={{ scale: 1.02, rotateY: 5 }}
-              transition={{ duration: 0.4 }}
-              className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] transform-gpu"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <AnimatePresence mode="sync">
-                <motion.div
-                  key={heroImages[current]}
-                  className="absolute inset-0"
+            <div className="relative w-full max-w-[700px]">
+
+              {/* Outer glow ring */}
+              <div
+                className="absolute inset-[-18px] rounded-[48px] pointer-events-none"
+                style={{
+                  background: "linear-gradient(135deg, rgba(0,194,168,0.18) 0%, rgba(9,40,90,0.10) 100%)",
+                  filter: "blur(2px)",
+                }}
+              />
+
+              {/* Decorative circle behind video */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: "88%", height: "88%",
+                  background: "radial-gradient(circle, rgba(0,194,168,0.13) 0%, rgba(9,40,90,0.06) 60%, transparent 100%)",
+                }}
+              />
+
+              {/* Video card — looping, properly centered */}
+              <div
+                className="relative rounded-[36px] overflow-hidden"
+                style={{
+                  boxShadow: "0 24px 64px rgba(9,40,90,0.18), 0 0 0 1.5px rgba(0,194,168,0.25)",
+                  background: "#09285A",
+                }}
+              >
+                <video
+                  src="/uae.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full block"
                   style={{
-                    backgroundImage: `url('${heroImages[current]}')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    display: "block",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    aspectRatio: "16/9",
                   }}
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 />
-              </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {heroImages.map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === current ? "w-8 bg-white" : "w-1.5 bg-white/50"
-                    }`}
-                    animate={{ scale: i === current ? 1 : 0.8 }}
-                  />
-                ))}
               </div>
-            </motion.div>
+
+              {/* Small floating badge — bottom left */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={animate ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute -bottom-4 -left-4 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+                style={{
+                  background: "#09285A",
+                  boxShadow: "0 8px 24px rgba(9,40,90,0.3)",
+                }}
+              >
+                <span className="w-2 h-2 rounded-full bg-[#00C2A8]" style={{ boxShadow: "0 0 6px #00C2A8" }} />
+                <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.05em" }}>
+                  UAE Market
+                </span>
+              </motion.div>
+
+              {/* Small floating badge — top right */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={animate ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute -top-4 -right-4 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+                style={{
+                  background: "#00C2A8",
+                  boxShadow: "0 8px 24px rgba(0,194,168,0.35)",
+                }}
+              >
+                <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.05em" }}>
+                  Compliance Excellence
+                </span>
+              </motion.div>
+            </div>
           </motion.div>
+
         </div>
-      </motion.section>
+      </section>
 
       {/* ── Why Choose Us ── with clean white background */}
       <section className="relative py-20 md:py-32 bg-white overflow-hidden">
@@ -592,6 +708,7 @@ const UAEServices = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

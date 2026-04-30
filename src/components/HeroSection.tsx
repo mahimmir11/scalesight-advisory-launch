@@ -78,7 +78,7 @@ const HeroSection = ({ splashDone = true }: Props) => {
 
       <section
         className="relative w-full overflow-hidden"
-        style={{ minHeight: "92vh", paddingTop: "76px", borderRadius: "0 0 32px 32px" }}
+        style={{ minHeight: "95vh", paddingTop: "76px", borderRadius: "0 0 32px 32px" }}
       >
         {/* Background */}
         <div className="hero-bg absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -92,7 +92,7 @@ const HeroSection = ({ splashDone = true }: Props) => {
         {/* Content */}
         <div
           className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-12 flex flex-col justify-center items-center text-center sm:items-start sm:text-left"
-          style={{ minHeight: "calc(92vh - 76px)" }}
+          style={{ minHeight: "calc(95vh - 76px)", paddingTop: "2rem" }}
         >
           <div className="max-w-[600px] w-full">
 
