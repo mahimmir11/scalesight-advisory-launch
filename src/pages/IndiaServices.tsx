@@ -51,8 +51,59 @@ const pillars = [
   { title: "Expert Guidance", body: "Founder-led team. Senior expertise, always.", Icon: Star },
 ];
 
+/* ── Preloaded Video Component ── */
+const PreloadedVideo = ({ src, style }: { src: string; style?: React.CSSProperties }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "video";
+    link.href = src;
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full">
+      {!ready && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(135deg, #0a1f2e 0%, #09285A 50%, #0a1f2e 100%)",
+            backgroundSize: "200% 100%",
+            animation: "videoShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+      )}
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onCanPlay={() => setReady(true)}
+        style={{
+          ...style,
+          opacity: ready ? 1 : 0,
+          transition: "opacity 0.4s ease",
+        }}
+      />
+      <style>{`
+        @keyframes videoShimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
 /* ── Typing hook ── */
-function useTypingText(text, speed = 18) {
+function useTypingText(text: string, speed = 18) {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   useEffect(() => {
@@ -71,8 +122,8 @@ function useTypingText(text, speed = 18) {
 }
 
 /* ── Pillar card with scroll bounce ── */
-function PillarCard({ pillar, index }) {
-  const ref = useRef(null);
+function PillarCard({ pillar, index }: { pillar: typeof pillars[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.2 });
@@ -122,7 +173,6 @@ function ServiceDetail({ service, index }: { service: typeof services[0]; index:
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="relative z-10 h-full flex flex-col justify-center px-12 md:px-16 py-14"
     >
-      {/* Counter */}
       <p
         className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-8"
         style={{ color: "#00C2A8", fontFamily: "'Inter', sans-serif" }}
@@ -130,7 +180,6 @@ function ServiceDetail({ service, index }: { service: typeof services[0]; index:
         {String(index + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
       </p>
 
-      {/* Icon */}
       <div
         className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
         style={{ background: "linear-gradient(135deg, #00C2A8 0%, #03C359 100%)" }}
@@ -138,7 +187,6 @@ function ServiceDetail({ service, index }: { service: typeof services[0]; index:
         <ServiceIcon className="w-6 h-6 text-white" strokeWidth={1.8} />
       </div>
 
-      {/* Title */}
       <h3
         className="text-4xl md:text-5xl font-bold text-[#09285A] leading-[1.1] mb-5"
         style={{ fontFamily: "'Inter', sans-serif", letterSpacing: "-0.025em", fontWeight: 700 }}
@@ -146,7 +194,6 @@ function ServiceDetail({ service, index }: { service: typeof services[0]; index:
         {service.title}
       </h3>
 
-      {/* Typing description */}
       <p
         className="text-[17px] text-gray-400 leading-[1.85] mb-8 max-w-[460px] min-h-[88px]"
         style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}
@@ -160,7 +207,6 @@ function ServiceDetail({ service, index }: { service: typeof services[0]; index:
         )}
       </p>
 
-      {/* Tags */}
       <div className="flex flex-wrap gap-2">
         {service.tags.map((tag: string, ti: number) => (
           <motion.span
@@ -213,7 +259,7 @@ const IndiaServices = () => {
       <div className="min-h-screen flex flex-col bg-white">
         <Navbar />
 
-        {/* ── Hero Section — Similar to About page with video ── */}
+        {/* ── Hero Section ── */}
         <section
           className="relative w-full overflow-hidden"
           style={{
@@ -223,7 +269,6 @@ const IndiaServices = () => {
             borderRadius: "0 0 32px 32px",
           }}
         >
-          {/* Subtle dot grid */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -232,20 +277,16 @@ const IndiaServices = () => {
             }}
           />
 
-          {/* Soft ambient blobs */}
           <div className="absolute top-[-80px] left-[-80px] w-[420px] h-[420px] rounded-full pointer-events-none"
             style={{ background: "radial-gradient(circle, rgba(255,153,51,0.12) 0%, transparent 70%)" }} />
           <div className="absolute bottom-[-60px] right-[-60px] w-[380px] h-[380px] rounded-full pointer-events-none"
             style={{ background: "radial-gradient(circle, rgba(0,194,168,0.08) 0%, transparent 70%)" }} />
 
-          {/* Main grid */}
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             style={{ minHeight: "calc(95vh - 76px)" }}>
 
             {/* LEFT — text */}
             <div className="flex flex-col justify-center py-12 lg:py-0">
-
-              {/* "INDIA SERVICES" label */}
               <motion.p
                 initial={{ opacity: 0, x: -20 }}
                 animate={animate ? { opacity: 1, x: 0 } : {}}
@@ -260,7 +301,6 @@ const IndiaServices = () => {
                 🇮🇳 India Services
               </motion.p>
 
-              {/* Heading */}
               <motion.h1
                 initial={{ opacity: 0, y: 28 }}
                 animate={animate ? { opacity: 1, y: 0 } : {}}
@@ -282,7 +322,6 @@ const IndiaServices = () => {
                 for India
               </motion.h1>
 
-              {/* Description */}
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 animate={animate ? { opacity: 1, y: 0 } : {}}
@@ -300,7 +339,6 @@ const IndiaServices = () => {
                 From Virtual CFO to FP&A, budgeting, and decision support — we deliver comprehensive financial advisory tailored for Indian businesses that demand precision and growth.
               </motion.p>
 
-              {/* Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={animate ? { opacity: 1, y: 0 } : {}}
@@ -354,7 +392,7 @@ const IndiaServices = () => {
               </motion.div>
             </div>
 
-            {/* RIGHT — Video card (similar to About page) */}
+            {/* RIGHT — Video card with preloading */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={animate ? { opacity: 1, x: 0 } : {}}
@@ -363,7 +401,6 @@ const IndiaServices = () => {
             >
               <div className="relative w-full max-w-[700px]">
 
-                {/* Outer glow ring */}
                 <div
                   className="absolute inset-[-18px] rounded-[48px] pointer-events-none"
                   style={{
@@ -372,7 +409,6 @@ const IndiaServices = () => {
                   }}
                 />
 
-                {/* Decorative circle behind video */}
                 <div
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
                   style={{
@@ -381,7 +417,6 @@ const IndiaServices = () => {
                   }}
                 />
 
-                {/* Video card — looping, properly centered */}
                 <div
                   className="relative rounded-[36px] overflow-hidden"
                   style={{
@@ -390,22 +425,18 @@ const IndiaServices = () => {
                     aspectRatio: "16/9",
                   }}
                 >
-                  <video
+                  <PreloadedVideo
                     src="/india.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full block"
                     style={{
                       display: "block",
                       objectFit: "cover",
                       objectPosition: "center",
+                      width: "100%",
+                      height: "100%",
                     }}
                   />
                 </div>
 
-                {/* Small floating badge — bottom left */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={animate ? { opacity: 1, scale: 1 } : {}}
@@ -422,7 +453,6 @@ const IndiaServices = () => {
                   </span>
                 </motion.div>
 
-                {/* Small floating badge — top right */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={animate ? { opacity: 1, scale: 1 } : {}}
@@ -470,7 +500,6 @@ const IndiaServices = () => {
                   border: "1px solid rgba(9,40,90,0.07)",
                 }}
               >
-                {/* Left nav — wider, bigger text */}
                 <div className="w-[280px] flex-shrink-0 flex flex-col border-r border-gray-100/80 bg-white py-4 px-3">
                   {services.map((s, i) => {
                     const isActive = activeService === i;
@@ -491,7 +520,6 @@ const IndiaServices = () => {
                           border: isActive ? "1px solid rgba(0,194,168,0.18)" : "1px solid transparent",
                         }}
                       >
-                        {/* Left active bar */}
                         {isActive && (
                           <motion.div
                             layoutId="activeBar"
@@ -499,7 +527,6 @@ const IndiaServices = () => {
                             style={{ background: "linear-gradient(180deg,#00C2A8,#03C359)" }}
                           />
                         )}
-                        {/* Icon badge */}
                         <div
                           className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200"
                           style={{
@@ -514,7 +541,6 @@ const IndiaServices = () => {
                             strokeWidth={1.8}
                           />
                         </div>
-                        {/* Service name */}
                         <span
                           className="text-[14px] font-semibold leading-snug transition-colors duration-200"
                           style={{
@@ -529,7 +555,6 @@ const IndiaServices = () => {
                   })}
                 </div>
 
-                {/* Right detail — clean white */}
                 <div className="flex-1 relative overflow-hidden bg-white">
                   <AnimatePresence mode="wait">
                     {services[activeService] && (

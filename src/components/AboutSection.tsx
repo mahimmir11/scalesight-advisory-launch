@@ -49,7 +49,61 @@ const steps = [
   { num: "04", title: "Optimize",    desc: "Continuous improvement as your business scales." },
 ];
 
-/* ── Floating particles for About hero — removed, using bg image now ── */
+/* ── Video with instant preload ── */
+const PreloadedVideo = ({ src, className, style }: { src: string; className?: string; style?: React.CSSProperties }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
+
+  // Inject <link rel="preload"> into <head> immediately on mount
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "video";
+    link.href = src;
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full">
+      {/* Skeleton shimmer shown until video is ready */}
+      {!ready && (
+        <div
+          className="absolute inset-0 rounded-[36px]"
+          style={{
+            background: "linear-gradient(135deg, #e0f2ef 0%, #d0ebe6 50%, #e0f2ef 100%)",
+            backgroundSize: "200% 100%",
+            animation: "shimmer 1.5s ease-in-out infinite",
+          }}
+        />
+      )}
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onCanPlay={() => setReady(true)}
+        className={className}
+        style={{
+          ...style,
+          opacity: ready ? 1 : 0,
+          transition: "opacity 0.4s ease",
+        }}
+      />
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+    </div>
+  );
+};
 
 /* ── SECTION 1: Hero — split layout, light bg, left text + right framed image ── */
 const OpeningSection = () => {
@@ -228,7 +282,7 @@ const OpeningSection = () => {
               }}
             />
 
-            {/* Video card — looping, properly fitted */}
+            {/* Video card — looping, preloaded */}
             <div
               className="relative rounded-[36px] overflow-hidden"
               style={{
@@ -237,12 +291,8 @@ const OpeningSection = () => {
                 aspectRatio: "16/9",
               }}
             >
-              <video
+              <PreloadedVideo
                 src="/about.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
                 className="w-full h-full block"
                 style={{
                   display: "block",
@@ -288,7 +338,7 @@ const OpeningSection = () => {
   );
 };
 
-/* ── SECTION 2: Who We Are — 98% badge removed ─────────── */
+/* ── SECTION 2: Who We Are ─────────────────────────────────────────────── */
 const WhoWeAre = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -339,45 +389,34 @@ const WhoWeAre = () => {
   );
 };
 
-/* ── SECTION 3: Accordion (Mobile-friendly with auto-open on scroll) ── */
+/* ── SECTION 3: Accordion ── */
 const AccordionExpertise = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [autoOpened, setAutoOpened] = useState<Set<number>>(new Set());
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Auto-open items one by one when scrolled into view
   useEffect(() => {
     const observers = accordionItems.map((_, i) => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting && !autoOpened.has(i)) {
-              // Auto-open this item after a delay
               setTimeout(() => {
                 setOpenIndex(i);
                 setAutoOpened(prev => new Set(prev).add(i));
-                
-                // Auto-close after 3 seconds
                 setTimeout(() => {
                   setOpenIndex(prev => prev === i ? null : prev);
                 }, 3000);
-              }, i * 400); // Stagger the auto-open
+              }, i * 400);
             }
           });
         },
         { threshold: 0.5 }
       );
-
-      if (itemRefs.current[i]) {
-        observer.observe(itemRefs.current[i]!);
-      }
-
+      if (itemRefs.current[i]) observer.observe(itemRefs.current[i]!);
       return observer;
     });
-
-    return () => {
-      observers.forEach(observer => observer.disconnect());
-    };
+    return () => { observers.forEach(observer => observer.disconnect()); };
   }, [autoOpened]);
 
   const toggleItem = (index: number) => {
@@ -386,7 +425,6 @@ const AccordionExpertise = () => {
 
   return (
     <section className="py-24 px-6 bg-[#F8FAFC] relative overflow-hidden">
-      {/* Ambient background elements */}
       <div className="absolute top-20 right-10 w-[400px] h-[400px] bg-[#00C2A8]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-20 left-10 w-[350px] h-[350px] bg-[#6C63FF]/5 rounded-full blur-[100px] pointer-events-none" />
       
@@ -427,7 +465,6 @@ const AccordionExpertise = () => {
                 className="group cursor-pointer relative"
                 onClick={() => toggleItem(i)}
               >
-                {/* Background card with gradient border effect */}
                 <motion.div
                   className="relative bg-white rounded-2xl overflow-hidden border transition-all duration-500"
                   style={{
@@ -436,12 +473,9 @@ const AccordionExpertise = () => {
                       ? "0 20px 40px rgba(0, 194, 168, 0.15), 0 0 0 1px rgba(0, 194, 168, 0.1)" 
                       : "0 2px 8px rgba(0, 0, 0, 0.04)"
                   }}
-                  animate={{
-                    scale: isOpen ? 1.02 : 1,
-                  }}
+                  animate={{ scale: isOpen ? 1.02 : 1 }}
                   transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                 >
-                  {/* Gradient overlay when open */}
                   <motion.div
                     className="absolute inset-0 pointer-events-none"
                     style={{
@@ -451,12 +485,9 @@ const AccordionExpertise = () => {
                     transition={{ duration: 0.4 }}
                   />
 
-                  {/* Content */}
                   <div className="relative p-6 md:p-8">
-                    {/* Always visible row */}
                     <div className="flex items-center justify-between gap-6">
                       <div className="flex items-center gap-6 flex-1">
-                        {/* Number badge */}
                         <motion.div
                           className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
                           style={{
@@ -464,60 +495,32 @@ const AccordionExpertise = () => {
                               ? "linear-gradient(135deg, #00C2A8 0%, #0ea5e9 100%)" 
                               : "#F8FAFC"
                           }}
-                          animate={{
-                            rotate: isOpen ? [0, -5, 5, 0] : 0,
-                          }}
+                          animate={{ rotate: isOpen ? [0, -5, 5, 0] : 0 }}
                           transition={{ duration: 0.6, ease: "easeInOut" }}
                         >
                           <motion.span
                             className="text-sm font-bold relative z-10"
-                            style={{ 
-                              color: isOpen ? "#FFFFFF" : "#9CA3AF",
-                              fontVariantNumeric: "tabular-nums" 
-                            }}
-                            animate={{
-                              scale: isOpen ? 1.1 : 1,
-                            }}
+                            style={{ color: isOpen ? "#FFFFFF" : "#9CA3AF" }}
+                            animate={{ scale: isOpen ? 1.1 : 1 }}
                             transition={{ duration: 0.3 }}
                           >
                             {item.num}
                           </motion.span>
-                          
-                          {/* Animated background circle */}
-                          <motion.div
-                            className="absolute inset-0 rounded-xl"
-                            style={{
-                              background: "radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%)"
-                            }}
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ 
-                              scale: isOpen ? 1.5 : 0,
-                              opacity: isOpen ? 1 : 0
-                            }}
-                            transition={{ duration: 0.5 }}
-                          />
                         </motion.div>
 
-                        {/* Title */}
                         <motion.h3
                           className="text-xl md:text-2xl font-bold transition-colors duration-300"
                           style={{ color: isOpen ? "#00C2A8" : "#0B1F3A" }}
-                          animate={{
-                            x: isOpen ? 8 : 0,
-                          }}
+                          animate={{ x: isOpen ? 8 : 0 }}
                           transition={{ duration: 0.3, ease: "easeOut" }}
                         >
                           {item.title}
                         </motion.h3>
                       </div>
 
-                      {/* Arrow icon */}
                       <motion.div
                         className="shrink-0"
-                        animate={{ 
-                          rotate: isOpen ? 90 : 0,
-                          scale: isOpen ? 1.2 : 1,
-                        }}
+                        animate={{ rotate: isOpen ? 90 : 0, scale: isOpen ? 1.2 : 1 }}
                         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                         style={{ color: isOpen ? "#00C2A8" : "#9CA3AF" }}
                       >
@@ -525,7 +528,6 @@ const AccordionExpertise = () => {
                       </motion.div>
                     </div>
 
-                    {/* Expandable description */}
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div
@@ -562,7 +564,6 @@ const AccordionExpertise = () => {
                     </AnimatePresence>
                   </div>
 
-                  {/* Shine effect when opened */}
                   {isOpen && (
                     <motion.div
                       className="absolute inset-0 pointer-events-none"
@@ -571,10 +572,7 @@ const AccordionExpertise = () => {
                       }}
                       initial={{ x: "-100%" }}
                       animate={{ x: "200%" }}
-                      transition={{
-                        duration: 0.8,
-                        ease: "easeInOut",
-                      }}
+                      transition={{ duration: 0.8, ease: "easeInOut" }}
                     />
                   )}
                 </motion.div>

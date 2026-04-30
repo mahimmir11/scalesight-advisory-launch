@@ -2,15 +2,24 @@ import express from "express";
 import cors from "cors";
 import { createRequire } from "module";
 import { config } from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
 config();
 
 const require = createRequire(import.meta.url);
 const nodemailer = require("nodemailer");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the dist directory in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "dist")));
+}
 
 app.post("/api/contact", async (req, res) => {
   try {
@@ -57,4 +66,13 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-app.listen(3001, () => console.log("API server running on http://localhost:3001"));
+// SPA fallback - serve index.html for all non-API routes
+// This must come AFTER the API routes
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  });
+}
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));

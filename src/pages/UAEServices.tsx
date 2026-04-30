@@ -4,6 +4,45 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "fra
 import { CheckCircle2, ArrowRight, FileText, Shield, BarChart3, Search, Workflow, TrendingUp, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
+/* ── Preloaded Video Component ── */
+const PreloadedVideo = ({ src, style }: { src: string; style?: React.CSSProperties }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "video";
+    link.href = src;
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full">
+      {!videoReady && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(135deg, #0a1f2e 0%, #09285A 50%, #0a1f2e 100%)",
+            backgroundSize: "200% 100%",
+            animation: "uaeShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+      )}
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay loop muted playsInline
+        preload="auto"
+        onCanPlay={() => setVideoReady(true)}
+        style={{ ...style, opacity: videoReady ? 1 : 0, transition: "opacity 0.4s ease" }}
+      />
+      <style>{`@keyframes uaeShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }`}</style>
+    </div>
+  );
+};
+
 type ServiceType = {
   title: string;
   desc: string;
@@ -372,17 +411,14 @@ const UAEServices = () => {
                   aspectRatio: "16/9",
                 }}
               >
-                <video
+                <PreloadedVideo
                   src="/uae.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full block"
                   style={{
                     display: "block",
                     objectFit: "cover",
                     objectPosition: "center",
+                    width: "100%",
+                    height: "100%",
                   }}
                 />
               </div>
