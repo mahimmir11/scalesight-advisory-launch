@@ -25,25 +25,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    target: "esnext",
     outDir: "dist",
     assetsDir: "assets",
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-framer': ['framer-motion'],
-          'vendor-radix': [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-popover',
-            '@radix-ui/react-select',
-            '@radix-ui/react-tabs',
-            '@radix-ui/react-toast',
-          ],
-        },
-      },
-    },
   },
 }));
