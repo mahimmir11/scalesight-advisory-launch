@@ -30,19 +30,18 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
-            }
-            if (id.includes('framer-motion')) {
-              return 'vendor-framer';
-            }
-            if (id.includes('@radix-ui')) {
-              return 'vendor-radix';
-            }
-            return 'vendor';
-          }
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-framer': ['framer-motion'],
+          'vendor-radix': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast',
+          ],
         },
       },
     },
