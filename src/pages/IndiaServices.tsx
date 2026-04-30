@@ -236,6 +236,7 @@ const IndiaServices = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const t = setTimeout(() => setAnimate(true), 80);
     return () => clearTimeout(t);
   }, []);

@@ -205,6 +205,7 @@ const UAEServices = () => {
   const backgroundY = useTransform(smoothProgress, [0, 1], [0, -200]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const t = setTimeout(() => setAnimate(true), 80);
     return () => clearTimeout(t);
   }, []);

@@ -5,16 +5,16 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Scroll to top immediately
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant"
-    });
-    
-    // Also ensure document element is scrolled to top
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    // Small timeout to let Lenis initialize before we scroll
+    const t = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      // Also reset Lenis scroll position if it exists
+      const lenisEl = document.querySelector("[data-lenis-prevent]");
+      if (lenisEl) (lenisEl as HTMLElement).scrollTop = 0;
+    }, 50);
+    return () => clearTimeout(t);
   }, [pathname]);
 
   return null;

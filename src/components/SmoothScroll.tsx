@@ -1,34 +1,42 @@
-import { useEffect } from 'react';
-import Lenis from '@studio-freight/lenis';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Lenis from "@studio-freight/lenis";
+
+let lenisInstance: Lenis | null = null;
 
 const SmoothScroll = () => {
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    // Initialize Lenis
+    if (lenisInstance) {
+      lenisInstance.destroy();
+      lenisInstance = null;
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
       smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
     });
 
-    // Animation frame loop
+    lenisInstance = lenis;
+
+    // Scroll to top on route change
+    lenis.scrollTo(0, { immediate: true });
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    const rafId = requestAnimationFrame(raf);
 
-    // Cleanup
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisInstance = null;
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 };

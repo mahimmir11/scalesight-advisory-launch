@@ -2,8 +2,16 @@ import Navbar from "@/components/Navbar";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
-const Contact = () => (
+const Contact = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  return (
   <div className="min-h-screen flex flex-col bg-white">
     <Navbar />
     <main className="flex-1">
@@ -98,6 +106,7 @@ const Contact = () => (
     </main>
     <Footer />
   </div>
-);
+  );
+};
 
 export default Contact;
