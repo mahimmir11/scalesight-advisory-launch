@@ -203,6 +203,8 @@ const UAEServices = () => {
   });
 
   const backgroundY = useTransform(smoothProgress, [0, 1], [0, -200]);
+  const ctaBackgroundY = useTransform(smoothProgress, [0.8, 1], [0, -50]);
+  const ctaOverlayY = useTransform(smoothProgress, [0.8, 1], [0, 50]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -701,12 +703,12 @@ const UAEServices = () => {
       {/* ── CTA Section ── */}
       <section className="relative py-32 overflow-hidden">
         <motion.div
-          style={{ y: useTransform(smoothProgress, [0.8, 1], [0, -50]) }}
+          style={{ y: ctaBackgroundY }}
           className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-secondary"
         />
 
         <motion.div
-          style={{ y: useTransform(smoothProgress, [0.8, 1], [0, 50]) }}
+          style={{ y: ctaOverlayY }}
           className="absolute inset-0 opacity-10"
         >
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl" />
