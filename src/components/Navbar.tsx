@@ -30,7 +30,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center shrink-0">
-          <img src="/fulllogo1.png" alt="ScaleSight" className="h-14 w-auto" />
+          <img src="/fulllogo1.png" alt="ScaleSight" className="h-14 w-auto" loading="eager" />
         </Link>
 
         {/* Desktop Menu */}

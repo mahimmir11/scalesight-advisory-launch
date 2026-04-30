@@ -387,20 +387,22 @@ const IndiaServices = () => {
                   style={{
                     boxShadow: "0 24px 64px rgba(9,40,90,0.18), 0 0 0 1.5px rgba(255,153,51,0.25)",
                     background: "#09285A",
+                    aspectRatio: "16/9",
                   }}
                 >
                   <video
                     src="/india.mp4"
+                    poster="/india.png"
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                     className="w-full h-full block"
                     style={{
                       display: "block",
                       objectFit: "cover",
                       objectPosition: "center",
-                      aspectRatio: "16/9",
                     }}
                   />
                 </div>

@@ -369,20 +369,22 @@ const UAEServices = () => {
                 style={{
                   boxShadow: "0 24px 64px rgba(9,40,90,0.18), 0 0 0 1.5px rgba(0,194,168,0.25)",
                   background: "#09285A",
+                  aspectRatio: "16/9",
                 }}
               >
                 <video
                   src="/uae.mp4"
+                  poster="/uae.jpg"
                   autoPlay
                   loop
                   muted
                   playsInline
+                  preload="metadata"
                   className="w-full h-full block"
                   style={{
                     display: "block",
                     objectFit: "cover",
                     objectPosition: "center",
-                    aspectRatio: "16/9",
                   }}
                 />
               </div>

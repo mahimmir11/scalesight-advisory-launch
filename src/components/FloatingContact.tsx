@@ -92,7 +92,7 @@ const FloatingContact = ({ splashDone = true }: Props) => {
                 }}
               >
                 <div className="px-4 pt-4 pb-3 border-b border-gray-100 flex items-center justify-center">
-                  <img src="/fulllogo1.png" alt="ScaleSight" className="h-8 w-auto" />
+                  <img src="/fulllogo1.png" alt="ScaleSight" className="h-8 w-auto" loading="lazy" />
                 </div>
 
                 <div className="px-3 py-3 space-y-2">

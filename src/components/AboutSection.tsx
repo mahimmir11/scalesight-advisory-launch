@@ -228,29 +228,30 @@ const OpeningSection = () => {
               }}
             />
 
-            {/* Video card — looping, cropped to remove black borders */}
+            {/* Video card — looping, properly fitted */}
             <div
               className="relative rounded-[36px] overflow-hidden"
               style={{
                 boxShadow: "0 24px 64px rgba(9,40,90,0.18), 0 0 0 1.5px rgba(0,194,168,0.25)",
                 background: "#e8f5f2",
+                aspectRatio: "16/9",
               }}
             >
               <video
                 src="/about.mp4"
+                poster="/about.png"
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-auto block"
+                preload="metadata"
+                className="w-full h-full block"
                 style={{
                   display: "block",
-                  /* crop left/right black borders — adjust % if needed */
                   objectFit: "cover",
                   objectPosition: "center",
-                  clipPath: "inset(0 6% 0 6%)",
-                  width: "112%",
-                  marginLeft: "-6%",
+                  width: "100%",
+                  height: "100%",
                 }}
               />
             </div>
@@ -330,7 +331,7 @@ const WhoWeAre = () => {
               ease: "easeInOut",
             }}
           >
-            <img src={officeTeamImg} alt="ScaleSight team" className="w-full h-full object-cover" />
+            <img src={officeTeamImg} alt="ScaleSight team" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/40 to-transparent" />
           </motion.div>
           <div className="absolute -z-10 -bottom-10 -right-10 w-72 h-72 bg-[#00C2A8]/15 rounded-full blur-3xl" />
