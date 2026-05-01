@@ -370,11 +370,10 @@ const WhoWeAre = () => {
             style={{ y }} 
             className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]"
             animate={{
-              rotate: [0, -1, 1, -0.5, 0.5, 0],
-              y: [0, -5, 5, -3, 3, 0],
+              rotate: [0, -0.6, 0.6, -0.4, 0.4, 0],
             }}
             transition={{
-              duration: 6,
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut",
             }}

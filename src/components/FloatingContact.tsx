@@ -231,9 +231,9 @@ const FloatingContact = ({ splashDone = true }: Props) => {
               scale: { duration: 0.4 },
               y: {
                 duration: 2.2,
-                repeat: Infinity,
+                repeat: 1,
                 ease: "easeInOut",
-                repeatDelay: 0.3,
+                repeatDelay: 0,
               },
             }}
             className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-semibold"
