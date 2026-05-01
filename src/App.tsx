@@ -20,6 +20,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import FloatingContact from "./components/FloatingContact";
+import FloatingServices from "./components/FloatingServices";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => {
           <ScrollToTop />
           <AnimatedRoutes splashDone={!splash} />
           <FloatingContact splashDone={!splash} />
+          <FloatingServices splashDone={!splash} />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

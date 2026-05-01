@@ -170,7 +170,7 @@ const FloatingContact = ({ splashDone = true }: Props) => {
                 </div>
 
                 <div className="px-4 pb-4 pt-1">
-                  <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer"
+                  <a href="https://www.linkedin.com/company/scalesight-global-advisory/" target="_blank" rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#0A66C2] text-white text-sm font-semibold hover:bg-[#0958a8] transition-colors">
                     <LinkedInIcon />
                     ScaleSight on LinkedIn

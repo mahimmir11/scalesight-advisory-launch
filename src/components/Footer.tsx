@@ -97,7 +97,7 @@ const Footer = () => (
             </a>
 
             {/* LinkedIn */}
-            <a href="https://linkedin.com/company/scalesight" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+            <a href="https://www.linkedin.com/company/scalesight-global-advisory/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
               className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
               <svg className="w-6 h-6" viewBox="0 0 24 24">
                 <rect width="24" height="24" rx="4" fill="#0A66C2"/>

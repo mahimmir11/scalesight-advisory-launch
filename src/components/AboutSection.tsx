@@ -209,14 +209,15 @@ const OpeningSection = () => {
             transition={{ duration: 0.65, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-wrap gap-3"
           >
-            <a
-              href="/contact"
+            <button
+              onClick={() => document.getElementById("who-we-are")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold"
               style={{
                 background: "#09285A", color: "#ffffff",
                 fontFamily: "'Manrope', sans-serif",
                 boxShadow: "0 4px 18px rgba(9,40,90,0.25)",
                 transition: "transform 0.2s, box-shadow 0.2s",
+                cursor: "pointer",
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
@@ -227,17 +228,20 @@ const OpeningSection = () => {
                 (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 18px rgba(9,40,90,0.25)";
               }}
             >
-              Learn More →
-            </a>
+              Learn More
+            </button>
 
-            <a
-              href="#services"
+            <button
+              onClick={() => {
+                window.location.href = "/#services";
+              }}
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
               style={{
                 background: "transparent", color: "#09285A",
                 border: "1.5px solid rgba(9,40,90,0.25)",
                 fontFamily: "'Manrope', sans-serif",
                 transition: "background 0.2s, border-color 0.2s, transform 0.2s",
+                cursor: "pointer",
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.background = "rgba(9,40,90,0.05)";
@@ -251,7 +255,7 @@ const OpeningSection = () => {
               }}
             >
               Our Services
-            </a>
+            </button>
           </motion.div>
         </div>
 
@@ -345,7 +349,7 @@ const WhoWeAre = () => {
   const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <section ref={ref} className="py-28 px-6 bg-white overflow-hidden">
+    <section ref={ref} className="py-28 px-6 bg-white overflow-hidden" id="who-we-are">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1">
         <div>
           <motion.p {...fromLeft(0)} className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00C2A8] mb-4">
@@ -423,7 +427,7 @@ const AccordionExpertise = () => {
   };
 
   return (
-    <section className="py-24 px-6 bg-[#F8FAFC] relative overflow-hidden">
+    <section className="py-24 px-6 bg-[#F8FAFC] relative overflow-hidden" id="about-expertise">
       <div className="absolute top-20 right-10 w-[400px] h-[400px] bg-[#00C2A8]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-20 left-10 w-[350px] h-[350px] bg-[#6C63FF]/5 rounded-full blur-[100px] pointer-events-none" />
       
