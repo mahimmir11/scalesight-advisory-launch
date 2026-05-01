@@ -1,6 +1,7 @@
 // #v2-local — AboutSection
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   FileText, ShieldCheck, TrendingUp, Briefcase,
   CheckCircle, Clock, Eye, Users, ArrowRight
@@ -203,12 +204,7 @@ const OpeningSection = () => {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={animate ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-wrap gap-3"
-          >
+          <div className="flex flex-wrap gap-3 mt-0">
             <button
               onClick={() => document.getElementById("who-we-are")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold"
@@ -231,17 +227,14 @@ const OpeningSection = () => {
               Learn More
             </button>
 
-            <button
-              onClick={() => {
-                window.location.href = "/#services";
-              }}
+            <Link
+              to="/contact"
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
               style={{
                 background: "transparent", color: "#09285A",
                 border: "1.5px solid rgba(9,40,90,0.25)",
                 fontFamily: "'Manrope', sans-serif",
                 transition: "background 0.2s, border-color 0.2s, transform 0.2s",
-                cursor: "pointer",
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.background = "rgba(9,40,90,0.05)";
@@ -254,9 +247,9 @@ const OpeningSection = () => {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
               }}
             >
-              Our Services
-            </button>
-          </motion.div>
+              Have a Talk
+            </Link>
+          </div>
         </div>
 
         {/* RIGHT — image in circular/rounded frame */}

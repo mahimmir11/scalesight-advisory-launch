@@ -676,20 +676,13 @@ const UAEServices = () => {
                         </AnimatePresence>
 
                         {/* Learn More — always at bottom */}
-                        <motion.button
+                        <button
                           onClick={() => setExpandedCard(isExpanded ? null : i)}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                          className="mt-auto pt-4 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-50 text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-300 group/btn border border-gray-100"
+                          className="mt-auto pt-4 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-50 text-primary font-semibold text-sm hover:bg-primary hover:text-white active:scale-95 transition-all duration-300 group/btn border border-gray-100"
                         >
                           {isExpanded ? "Show Less" : "Learn More"}
-                          <motion.div
-                            animate={{ rotate: isExpanded ? 90 : 0 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                          </motion.div>
-                        </motion.button>
+                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </button>
                       </div>
                     </div>
                   </motion.div>
