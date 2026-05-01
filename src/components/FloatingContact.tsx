@@ -28,9 +28,27 @@ const FloatingContact = ({ splashDone = true }: Props) => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [waOpen, setWaOpen] = useState(false);
+  const [showTeaser, setShowTeaser] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  void splashDone;
+  // Auto-show teaser card once per session after 4 s
+  useEffect(() => {
+    if (!splashDone) return;
+    if (sessionStorage.getItem("fcSeen")) return;
+    sessionStorage.setItem("fcSeen", "1");
+
+    const t1 = setTimeout(() => {
+      setShowTeaser(true);
+
+      const t2 = setTimeout(() => {
+        setShowTeaser(false);
+      }, 4000);
+
+      return () => clearTimeout(t2);
+    }, 4000);
+
+    return () => clearTimeout(t1);
+  }, [splashDone]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -45,21 +63,53 @@ const FloatingContact = ({ splashDone = true }: Props) => {
   }, []);
 
   const handleClick = () => {
+    setShowTeaser(false);
     if (open) {
-      // close everything
       setOpen(false);
       setExpanded(false);
       setWaOpen(false);
     } else {
-      // first click: expand the button label
       setExpanded(true);
-      // slight delay then show popup
       setTimeout(() => setOpen(true), 320);
     }
   };
 
   return (
     <div ref={ref} className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+
+      {/* ── Teaser card — "Talk to our advisors" ── */}
+      <AnimatePresence>
+        {showTeaser && !open && (
+          <motion.div
+            key="teaser"
+            initial={{ opacity: 0, y: 12, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.94 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-white rounded-2xl overflow-hidden pointer-events-none"
+            style={{
+              width: "260px",
+              boxShadow: "0 12px 40px rgba(9,40,90,0.13), 0 0 0 1.5px rgba(9,40,90,0.08)",
+            }}
+          >
+            <div className="px-5 py-4 flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-xl bg-[#25D366] flex items-center justify-center shrink-0 text-white">
+                <WaIcon />
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 font-medium">Need help?</p>
+                <p className="text-[15px] font-bold text-[#09285A] leading-tight">Talk to our advisors</p>
+              </div>
+            </div>
+            <div className="px-5 pb-4">
+              <div className="h-px bg-gray-100 mb-2.5" />
+              <p className="text-xs text-gray-500 leading-snug">
+                🇮🇳 India &amp; 🇦🇪 UAE — tap the button to connect
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Contact popup card ── */}
       <AnimatePresence>
