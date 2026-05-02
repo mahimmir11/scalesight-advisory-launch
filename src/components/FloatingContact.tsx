@@ -168,18 +168,6 @@ const FloatingContact = ({ splashDone = true }: Props) => {
                     >
                       <div className="mt-1.5 ml-2 space-y-1.5">
                         <a
-                          href="https://wa.me/919023120410"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white border border-gray-200 hover:border-[#09285A]/30 hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-lg leading-none">🇮🇳</span>
-                          <div>
-                            <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">India</p>
-                            <p className="text-sm font-bold text-[#09285A]">+91 90231 20410</p>
-                          </div>
-                        </a>
-                        <a
                           href="https://wa.me/971552543007"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -189,6 +177,18 @@ const FloatingContact = ({ splashDone = true }: Props) => {
                           <div>
                             <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">UAE</p>
                             <p className="text-sm font-bold text-[#09285A]">+971 55 254 3007</p>
+                          </div>
+                        </a>
+                        <a
+                          href="https://wa.me/919023120410"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white border border-gray-200 hover:border-[#09285A]/30 hover:bg-gray-50 transition-colors"
+                        >
+                          <span className="text-lg leading-none">🇮🇳</span>
+                          <div>
+                            <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">India</p>
+                            <p className="text-sm font-bold text-[#09285A]">+91 90231 20410</p>
                           </div>
                         </a>
                       </div>

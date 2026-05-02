@@ -94,7 +94,7 @@ const ServicesSection = () => {
               transition={{ duration: 0.4 }}
               className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
             >
-              {(["India", "UAE"] as const).map((r, i) => (
+              {(["UAE", "India"] as const).map((r, i) => (
                 <Link
                   key={r}
                   to={r === "India" ? "/services/india" : "/services/uae"}

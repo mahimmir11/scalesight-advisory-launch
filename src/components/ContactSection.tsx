@@ -1,4 +1,4 @@
-// #v2-local — ContactSection
+﻿// #v2-local — ContactSection
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Send, Mail, MapPin, ExternalLink, CheckCircle2, MessageCircle } from "lucide-react";
@@ -236,7 +236,11 @@ const RegionBlock = ({
             transition={!blinked && isInView ? { duration: 0.55, delay: delay + 0.3, ease: "easeInOut" } : { duration: 0.2 }}
             className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm"
           >
-            {flag}
+            {flag.startsWith('/') ? (
+              <img src={flag} alt={country} className="w-6 h-6 object-contain" />
+            ) : (
+              flag
+            )}
           </motion.div>
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#00C2A8] mb-0.5">{country}</p>
@@ -466,8 +470,8 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
                 📞 Phone & WhatsApp
               </p>
               <div className="space-y-2.5">
-                <RegionBlock flag="🇮🇳" country="India" phone="+91 90231 20410" waHref="https://wa.me/919023120410" delay={0.1} />
-                <RegionBlock flag="🇦🇪" country="Dubai, UAE" phone="+971 55 254 3007" waHref="https://wa.me/971552543007" delay={0.18} />
+                <RegionBlock flag="/uaeflag.png" country="Dubai, UAE" phone="+971 55 254 3007" waHref="https://wa.me/971552543007" delay={0.1} />
+                <RegionBlock flag="/indiaflag.png" country="India" phone="+91 90231 20410" waHref="https://wa.me/919023120410" delay={0.18} />
               </div>
             </motion.div>
 
