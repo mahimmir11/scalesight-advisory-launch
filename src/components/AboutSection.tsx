@@ -141,11 +141,11 @@ const OpeningSection = () => {
         style={{ background: "radial-gradient(circle, rgba(9,40,90,0.08) 0%, transparent 70%)" }} />
 
       {/* Main grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
         style={{ minHeight: "calc(95vh - 76px)" }}>
 
         {/* LEFT — text */}
-        <div className="flex flex-col justify-center py-12 lg:py-0">
+        <div className="flex flex-col justify-center py-0 lg:py-12">
 
           {/* "ABOUT US" label */}
           <motion.p
@@ -257,7 +257,7 @@ const OpeningSection = () => {
           initial={{ opacity: 0, x: 40 }}
           animate={animate ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-center justify-center py-12 lg:py-0"
+          className="flex items-center justify-center py-0 lg:py-12"
         >
           <div className="relative w-full max-w-[700px]">
 

@@ -90,7 +90,14 @@ const HeroSection = ({ splashDone = true }: Props) => {
           style={{ minHeight: "auto" }}>
 
           {/* LEFT — Text Content */}
-          <div className="flex flex-col justify-center py-0 lg:py-12">
+          <div 
+            className="flex flex-col justify-center py-0 lg:py-12"
+            style={{
+              opacity: animate ? 1 : 0,
+              transform: animate ? "translateX(0)" : "translateX(-60px)",
+              transition: "all 1s ease-out 0.1s"
+            }}
+          >
             
             {/* Badge */}
             <div
@@ -98,9 +105,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
               style={{ 
                 background: "rgba(0,201,167,0.08)", 
                 border: "1px solid rgba(0,201,167,0.2)",
-                opacity: animate ? 1 : 0,
-                transform: animate ? "translateY(0)" : "translateY(-10px)",
-                transition: "all 0.6s ease-out"
               }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#00C9A7", boxShadow: "0 0 8px #00C9A7" }} />
@@ -125,9 +129,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
               letterSpacing: "-0.02em", 
               color: "#02121e",
               margin: "0 0 20px 0",
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.8s ease-out 0.1s"
             }}>
               {headingLines.map((line, li) => (
                 <span
@@ -153,9 +154,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
                 maxWidth: "480px",
                 margin: "0 0 36px 0", 
                 fontWeight: 400,
-                opacity: animate ? 1 : 0,
-                transform: animate ? "translateY(0)" : "translateY(20px)",
-                transition: "all 0.8s ease-out 0.2s"
               }}
             >
               Tailored, insight-driven advisory to help businesses grow confidently across UAE and India.
@@ -164,11 +162,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
             {/* Buttons */}
             <div 
               className="flex flex-wrap gap-3 items-center"
-              style={{
-                opacity: animate ? 1 : 0,
-                transform: animate ? "translateY(0)" : "translateY(20px)",
-                transition: "all 0.8s ease-out 0.3s"
-              }}
             >
               <Link
                 to="/contact"
@@ -232,7 +225,7 @@ const HeroSection = ({ splashDone = true }: Props) => {
             className="flex items-center justify-center py-0 lg:py-12"
             style={{
               opacity: animate ? 1 : 0,
-              transform: animate ? "translateX(0)" : "translateX(40px)",
+              transform: animate ? "translateX(0)" : "translateX(60px)",
               transition: "all 1s ease-out 0.2s"
             }}
           >
@@ -290,9 +283,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
                 style={{ 
                   background: "linear-gradient(135deg, #00C9A7 0%, #00a88a 100%)", 
                   boxShadow: "0 10px 30px rgba(0,201,167,0.35)",
-                  opacity: animate ? 1 : 0,
-                  transform: animate ? "scale(1)" : "scale(0.8)",
-                  transition: "all 0.6s ease-out 0.8s"
                 }}
               >
                 <span className="w-2 h-2 rounded-full bg-white" style={{ boxShadow: "0 0 8px white" }} />
@@ -314,9 +304,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
                   background: "#ffffff", 
                   border: "1px solid rgba(0,201,167,0.25)",
                   boxShadow: "0 10px 30px rgba(0,201,167,0.2)",
-                  opacity: animate ? 1 : 0,
-                  transform: animate ? "scale(1)" : "scale(0.8)",
-                  transition: "all 0.6s ease-out 0.9s"
                 }}
               >
                 <Sparkles className="w-4 h-4" style={{ color: "#00C9A7" }} />
@@ -332,30 +319,6 @@ const HeroSection = ({ splashDone = true }: Props) => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2" 
-          style={{ 
-            opacity: animate ? 0.5 : 0,
-            transition: "opacity 0.6s ease-out 1s"
-          }}
-        >
-          <span style={{
-            fontFamily: "'Manrope', sans-serif",
-            fontSize: "10px",
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: "rgba(2,18,30,0.5)"
-          }}>
-            Scroll
-          </span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="rgba(2,18,30,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
         </div>
       </section>
     </>
