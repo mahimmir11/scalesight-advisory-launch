@@ -470,7 +470,7 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
                 📞 Phone & WhatsApp
               </p>
               <div className="space-y-2.5">
-                <RegionBlock flag="/uaeflag.png" country="Dubai, UAE" phone="+971 55 254 3007" waHref="https://wa.me/971552543007" delay={0.1} />
+                <RegionBlock flag="/uaeflag.png" country="UAE" phone="+971 55 254 3007" waHref="https://wa.me/971552543007" delay={0.1} />
                 <RegionBlock flag="/indiaflag.png" country="India" phone="+91 90231 20410" waHref="https://wa.me/919023120410" delay={0.18} />
               </div>
             </motion.div>
@@ -518,7 +518,7 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
               className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm text-gray-500 hover:text-[#09285A] transition-colors"
             >
               <MapPin className="w-4 h-4 text-[#00C2A8] flex-shrink-0" />
-              <span>India & Dubai, UAE</span>
+              <span>India & UAE</span>
             </motion.a>
 
           </div>
