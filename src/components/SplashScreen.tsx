@@ -2,8 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 
 // All heavy assets that need to be ready before the user navigates
-const VIDEOS_TO_PRELOAD = ["/about.mp4", "/uae.mp4", "/india.mp4"];
-const IMAGES_TO_PRELOAD = ["/hero.png", "/about.png", "/homeabout.png", "/india.png", "/uae.jpg"];
+const VIDEOS_TO_PRELOAD = ["/about.mp4", "/uae.mp4", "/india.mp4", "/home.mp4"];
+const IMAGES_TO_PRELOAD = ["/fulllogo1.png", "/logo.png", "/contact.png", "/footer.png", "/india1.png", "/uae.jpg"];
 
 const preloadAssets = () => {
   // Preload videos — create hidden video elements so the browser starts buffering them
