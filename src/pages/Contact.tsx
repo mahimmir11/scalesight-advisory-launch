@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 
@@ -11,8 +12,23 @@ const Contact = () => {
     document.body.scrollTop = 0;
   }, []);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact ScaleSight Global Advisory",
+    "description": "Get in touch with ScaleSight for strategic finance advisory services across India and UAE.",
+    "url": "https://www.scalesight.in/contact"
+  };
+
   return (
   <div className="min-h-screen flex flex-col bg-white">
+    <SEO
+      title="Contact Us"
+      description="Ready to transform your business? Get in touch with ScaleSight Global Advisory for expert finance advisory services across India and UAE. Let's discuss your strategic finance needs."
+      canonical="https://www.scalesight.in/contact"
+      keywords="contact finance advisor, business consulting contact, CFO services inquiry, India UAE advisory"
+      structuredData={structuredData}
+    />
     <Navbar />
     <main className="flex-1">
 

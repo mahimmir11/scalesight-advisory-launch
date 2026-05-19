@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { CheckCircle2, ArrowRight, TrendingUp, BarChart2, DollarSign, PieChart, Database, Lightbulb, Shield, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -194,8 +195,28 @@ const IndiaServices = () => {
     return () => clearTimeout(t);
   }, []);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "India Financial Advisory Services",
+    "description": "Strategic financial leadership for Indian businesses - Virtual CFO, FP&A, budgeting, forecasting, and decision support services.",
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "ScaleSight Global Advisory"
+    },
+    "areaServed": "IN",
+    "url": "https://www.scalesight.in/services/india"
+  };
+
   return (
     <>
+      <SEO
+        title="India Services - Virtual CFO, FP&A & Financial Advisory"
+        description="Strategic financial leadership for Indian businesses. Virtual CFO services, FP&A, budgeting, forecasting, MIS reporting, financial analytics, and decision support tailored for India."
+        canonical="https://www.scalesight.in/services/india"
+        keywords="virtual CFO India, FP&A services India, budgeting forecasting India, financial advisory India, MIS reporting, financial analytics"
+        structuredData={structuredData}
+      />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
       `}</style>

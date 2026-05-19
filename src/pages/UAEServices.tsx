@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { CheckCircle2, ArrowRight, FileText, Shield, BarChart3, Search, Workflow, TrendingUp, Users, Award, Clock, Target, LucideIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -212,8 +213,28 @@ const UAEServices = () => {
     return () => clearTimeout(t);
   }, []);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "UAE Financial Advisory Services",
+    "description": "Expert financial advisory for UAE businesses - Accounting, bookkeeping, IFRS reporting, internal audit, process reviews, and compliance services.",
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "ScaleSight Global Advisory"
+    },
+    "areaServed": "AE",
+    "url": "https://www.scalesight.in/services/uae"
+  };
+
   return (
     <>
+      <SEO
+        title="UAE Services - Accounting, IFRS Reporting & Compliance"
+        description="Expert financial advisory for UAE businesses. Accounting, bookkeeping, IFRS reporting, internal audit support, process reviews, and comprehensive compliance services tailored for UAE market."
+        canonical="https://www.scalesight.in/services/uae"
+        keywords="UAE accounting services, IFRS reporting UAE, internal audit UAE, compliance UAE, bookkeeping Dubai, financial advisory UAE"
+        structuredData={structuredData}
+      />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
