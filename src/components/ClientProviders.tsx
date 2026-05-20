@@ -18,18 +18,46 @@ export default function ClientProviders({
 }: {
   children: React.ReactNode;
 }) {
-  const [splash, setSplash] = useState(false);
+  // Start as null = "not yet decided" — prevents any flash
+  const [splash, setSplash] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Only run on client — check sessionStorage
     const alreadyVisited = sessionStorage.getItem("visited");
     if (!alreadyVisited) {
-      setSplash(true);
+      // First visit — show splash
       sessionStorage.setItem("visited", "1");
+      setSplash(true);
       const t = setTimeout(() => setSplash(false), 2000);
       return () => clearTimeout(t);
+    } else {
+      // Already visited — no splash, show page immediately
+      setSplash(false);
     }
   }, []);
+
+  // While we haven't decided yet (null), show a white cover so
+  // the page content never flashes before the splash check runs
+  if (splash === null) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "#ffffff",
+          zIndex: 9999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src="/logo.png"
+          alt="ScaleSight"
+          style={{ width: "clamp(60px, 10vw, 90px)", height: "auto" }}
+        />
+      </div>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
