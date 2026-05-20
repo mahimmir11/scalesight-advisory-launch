@@ -35,8 +35,8 @@ export default function ClientProviders({
     }
   }, []);
 
-  // While we haven't decided yet (null), show a white cover so
-  // the page content never flashes before the splash check runs
+  // While we haven't decided yet (null), show a plain white cover —
+  // no logo here so the animated SplashScreen is the only thing user sees
   if (splash === null) {
     return (
       <div
@@ -45,17 +45,8 @@ export default function ClientProviders({
           inset: 0,
           background: "#ffffff",
           zIndex: 9999,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
-      >
-        <img
-          src="/logo.png"
-          alt="ScaleSight"
-          style={{ width: "clamp(60px, 10vw, 90px)", height: "auto" }}
-        />
-      </div>
+      />
     );
   }
 
