@@ -1,6 +1,8 @@
+'use client';
+
 // #v2-local — HeroSection
 import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -13,7 +15,7 @@ const headingLines = [
   { text: "Dedicated Advisors",  teal: true  },
 ];
 
-const HeroSection = ({ splashDone = true }: Props) => {
+const HeroSection = ({ splashDone: _splashDone = true }: Props) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => { 
@@ -164,7 +166,7 @@ const HeroSection = ({ splashDone = true }: Props) => {
               className="flex flex-wrap gap-3 items-center"
             >
               <Link
-                to="/contact"
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm"
                 style={{
                   background: "#00C9A7", 
@@ -175,12 +177,12 @@ const HeroSection = ({ splashDone = true }: Props) => {
                   boxShadow: "0 4px 24px rgba(0,201,167,0.3)",
                   transition: "transform 0.2s, box-shadow 0.2s, background 0.2s",
                 }}
-                onMouseEnter={e => {
+                onMouseEnter={(e: React.MouseEvent<HTMLElement>) => {
                   (e.currentTarget as HTMLElement).style.background = "#00a88a";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
                   (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,201,167,0.5)";
                 }}
-                onMouseLeave={e => {
+                onMouseLeave={(e: React.MouseEvent<HTMLElement>) => {
                   (e.currentTarget as HTMLElement).style.background = "#00C9A7";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                   (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px rgba(0,201,167,0.3)";
@@ -203,12 +205,12 @@ const HeroSection = ({ splashDone = true }: Props) => {
                   transition: "background 0.2s, border-color 0.2s, transform 0.2s", 
                   cursor: "pointer",
                 }}
-                onMouseEnter={e => {
+                onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                   (e.currentTarget as HTMLElement).style.background = "rgba(2,18,30,0.05)";
                   (e.currentTarget as HTMLElement).style.borderColor = "rgba(2,18,30,0.4)";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
                 }}
-                onMouseLeave={e => {
+                onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
                   (e.currentTarget as HTMLElement).style.background = "transparent";
                   (e.currentTarget as HTMLElement).style.borderColor = "rgba(2,18,30,0.2)";
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";

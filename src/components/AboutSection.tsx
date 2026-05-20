@@ -1,12 +1,15 @@
 // #v2-local — AboutSection
+'use client';
+
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import {
   FileText, ShieldCheck, TrendingUp, Briefcase,
   CheckCircle, Clock, Eye, Users, ArrowRight
 } from "lucide-react";
-import officeTeamImg from "../assets/office-team.png";
+
+const officeTeamSrc = "/office-team.png";
 
 const ease = [0.19, 1, 0.22, 1] as const;
 
@@ -228,7 +231,7 @@ const OpeningSection = () => {
             </button>
 
             <Link
-              to="/contact"
+              href="/contact"
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
               style={{
                 background: "transparent", color: "#09285A",
@@ -236,12 +239,12 @@ const OpeningSection = () => {
                 fontFamily: "'Manrope', sans-serif",
                 transition: "background 0.2s, border-color 0.2s, transform 0.2s",
               }}
-              onMouseEnter={e => {
+              onMouseEnter={(e: React.MouseEvent<HTMLElement>) => {
                 (e.currentTarget as HTMLElement).style.background = "rgba(9,40,90,0.05)";
                 (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.5)";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
               }}
-              onMouseLeave={e => {
+              onMouseLeave={(e: React.MouseEvent<HTMLElement>) => {
                 (e.currentTarget as HTMLElement).style.background = "transparent";
                 (e.currentTarget as HTMLElement).style.borderColor = "rgba(9,40,90,0.25)";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
@@ -375,7 +378,7 @@ const WhoWeAre = () => {
               ease: "easeInOut",
             }}
           >
-            <img src={officeTeamImg} alt="ScaleSight team" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+            <img src={officeTeamSrc} alt="ScaleSight team" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/40 to-transparent" />
           </motion.div>
           <div className="absolute -z-10 -bottom-10 -right-10 w-72 h-72 bg-[#00C2A8]/15 rounded-full blur-3xl" />
@@ -453,7 +456,7 @@ const AccordionExpertise = () => {
             return (
               <motion.div
                 key={item.num}
-                ref={el => itemRefs.current[i] = el}
+                ref={el => { itemRefs.current[i] = el; }}
                 initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}

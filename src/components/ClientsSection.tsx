@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Building2, Rocket, TrendingUp, Users, Target, Eye, BarChart3 } from "lucide-react";
 import { useRef, useEffect, useState, useCallback } from "react";

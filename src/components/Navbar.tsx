@@ -1,8 +1,11 @@
+'use client';
+
 // #v2-local — Navbar
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -15,21 +18,19 @@ const links = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
   useEffect(() => {
     setMobileOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
-  const isActive = (to: string) => location.pathname === to;
-
-  const linkColor = "text-gray-600 hover:text-[#09285A] hover:bg-gray-100";
+  const isActive = (to: string) => pathname === to;
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center shrink-0">
+        <Link href="/" className="flex items-center shrink-0">
           <img src="/fulllogo1.png" alt="ScaleSight" className="h-14 w-auto" loading="eager" />
         </Link>
 
@@ -38,7 +39,7 @@ const Navbar = () => {
           {links.map((l) => (
             <Link
               key={l.to}
-              to={l.to}
+              href={l.to}
               className={cn(
                 "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 overflow-hidden",
                 isActive(l.to) ? "text-white" : "text-gray-600 hover:text-[#09285A] hover:bg-gray-100"
@@ -118,7 +119,7 @@ const Navbar = () => {
                     transition={{ delay: i * 0.05, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <Link
-                      to={l.to}
+                      href={l.to}
                       onClick={() => setMobileOpen(false)}
                       className={`
                         relative flex items-center justify-between px-6 py-4 text-base font-semibold

@@ -1,6 +1,8 @@
+'use client';
+
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface Props {
   splashDone?: boolean;
@@ -10,7 +12,7 @@ const FloatingServices = ({ splashDone = true }: Props) => {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (!splashDone) return;
@@ -28,7 +30,7 @@ const FloatingServices = ({ splashDone = true }: Props) => {
 
   const goTo = (path: string) => {
     setOpen(false);
-    navigate(path);
+    router.push(path);
   };
 
   if (!visible) return null;

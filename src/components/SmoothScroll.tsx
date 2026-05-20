@@ -1,11 +1,13 @@
+'use client';
+
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 let lenisInstance: Lenis | null = null;
 
 const SmoothScroll = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (lenisInstance) {
@@ -16,7 +18,6 @@ const SmoothScroll = () => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: false,
     });
 
     lenisInstance = lenis;

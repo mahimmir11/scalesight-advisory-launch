@@ -1,7 +1,9 @@
+'use client';
+
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const data: Record<string, { title: string; desc: string }[]> = {
   India: [
@@ -97,7 +99,7 @@ const ServicesSection = () => {
               {(["UAE", "India"] as const).map((r, i) => (
                 <Link
                   key={r}
-                  to={r === "India" ? "/services/india" : "/services/uae"}
+                  href={r === "India" ? "/services/india" : "/services/uae"}
                   className="block"
                 >
                   <motion.div
