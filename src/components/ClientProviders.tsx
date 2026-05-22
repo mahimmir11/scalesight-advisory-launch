@@ -35,32 +35,33 @@ export default function ClientProviders({
     }
   }, []);
 
-  // While we haven't decided yet (null), show a plain white cover —
-  // no logo here so the animated SplashScreen is the only thing user sees
-  if (splash === null) {
-    return (
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "#ffffff",
-          zIndex: 9999,
-        }}
-      />
-    );
-  }
+  // splash === null means we haven't decided yet (first render, before useEffect).
+  // We still render children so crawlers (Google, GBP, ChatGPT) can see the HTML.
+  // The white overlay sits on top visually so users don't see a flash.
+  const splashDone = splash === false;
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <SplashScreen visible={splash} />
+        {/* White overlay covers content until splash decision is made */}
+        {splash === null && (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "#ffffff",
+              zIndex: 9999,
+            }}
+          />
+        )}
+        <SplashScreen visible={splash === true} />
         <Toaster />
         <Sonner />
         <SmoothScroll />
         <ScrollToTop />
         {children}
-        <FloatingContact splashDone={!splash} />
-        <FloatingServices splashDone={!splash} />
+        <FloatingContact splashDone={splashDone} />
+        <FloatingServices splashDone={splashDone} />
       </TooltipProvider>
     </QueryClientProvider>
   );
