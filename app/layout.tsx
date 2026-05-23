@@ -19,17 +19,40 @@ export const metadata: Metadata = {
     "compliance",
     "financial planning",
     "startup advisory",
+    "virtual CFO",
+    "FP&A",
+    "IFRS reporting",
+    "bookkeeping Dubai",
   ],
   authors: [{ name: "ScaleSight Global Advisory" }],
+  metadataBase: new URL("https://www.scalesight.in"),
   openGraph: {
     type: "website",
     siteName: "ScaleSight Global Advisory",
-    images: [{ url: "/logo.png" }],
+    images: [
+      {
+        url: "https://www.scalesight.in/fulllogo1.png",
+        width: 1200,
+        height: 630,
+        alt: "ScaleSight Global Advisory",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@ScaleSight",
-    images: ["/logo.png"],
+    images: ["https://www.scalesight.in/fulllogo1.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
