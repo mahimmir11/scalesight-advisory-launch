@@ -67,7 +67,7 @@ function StaticSEOContent() {
         border: 0,
       }}
     >
-      <h1>Strategic Expertise From Dedicated Advisors</h1>
+      <h1>Built for Businesses in India and the UAE.</h1>
       <p>
         Tailored, insight-driven advisory to help businesses grow confidently across UAE and India.
         Trusted Advisory · UAE &amp; India.
@@ -88,7 +88,7 @@ function StaticSEOContent() {
       </ul>
 
       <h3>UAE Financial Advisory Services</h3>
-      <p>Expert advisory for the UAE regulatory landscape</p>
+      <p>Expert advisory for the UAE regulatory landscape — Accounting, VAT, Corporate Tax, Registration, Internal and External Audits, IFRS Reporting &amp; Process Reviews.</p>
       <ul>
         <li>Accounting &amp; Bookkeeping – Precision-led maintenance of your financial records.</li>
         <li>Compliance Advisory – Navigating the evolving UAE regulatory landscape.</li>
@@ -100,15 +100,19 @@ function StaticSEOContent() {
       <h2>Frequently Asked Questions</h2>
       <dl>
         <dt>What makes ScaleSight different from a traditional CA firm?</dt>
-        <dd>We are a founder-led advisory firm focused on strategic finance — not just compliance. We combine deep expertise with modern tools to provide actionable insights, not just reports.</dd>
+        <dd>Two things. First, every client is handled directly by experienced Chartered Accountants — not a junior associate. Second, our bookkeeping is run with CFO-level oversight: we don't just record transactions, we flag tax exposure, cash gaps and reporting issues as they happen — at a price that delivers genuine value.</dd>
         <dt>Do you work with businesses outside India and UAE?</dt>
-        <dd>While our core expertise is in India and UAE, we work with global clients who have operations or financial interests in these regions.</dd>
+        <dd>Our core practice is India and the UAE. We will take on global clients only when their work meaningfully connects to one of these two markets — for example, a UK or US holding company with an Indian subsidiary.</dd>
         <dt>What is a Virtual CFO service?</dt>
-        <dd>A Virtual CFO provides strategic financial leadership — FP&amp;A, budgeting, investor reporting, and decision support — without the cost of a full-time hire.</dd>
+        <dd>A Virtual CFO is a part-time, senior finance lead for businesses that cannot justify a full-time CFO. With us, that means monthly reviews, cash-flow forecasting, MIS dashboards in Power BI, board and investor reporting, and direct WhatsApp access to a Chartered Accountant. Typical engagement: 1–3 days of attention per month, billed at a fixed monthly fee.</dd>
         <dt>How do you ensure data security and confidentiality?</dt>
-        <dd>We follow strict data protection protocols, use secure cloud-based tools, and maintain confidentiality agreements with all clients.</dd>
+        <dd>Books are maintained on your own Zoho, Tally or QuickBooks account — we do not move your data to ours. Access is role-based, files are exchanged through encrypted cloud storage, and every engagement is covered by a signed NDA.</dd>
         <dt>Can I schedule a free consultation?</dt>
-        <dd>Absolutely. We offer a complimentary discovery call to understand your needs and recommend the right advisory framework for your business.</dd>
+        <dd>Yes — a 30-minute discovery call is free. We will review your current setup, flag the two or three things that need immediate attention, and tell you honestly whether you need us or not.</dd>
+        <dt>How much does your service cost compared to hiring an in-house accountant?</dt>
+        <dd>Our engagements are typically priced at a fraction of the cost of an equivalent in-house accountant or finance manager — and that price already includes senior Chartered Accountant oversight, modern accounting tools, and structured monthly reporting. Pricing is fixed monthly, scoped in writing, and adjusted only if the scope itself changes.</dd>
+        <dt>Why does my business need a structured accounting partner?</dt>
+        <dd>Unstructured accounting silently costs businesses money — through missed tax deadlines, regulatory penalties, weak cash visibility, and a lack of decision-ready numbers. A structured accounting partner keeps your books audit-ready, protects you from FTA and tax penalties, gives leadership real-time financial visibility, and significantly improves the value of the business when it comes time to raise capital, attract investment or sell.</dd>
       </dl>
 
       <h2>Contact ScaleSight Global Advisory</h2>

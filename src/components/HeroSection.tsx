@@ -10,9 +10,7 @@ interface Props {
 }
 
 const headingLines = [
-  { text: "Strategic Expertise", teal: false },
-  { text: "From",                teal: false },
-  { text: "Dedicated Advisors",  teal: true  },
+  { text: "Built for Businesses in India and the UAE.",  teal: true  },
 ];
 
 const HeroSection = ({ splashDone: _splashDone = true }: Props) => {
@@ -188,7 +186,7 @@ const HeroSection = ({ splashDone: _splashDone = true }: Props) => {
                   (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px rgba(0,201,167,0.3)";
                 }}
               >
-                Get Started
+                Book a Free Discovery Call
                 <ArrowRight size={16} />
               </Link>
 
@@ -216,7 +214,7 @@ const HeroSection = ({ splashDone: _splashDone = true }: Props) => {
                   (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                 }}
               >
-                Our Services
+                See What We Do
                 <ChevronDown size={16} strokeWidth={2} />
               </button>
             </div>

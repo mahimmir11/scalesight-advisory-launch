@@ -35,7 +35,7 @@ const regionInfo = {
     flag: "🇦🇪",
     label: "UAE",
     tagline: "Expert advisory for the UAE regulatory landscape",
-    summary: "Accounting, Compliance, IFRS Reporting, Internal Audit & Process Reviews.",
+    summary: "Accounting, VAT, Corporate Tax, Registration, Internal and External Audits, IFRS Reporting & Process Reviews.",
     count: 5,
   },
 };

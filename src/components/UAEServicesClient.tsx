@@ -73,20 +73,20 @@ const services: ServiceType[] = [
     iconBg: "linear-gradient(135deg, #3b82f6, #06b6d4)"
   },
   {
-    title: "Accounting & Bookkeeping",
-    desc: "Precision-led maintenance of your financial records.",
-    icon: FileText,
+    title: "Compliance Advisory",
+    desc: "Navigating the evolving UAE regulatory landscape.",
+    icon: Shield,
     details: [
-      "Daily transaction recording and reconciliation",
-      "Chart of accounts setup and management",
-      "Bank and credit card reconciliation",
-      "Accounts payable and receivable management",
-      "Monthly financial statements preparation",
-      "VAT-compliant bookkeeping"
+      "VAT registration and compliance",
+      "Corporate tax advisory and filing",
+      "Economic substance regulations (ESR)",
+      "Ultimate beneficial owner (UBO) reporting",
+      "Anti-money laundering (AML) compliance",
+      "Regulatory change monitoring and updates"
     ],
-    benefits: ["99.9% accuracy", "Real-time updates", "Cloud access"],
-    color: "from-blue-500 to-cyan-500",
-    iconBg: "linear-gradient(135deg, #3b82f6, #06b6d4)"
+    benefits: ["100% compliance", "Penalty avoidance", "Expert guidance"],
+    color: "from-green-500 to-emerald-500",
+    iconBg: "linear-gradient(135deg, #22c55e, #10b981)"
   },
   {
     title: "IFRS Reporting",
