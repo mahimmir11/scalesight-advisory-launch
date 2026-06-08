@@ -57,87 +57,86 @@ function StaticSEOContent() {
     >
       <h1>Expert Financial Advisory for UAE</h1>
       <p>
-        Navigate the UAE regulatory landscape with confidence — from accounting and compliance
-        to IFRS reporting and internal audit support.
+        Navigate the UAE regulatory landscape with confidence — From new mainland and free-zone establishments to growing SMEs and family-owned shops — from accounting and compliance to IFRS reporting and internal audit support.
       </p>
 
       <h2>UAE Financial Advisory Services</h2>
 
       <article>
         <h3>Accounting &amp; Bookkeeping</h3>
-        <p>Precision-led maintenance of your financial records.</p>
+        <p>Books closed monthly, audit-ready always.</p>
         <ul>
           <li>Daily transaction recording and reconciliation</li>
-          <li>Chart of accounts setup and management</li>
-          <li>Bank and credit card reconciliation</li>
-          <li>Accounts payable and receivable management</li>
+          <li>Chart of accounts design and management</li>
+          <li>Bank and credit card reconciliations</li>
+          <li>Accounts payable and receivable tracking</li>
           <li>Monthly financial statements preparation</li>
-          <li>VAT-compliant bookkeeping</li>
+          <li>VAT-compliant ledger maintenance</li>
         </ul>
       </article>
 
       <article>
-        <h3>Compliance Advisory</h3>
-        <p>Navigating the evolving UAE regulatory landscape.</p>
+        <h3>VAT Compliance</h3>
+        <p>End-to-end UAE VAT support.</p>
         <ul>
-          <li>UAE corporate tax compliance</li>
-          <li>VAT registration and filing</li>
-          <li>Economic substance regulations</li>
-          <li>Anti-money laundering compliance</li>
-          <li>Regulatory reporting and submissions</li>
-          <li>Compliance health checks and audits</li>
+          <li>VAT registration and de-registration support</li>
+          <li>Quarterly VAT return preparation and filing</li>
+          <li>Input and output VAT reconciliation</li>
+          <li>FTA correspondence and notice handling</li>
+          <li>VAT health checks and compliance reviews</li>
+          <li>Refund applications and follow-ups</li>
         </ul>
       </article>
 
       <article>
-        <h3>IFRS Reporting</h3>
-        <p>International standard reporting for global transparency.</p>
+        <h3>Corporate Tax</h3>
+        <p>UAE Corporate Tax — fully managed.</p>
         <ul>
-          <li>IFRS-compliant financial statements</li>
-          <li>Conversion from local GAAP to IFRS</li>
-          <li>Revenue recognition under IFRS 15</li>
-          <li>Lease accounting (IFRS 16)</li>
-          <li>Financial instruments (IFRS 9)</li>
-          <li>Consolidated financial statements</li>
+          <li>Corporate Tax registration with FTA</li>
+          <li>Taxable income computation and review</li>
+          <li>Transfer pricing documentation support</li>
+          <li>Deferred tax workings under IFRS</li>
+          <li>Corporate Tax return preparation and filing</li>
+          <li>Year-end tax planning and advisory</li>
         </ul>
       </article>
 
       <article>
-        <h3>Internal Audit Support</h3>
-        <p>Rigorous process reviews and risk mitigation.</p>
+        <h3>Business Registration</h3>
+        <p>Mainland and free zone setup support.</p>
+        <ul>
+          <li>Trade license application and renewals</li>
+          <li>Mainland and free zone jurisdiction guidance</li>
+          <li>Documentation, approvals and PRO coordination</li>
+          <li>Office address and bank account assistance</li>
+          <li>Initial accounting, VAT and tax setup</li>
+          <li>Post-incorporation statutory compliance setup</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Internal and External Audits</h3>
+        <p>Audit-ready businesses, every cycle.</p>
         <ul>
           <li>Internal control evaluation and testing</li>
-          <li>Risk assessment and management</li>
-          <li>Operational audit and efficiency reviews</li>
-          <li>Fraud detection and prevention</li>
-          <li>Compliance audit procedures</li>
-          <li>Audit report preparation and follow-up</li>
+          <li>Risk assessment and process documentation</li>
+          <li>External audit liaison and preparation</li>
+          <li>Workpaper readiness and schedule preparation</li>
+          <li>Fraud detection and prevention reviews</li>
+          <li>Audit observation closure and follow-up</li>
         </ul>
       </article>
 
       <article>
         <h3>Process Reviews</h3>
-        <p>Streamlining operations for maximum efficiency.</p>
+        <p>Smarter finance processes, sharper insight.</p>
         <ul>
-          <li>Business process mapping and analysis</li>
-          <li>Workflow optimization recommendations</li>
-          <li>Cost reduction opportunities identification</li>
-          <li>System integration and automation</li>
-          <li>Performance metrics and KPI development</li>
-          <li>Change management support</li>
-        </ul>
-      </article>
-
-      <article>
-        <h3>Financial Advisory</h3>
-        <p>Strategic financial planning for sustainable growth.</p>
-        <ul>
-          <li>Business valuation and financial modeling</li>
-          <li>Mergers and acquisitions advisory</li>
-          <li>Capital structure optimization</li>
-          <li>Cash flow management strategies</li>
-          <li>Investment appraisal and feasibility studies</li>
-          <li>Exit planning and succession advisory</li>
+          <li>Finance process mapping and gap analysis</li>
+          <li>Workflow automation recommendations</li>
+          <li>Cost reduction opportunity identification</li>
+          <li>System integration and tool selection</li>
+          <li>KPI design and performance dashboards</li>
+          <li>Continuous improvement and change support</li>
         </ul>
       </article>
 
@@ -147,9 +146,10 @@ function StaticSEOContent() {
         <li>100% Compliance – Stay ahead of regulatory changes with our proactive compliance monitoring.</li>
         <li>Dedicated Team – Work with experienced professionals who understand your business needs.</li>
         <li>Proven Track Record – Join 100+ satisfied clients who trust us with their financial operations.</li>
+        <li>Modern Stack – Books on Zoho, Tally or QuickBooks; dashboards on Power BI; automation built with AI tools where it saves you time.</li>
       </ul>
 
-      <h2>Your Trusted Partner in UAE Financial Excellence</h2>
+      <h2>Want clean books, on-time filings, and a CA you can WhatsApp?</h2>
       <p>
         We combine deep regulatory knowledge with cutting-edge technology to deliver
         unparalleled financial services across the UAE market.

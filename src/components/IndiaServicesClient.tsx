@@ -49,97 +49,97 @@ type ServiceType = {
 const services: ServiceType[] = [
   {
     title: "Virtual CFO",
-    desc: "Strategic financial leadership without the full-time overhead. We act as your CFO — guiding decisions, managing risk, and driving growth.",
+    desc: "Senior finance leadership, on demand.",
     icon: TrendingUp,
     details: [
-      "Financial strategy and planning",
-      "Cash flow management and forecasting",
-      "Investor relations and fundraising support",
-      "Risk identification and mitigation",
-      "Board reporting and presentations",
-      "Business performance monitoring"
+      "Monthly financial review and insights",
+      "Cash flow forecasting and management",
+      "Investor and lender relationship support",
+      "Board reporting and management presentations",
+      "Strategic financial planning and roadmap",
+      "Risk identification and mitigation advisory"
     ],
     benefits: ["Senior expertise", "Cost-effective", "Growth-focused"],
     color: "from-orange-500 to-amber-500",
     iconBg: "linear-gradient(135deg, #f97316, #f59e0b)"
   },
   {
-    title: "FP&A",
-    desc: "Advanced financial planning and analysis to drive predictable, sustainable growth. We turn numbers into a clear roadmap for your business.",
+    title: "Accounting & Bookkeeping",
+    desc: "Clean books, ready when needed.",
     icon: BarChart2,
     details: [
-      "Annual and rolling financial forecasts",
-      "Variance analysis and commentary",
-      "KPI development and tracking",
-      "Scenario and sensitivity modelling",
-      "Revenue and cost driver analysis",
-      "Management reporting packs"
+      "Daily transaction recording and reconciliation",
+      "Chart of accounts design and maintenance",
+      "Bank and vendor reconciliations",
+      "Receivables and payables tracking",
+      "Monthly financial closing and statements",
+      "Cloud accounting on Zoho or Tally"
     ],
-    benefits: ["Forecasting", "Variance analysis", "KPI tracking"],
+    benefits: ["99.9% accuracy", "Real-time updates", "Cloud access"],
     color: "from-blue-500 to-cyan-500",
     iconBg: "linear-gradient(135deg, #3b82f6, #06b6d4)"
   },
   {
-    title: "Budgeting & Forecasting",
-    desc: "Data-backed fiscal roadmaps that keep your business on track. We build budgets that are realistic, flexible, and tied to your goals.",
-    icon: DollarSign,
+    title: "Compliance Reporting",
+    desc: "GST, TDS, Income Tax and MCA.",
+    icon: Shield,
     details: [
-      "Annual budget preparation and review",
-      "Rolling 12-month forecasts",
-      "Department-level budget allocation",
-      "Scenario planning and stress testing",
-      "Budget vs actuals tracking",
-      "Reforecast and revision cycles"
+      "Monthly GST returns and reconciliations",
+      "Quarterly TDS returns and challan management",
+      "Annual income tax return preparation",
+      "MCA filings, AGM and annual returns",
+      "Statutory notice handling and responses",
+      "Year-end tax planning and advisory"
     ],
-    benefits: ["Annual budgets", "Rolling forecasts", "Scenario planning"],
+    benefits: ["100% compliance", "Penalty avoidance", "Expert guidance"],
     color: "from-green-500 to-teal-500",
     iconBg: "linear-gradient(135deg, #22c55e, #14b8a6)"
   },
   {
-    title: "MIS & Reporting",
-    desc: "Accurate, timely management information systems that give leadership the visibility they need to act fast and with confidence.",
+    title: "FP&A, Budgeting & Reporting",
+    desc: "Plan, forecast, and report with clarity.",
     icon: PieChart,
     details: [
-      "Custom MIS dashboard design",
+      "Annual budget preparation and approval",
+      "Rolling forecasts and variance analysis",
+      "Departmental and project-level budgeting",
+      "Custom MIS dashboard design and delivery",
       "Monthly and quarterly management reports",
-      "Board pack preparation",
-      "Automated data consolidation",
-      "Real-time performance tracking",
-      "Executive summary reporting"
+      "Scenario modelling and stress testing"
     ],
-    benefits: ["Dashboard design", "Monthly reports", "Board packs"],
+    benefits: ["Forecasting", "Variance analysis", "KPI tracking"],
     color: "from-purple-500 to-pink-500",
     iconBg: "linear-gradient(135deg, #a855f7, #ec4899)"
   },
   {
     title: "Financial Analytics",
-    desc: "Turning raw data into actionable business intelligence. We surface the insights hidden in your numbers so you can move with clarity.",
+    desc: "Numbers turned into actionable insight.",
     icon: Database,
     details: [
       "Financial data modelling and structuring",
-      "Trend and pattern analysis",
-      "Business intelligence reporting",
-      "Profitability and margin analysis",
-      "Customer and product analytics",
-      "Predictive financial modelling"
+      "Profitability, margin and unit economics",
+      "Customer, product and segment analytics",
+      "Trend, pattern and outlier identification",
+      "Business intelligence reporting in Power BI",
+      "Predictive and prescriptive financial modelling"
     ],
     benefits: ["Data modelling", "Trend analysis", "Business intelligence"],
     color: "from-indigo-500 to-blue-500",
     iconBg: "linear-gradient(135deg, #6366f1, #3b82f6)"
   },
   {
-    title: "Decision Support",
-    desc: "Empowering leadership with data-driven recommendations at every critical juncture — from expansion to restructuring.",
+    title: "Overseas Investment Advisory",
+    desc: "Cross-border investment, fully facilitated.",
     icon: Lightbulb,
     details: [
-      "Investment appraisal and ROI analysis",
-      "M&A financial due diligence support",
-      "Make-or-buy and build-vs-buy analysis",
-      "Market entry financial modelling",
-      "Restructuring and turnaround advisory",
-      "Strategic options evaluation"
+      "Outbound investment structuring guidance",
+      "FEMA, RBI and ODI compliance advisory",
+      "Remittance routing and documentation support",
+      "Tax planning across multiple jurisdictions",
+      "Liaison with overseas service providers",
+      "Post-investment reporting and ongoing compliance"
     ],
-    benefits: ["Investment appraisal", "M&A support", "Strategic advisory"],
+    benefits: ["Cross-border", "FEMA compliance", "Multi-jurisdiction"],
     color: "from-violet-500 to-purple-500",
     iconBg: "linear-gradient(135deg, #8b5cf6, #a855f7)"
   },
@@ -175,6 +175,12 @@ const whyChooseUs: WhyChooseUsType[] = [
     icon: Award,
     title: "Proven Track Record",
     desc: "Trusted by 100+ Indian businesses for strategic financial leadership.",
+    iconBg: "linear-gradient(135deg, #f97316, #f59e0b)"
+  },
+  {
+    icon: Database,
+    title: "Power BI + AI Automation",
+    desc: "Your reports are dashboards, not PDFs; routine work is automated wherever it saves you time.",
     iconBg: "linear-gradient(135deg, #f97316, #f59e0b)"
   }
 ];
@@ -258,7 +264,7 @@ const IndiaServices = () => {
                 transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 style={{ fontFamily: "'Manrope', sans-serif", fontSize: "clamp(0.875rem, 1.05vw, 0.95rem)",
                   color: "#4a5568", lineHeight: 1.75, maxWidth: "480px", margin: "0 0 36px 0", fontWeight: 400 }}>
-                From Virtual CFO to FP&A, budgeting, and decision support — we deliver comprehensive financial advisory tailored for Indian businesses that demand precision and growth.
+                From Accounting to Compliance, Virtual CFO to FP&A, budgeting, and decision support — we deliver comprehensive financial advisory tailored for Indian businesses that demand precision and growth.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 14 }} animate={animate ? { opacity: 1, y: 0 } : {}}
@@ -495,7 +501,7 @@ const IndiaServices = () => {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Ready to Transform Your India Financial Operations?
+                Tell us what's breaking in your finance function. We'll tell you honestly whether we can help.
               </h2>
               <p className="text-xl text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
                 Let's discuss how our expert team can help you achieve financial clarity and drive sustainable growth.

@@ -58,97 +58,97 @@ type ServiceType = {
 const services: ServiceType[] = [
   {
     title: "Accounting & Bookkeeping",
-    desc: "Precision-led maintenance of your financial records.",
+    desc: "Books closed monthly, audit-ready always.",
     icon: FileText,
     details: [
       "Daily transaction recording and reconciliation",
-      "Chart of accounts setup and management",
-      "Bank and credit card reconciliation",
-      "Accounts payable and receivable management",
+      "Chart of accounts design and management",
+      "Bank and credit card reconciliations",
+      "Accounts payable and receivable tracking",
       "Monthly financial statements preparation",
-      "VAT-compliant bookkeeping"
+      "VAT-compliant ledger maintenance"
     ],
     benefits: ["99.9% accuracy", "Real-time updates", "Cloud access"],
     color: "from-blue-500 to-cyan-500",
     iconBg: "linear-gradient(135deg, #3b82f6, #06b6d4)"
   },
   {
-    title: "Compliance Advisory",
-    desc: "Navigating the evolving UAE regulatory landscape.",
+    title: "VAT Compliance",
+    desc: "End-to-end UAE VAT support.",
     icon: Shield,
     details: [
-      "VAT registration and compliance",
-      "Corporate tax advisory and filing",
-      "Economic substance regulations (ESR)",
-      "Ultimate beneficial owner (UBO) reporting",
-      "Anti-money laundering (AML) compliance",
-      "Regulatory change monitoring and updates"
+      "VAT registration and de-registration support",
+      "Quarterly VAT return preparation and filing",
+      "Input and output VAT reconciliation",
+      "FTA correspondence and notice handling",
+      "VAT health checks and compliance reviews",
+      "Refund applications and follow-ups"
     ],
     benefits: ["100% compliance", "Penalty avoidance", "Expert guidance"],
     color: "from-green-500 to-emerald-500",
     iconBg: "linear-gradient(135deg, #22c55e, #10b981)"
   },
   {
-    title: "IFRS Reporting",
-    desc: "International standard reporting for global transparency.",
+    title: "Corporate Tax",
+    desc: "UAE Corporate Tax — fully managed.",
     icon: BarChart3,
     details: [
-      "IFRS-compliant financial statements",
-      "Conversion from local GAAP to IFRS",
-      "Revenue recognition under IFRS 15",
-      "Lease accounting (IFRS 16)",
-      "Financial instruments (IFRS 9)",
-      "Consolidated financial statements"
+      "Corporate Tax registration with FTA",
+      "Taxable income computation and review",
+      "Transfer pricing documentation support",
+      "Deferred tax workings under IFRS",
+      "Corporate Tax return preparation and filing",
+      "Year-end tax planning and advisory"
     ],
     benefits: ["Global standards", "Investor confidence", "Audit-ready"],
     color: "from-purple-500 to-pink-500",
     iconBg: "linear-gradient(135deg, #a855f7, #ec4899)"
   },
   {
-    title: "Internal Audit Support",
-    desc: "Rigorous process reviews and risk mitigation.",
-    icon: Search,
+    title: "Business Registration",
+    desc: "Mainland and free zone setup support.",
+    icon: TrendingUp,
     details: [
-      "Internal control evaluation and testing",
-      "Risk assessment and management",
-      "Operational audit and efficiency reviews",
-      "Fraud detection and prevention",
-      "Compliance audit procedures",
-      "Audit report preparation and follow-up"
+      "Trade license application and renewals",
+      "Mainland and free zone jurisdiction guidance",
+      "Documentation, approvals and PRO coordination",
+      "Office address and bank account assistance",
+      "Initial accounting, VAT and tax setup",
+      "Post-incorporation statutory compliance setup"
     ],
-    benefits: ["Risk reduction", "Process improvement", "Fraud prevention"],
+    benefits: ["Fast setup", "Full guidance", "End-to-end support"],
     color: "from-orange-500 to-red-500",
     iconBg: "linear-gradient(135deg, #f97316, #ef4444)"
   },
   {
-    title: "Process Reviews",
-    desc: "Streamlining operations for maximum efficiency.",
-    icon: Workflow,
+    title: "Internal and External Audits",
+    desc: "Audit-ready businesses, every cycle.",
+    icon: Search,
     details: [
-      "Business process mapping and analysis",
-      "Workflow optimization recommendations",
-      "Cost reduction opportunities identification",
-      "System integration and automation",
-      "Performance metrics and KPI development",
-      "Change management support"
+      "Internal control evaluation and testing",
+      "Risk assessment and process documentation",
+      "External audit liaison and preparation",
+      "Workpaper readiness and schedule preparation",
+      "Fraud detection and prevention reviews",
+      "Audit observation closure and follow-up"
     ],
-    benefits: ["30% efficiency gain", "Cost savings", "Scalable systems"],
+    benefits: ["Risk reduction", "Process improvement", "Fraud prevention"],
     color: "from-indigo-500 to-blue-500",
     iconBg: "linear-gradient(135deg, #6366f1, #3b82f6)"
   },
   {
-    title: "Financial Advisory",
-    desc: "Strategic financial planning for sustainable growth.",
-    icon: TrendingUp,
+    title: "Process Reviews",
+    desc: "Smarter finance processes, sharper insight.",
+    icon: Workflow,
     details: [
-      "Business valuation and financial modeling",
-      "Mergers and acquisitions advisory",
-      "Capital structure optimization",
-      "Cash flow management strategies",
-      "Investment appraisal and feasibility studies",
-      "Exit planning and succession advisory"
+      "Finance process mapping and gap analysis",
+      "Workflow automation recommendations",
+      "Cost reduction opportunity identification",
+      "System integration and tool selection",
+      "KPI design and performance dashboards",
+      "Continuous improvement and change support"
     ],
-    benefits: ["Strategic insights", "Growth acceleration", "Value maximization"],
+    benefits: ["30% efficiency gain", "Cost savings", "Scalable systems"],
     color: "from-violet-500 to-purple-500",
     iconBg: "linear-gradient(135deg, #8b5cf6, #a855f7)"
   },
@@ -184,6 +184,12 @@ const whyChooseUs: WhyChooseUsType[] = [
     icon: Award,
     title: "Proven Track Record",
     desc: "Join 100+ satisfied clients who trust us with their financial operations.",
+    iconBg: "linear-gradient(135deg, #14b8a6, #0891b2)"
+  },
+  {
+    icon: TrendingUp,
+    title: "Modern Stack",
+    desc: "Books on Zoho, Tally or QuickBooks; dashboards on Power BI; automation built with AI tools where it saves you time.",
     iconBg: "linear-gradient(135deg, #14b8a6, #0891b2)"
   }
 ];
@@ -323,7 +329,7 @@ const UAEServices = () => {
                 fontWeight: 400,
               }}
             >
-              Navigate the UAE regulatory landscape with confidence — from accounting and compliance to IFRS reporting and internal audit support.
+              Navigate the UAE regulatory landscape with confidence — From new mainland and free-zone establishments to growing SMEs and family-owned shops — from accounting and compliance to IFRS reporting and internal audit support.
             </motion.p>
 
             {/* Buttons */}
@@ -718,7 +724,7 @@ const UAEServices = () => {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Ready to Transform Your UAE Financial Operations?
+              Want clean books, on-time filings, and a CA you can WhatsApp?
             </h2>
             <p className="text-xl text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
               Let's discuss how our expert team can help you achieve compliance excellence

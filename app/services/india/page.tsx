@@ -57,7 +57,7 @@ function StaticSEOContent() {
     >
       <h1>Strategic Financial Leadership for India</h1>
       <p>
-        From Virtual CFO to FP&amp;A, budgeting, and decision support — we deliver comprehensive
+        From Accounting to Compliance, Virtual CFO to FP&amp;A, budgeting, and decision support — we deliver comprehensive
         financial advisory tailored for Indian businesses that demand precision and growth.
       </p>
 
@@ -65,79 +65,79 @@ function StaticSEOContent() {
 
       <article>
         <h3>Virtual CFO</h3>
-        <p>Strategic financial leadership without the full-time overhead. We act as your CFO — guiding decisions, managing risk, and driving growth.</p>
+        <p>Senior finance leadership, on demand.</p>
         <ul>
-          <li>Financial strategy and planning</li>
-          <li>Cash flow management and forecasting</li>
-          <li>Investor relations and fundraising support</li>
-          <li>Risk identification and mitigation</li>
-          <li>Board reporting and presentations</li>
-          <li>Business performance monitoring</li>
+          <li>Monthly financial review and insights</li>
+          <li>Cash flow forecasting and management</li>
+          <li>Investor and lender relationship support</li>
+          <li>Board reporting and management presentations</li>
+          <li>Strategic financial planning and roadmap</li>
+          <li>Risk identification and mitigation advisory</li>
         </ul>
       </article>
 
       <article>
-        <h3>FP&amp;A (Financial Planning &amp; Analysis)</h3>
-        <p>Advanced financial planning and analysis to drive predictable, sustainable growth. We turn numbers into a clear roadmap for your business.</p>
+        <h3>Accounting &amp; Bookkeeping</h3>
+        <p>Clean books, ready when needed.</p>
         <ul>
-          <li>Annual and rolling financial forecasts</li>
-          <li>Variance analysis and commentary</li>
-          <li>KPI development and tracking</li>
-          <li>Scenario and sensitivity modelling</li>
-          <li>Revenue and cost driver analysis</li>
-          <li>Management reporting packs</li>
+          <li>Daily transaction recording and reconciliation</li>
+          <li>Chart of accounts design and maintenance</li>
+          <li>Bank and vendor reconciliations</li>
+          <li>Receivables and payables tracking</li>
+          <li>Monthly financial closing and statements</li>
+          <li>Cloud accounting on Zoho or Tally</li>
         </ul>
       </article>
 
       <article>
-        <h3>Budgeting &amp; Forecasting</h3>
-        <p>Data-backed fiscal roadmaps that keep your business on track. We build budgets that are realistic, flexible, and tied to your goals.</p>
+        <h3>Compliance Reporting</h3>
+        <p>GST, TDS, Income Tax and MCA.</p>
         <ul>
-          <li>Annual budget preparation and review</li>
-          <li>Rolling 12-month forecasts</li>
-          <li>Department-level budget allocation</li>
-          <li>Scenario planning and stress testing</li>
-          <li>Budget vs actuals tracking</li>
-          <li>Reforecast and revision cycles</li>
+          <li>Monthly GST returns and reconciliations</li>
+          <li>Quarterly TDS returns and challan management</li>
+          <li>Annual income tax return preparation</li>
+          <li>MCA filings, AGM and annual returns</li>
+          <li>Statutory notice handling and responses</li>
+          <li>Year-end tax planning and advisory</li>
         </ul>
       </article>
 
       <article>
-        <h3>MIS &amp; Reporting</h3>
-        <p>Accurate, timely management information systems that give leadership the visibility they need to act fast and with confidence.</p>
+        <h3>FP&amp;A, Budgeting &amp; Reporting</h3>
+        <p>Plan, forecast, and report with clarity.</p>
         <ul>
-          <li>Custom MIS dashboard design</li>
+          <li>Annual budget preparation and approval</li>
+          <li>Rolling forecasts and variance analysis</li>
+          <li>Departmental and project-level budgeting</li>
+          <li>Custom MIS dashboard design and delivery</li>
           <li>Monthly and quarterly management reports</li>
-          <li>Board pack preparation</li>
-          <li>Automated data consolidation</li>
-          <li>Real-time performance tracking</li>
-          <li>Executive summary reporting</li>
+          <li>Scenario modelling and stress testing</li>
         </ul>
       </article>
 
       <article>
         <h3>Financial Analytics</h3>
-        <p>Turning raw data into actionable business intelligence. We surface the insights hidden in your numbers so you can move with clarity.</p>
+        <p>Numbers turned into actionable insight.</p>
         <ul>
           <li>Financial data modelling and structuring</li>
-          <li>Trend and pattern analysis</li>
-          <li>Business intelligence reporting</li>
-          <li>Profitability and margin analysis</li>
-          <li>Customer and product analytics</li>
-          <li>Predictive financial modelling</li>
+          <li>Profitability, margin and unit economics</li>
+          <li>Customer, product and segment analytics</li>
+          <li>Trend, pattern and outlier identification</li>
+          <li>Business intelligence reporting in Power BI</li>
+          <li>Predictive and prescriptive financial modelling</li>
         </ul>
       </article>
 
       <article>
-        <h3>Decision Support</h3>
-        <p>Empowering leadership with data-driven recommendations at every critical juncture — from expansion to restructuring.</p>
+        <h3>Overseas Investment Advisory</h3>
+        <p>Cross-border investment, fully facilitated.</p>
         <ul>
-          <li>Investment appraisal and ROI analysis</li>
-          <li>M&amp;A financial due diligence support</li>
-          <li>Make-or-buy and build-vs-buy analysis</li>
-          <li>Market entry financial modelling</li>
-          <li>Restructuring and turnaround advisory</li>
-          <li>Strategic options evaluation</li>
+          <li>Outbound investment structuring guidance</li>
+          <li>FEMA, RBI and ODI compliance advisory</li>
+          <li>Remittance routing and documentation support</li>
+          <li>Tax planning across multiple jurisdictions</li>
+          <li>Liaison with overseas service providers</li>
+          <li>Post-investment reporting and ongoing compliance</li>
         </ul>
       </article>
 
@@ -147,9 +147,10 @@ function StaticSEOContent() {
         <li>100% Accuracy – Every number verified. Zero tolerance for errors in your financial data.</li>
         <li>Dedicated Team – Work with senior finance professionals who understand Indian business needs.</li>
         <li>Proven Track Record – Trusted by 100+ Indian businesses for strategic financial leadership.</li>
+        <li>Power BI + AI Automation – Your reports are dashboards, not PDFs; routine work is automated wherever it saves you time.</li>
       </ul>
 
-      <h2>Ready to Transform Your India Financial Operations?</h2>
+      <h2>Tell us what's breaking in your finance function. We'll tell you honestly whether we can help.</h2>
       <p>
         Let's discuss how our expert team can help you achieve financial clarity and drive sustainable growth.
         Contact ScaleSight Global Advisory today.
