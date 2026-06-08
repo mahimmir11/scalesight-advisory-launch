@@ -50,12 +50,14 @@ async function detectCountryCode(): Promise<string> {
 }
 
 const services = [
-  "Business Setup & Licensing",
-  "Tax & Compliance Advisory",
-  "Investment & Funding",
-  "Market Entry Strategy",
-  "Legal & Regulatory Support",
-  "Other / General Inquiry",
+  "Accounting & Bookkeeping",
+  "VAT & Corporate Tax (UAE)",
+  "GST, TDS & Income Tax (India)",
+  "Virtual CFO & MIS",
+  "Audit, IFRS or M&A Support",
+  "Business Registration (UAE)",
+  "Overseas Investment Advisory",
+  "Other / Not Sure Yet",
 ];
 
 const prefilledSubject = encodeURIComponent("Inquiry About Finance Advisory Services");
@@ -375,7 +377,10 @@ const ContactSection = ({ showInfoCards: _showInfoCards = true }: { showInfoCard
             >
               <div className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-[#FAFAF8]">
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#09285A] mb-1">Send Us a Message</h3>
-                <p className="text-gray-400 text-sm mb-6">Fill in the form and our team will get back to you within one business day.</p>
+                <p className="text-gray-400 text-sm mb-2">Fill in the form and our team will get back to you within one business day.</p>
+                <p className="text-[#09285A] text-xs font-medium mb-6 px-3 py-2.5 rounded-xl bg-[#f0fdf9] border border-[#00C2A825]">
+                  Free 30-minute discovery call. No obligation, no sales pitch — and we will tell you honestly if you don't need us yet.
+                </p>
 
                 {submitted ? (
                   <motion.div

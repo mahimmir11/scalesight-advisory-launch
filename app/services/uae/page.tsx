@@ -6,12 +6,19 @@ export const metadata: Metadata = {
   description:
     "Expert financial advisory for UAE businesses. Accounting, bookkeeping, IFRS reporting, internal audit support, process reviews, and comprehensive compliance services tailored for UAE market.",
   keywords: [
-    "UAE accounting services",
+    "accounting services Dubai",
+    "VAT return filing Dubai",
+    "UAE corporate tax",
+    "free zone accounting",
+    "mainland accounting",
+    "business registration Dubai",
+    "bookkeeping Dubai",
+    "financial advisory UAE",
     "IFRS reporting UAE",
     "internal audit UAE",
     "compliance UAE",
-    "bookkeeping Dubai",
-    "financial advisory UAE",
+    "overseas investment advisory India",
+    "chartered accountant UAE",
   ],
   alternates: { canonical: "https://www.scalesight.in/services/uae" },
   openGraph: {

@@ -2,14 +2,26 @@ import type { Metadata } from "next";
 import FAQPageClient from "@/components/FAQPageClient";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
+  title: "Frequently Asked Questions | ScaleSight Global Advisory",
   description:
-    "Find answers to common questions about ScaleSight Global Advisory's finance advisory services for businesses in India and UAE.",
+    "Find answers to common questions about ScaleSight Global Advisory's accounting, tax, Virtual CFO and advisory services for businesses in India and UAE.",
+  keywords: [
+    "accounting services Dubai",
+    "VAT return filing Dubai",
+    "UAE corporate tax",
+    "virtual CFO services",
+    "GST return filing India",
+    "TDS filing India",
+    "MCA compliance",
+    "overseas investment advisory India",
+    "chartered accountant India",
+    "chartered accountant UAE",
+  ],
   alternates: { canonical: "https://www.scalesight.in/faq" },
   openGraph: {
     title: "Frequently Asked Questions | ScaleSight Global Advisory",
     description:
-      "Find answers to common questions about ScaleSight's finance advisory services for India and UAE businesses.",
+      "Find answers to common questions about ScaleSight's accounting, tax and advisory services for India and UAE businesses.",
     url: "https://www.scalesight.in/faq",
     siteName: "ScaleSight Global Advisory",
     images: [{ url: "https://www.scalesight.in/fulllogo1.png", width: 1200, height: 630, alt: "ScaleSight FAQ" }],

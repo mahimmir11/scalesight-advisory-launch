@@ -2,14 +2,23 @@ import type { Metadata } from "next";
 import TeamPageClient from "@/components/TeamPageClient";
 
 export const metadata: Metadata = {
-  title: "Our Team",
+  title: "Our Team | ScaleSight Global Advisory",
   description:
-    "Meet the founders and advisors behind ScaleSight Global Advisory — experienced finance professionals serving businesses across India and UAE.",
+    "Meet the founders and Chartered Accountants behind ScaleSight Global Advisory — experienced finance professionals serving businesses across India and UAE.",
+  keywords: [
+    "chartered accountant India",
+    "chartered accountant UAE",
+    "virtual CFO services",
+    "outsourced CFO India",
+    "accounting services Dubai",
+    "financial advisory India",
+    "financial advisory UAE",
+  ],
   alternates: { canonical: "https://www.scalesight.in/team" },
   openGraph: {
     title: "Our Team | ScaleSight Global Advisory",
     description:
-      "Meet the founders and advisors behind ScaleSight Global Advisory — experienced finance professionals serving businesses across India and UAE.",
+      "Meet the founders and Chartered Accountants behind ScaleSight Global Advisory — experienced finance professionals serving businesses across India and UAE.",
     url: "https://www.scalesight.in/team",
     siteName: "ScaleSight Global Advisory",
     images: [{ url: "https://www.scalesight.in/fulllogo1.png", width: 1200, height: 630, alt: "ScaleSight Team" }],

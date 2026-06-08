@@ -2,14 +2,30 @@ import type { Metadata } from "next";
 import AboutClient from "@/components/AboutClient";
 
 export const metadata: Metadata = {
-  title: "About Us - Founder-Led Finance Advisory",
+  title: "About Us - Chartered Accountants in India & UAE | ScaleSight Global Advisory",
   description:
-    "Meet the team behind ScaleSight Global Advisory. Founder-led strategic finance advisory helping businesses across India and UAE achieve clarity, compliance, and confident growth.",
+    "Meet the team behind ScaleSight Global Advisory. Founder-led accounting, tax and advisory practice helping businesses across India and UAE achieve clarity, compliance, and confident growth.",
+  keywords: [
+    "accounting services Dubai",
+    "VAT return filing Dubai",
+    "UAE corporate tax",
+    "free zone accounting",
+    "mainland accounting",
+    "business registration Dubai",
+    "outsourced CFO India",
+    "virtual CFO services",
+    "GST return filing India",
+    "TDS filing India",
+    "MCA compliance",
+    "overseas investment advisory India",
+    "chartered accountant India",
+    "chartered accountant UAE",
+  ],
   alternates: { canonical: "https://www.scalesight.in/about" },
   openGraph: {
     title: "About ScaleSight Global Advisory",
     description:
-      "Founder-led strategic finance advisory helping businesses across India and UAE achieve clarity, compliance, and confident growth.",
+      "Founder-led accounting, tax and advisory practice helping businesses across India and UAE achieve clarity, compliance, and confident growth.",
     url: "https://www.scalesight.in/about",
     siteName: "ScaleSight Global Advisory",
     images: [{ url: "https://www.scalesight.in/fulllogo1.png", width: 1200, height: 630, alt: "ScaleSight Global Advisory" }],

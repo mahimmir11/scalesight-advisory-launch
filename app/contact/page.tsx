@@ -2,14 +2,28 @@ import type { Metadata } from "next";
 import ContactClient from "@/components/ContactClient";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us | ScaleSight Global Advisory — India & UAE",
   description:
-    "Ready to transform your business? Get in touch with ScaleSight Global Advisory for expert finance advisory services across India and UAE. Let's discuss your strategic finance needs.",
+    "Get in touch with ScaleSight Global Advisory for accounting, tax, Virtual CFO and advisory services across India and UAE. Free 30-minute discovery call available.",
+  keywords: [
+    "accounting services Dubai",
+    "VAT return filing Dubai",
+    "UAE corporate tax",
+    "free zone accounting",
+    "mainland accounting",
+    "business registration Dubai",
+    "outsourced CFO India",
+    "virtual CFO services",
+    "GST return filing India",
+    "TDS filing India",
+    "MCA compliance",
+    "overseas investment advisory India",
+  ],
   alternates: { canonical: "https://www.scalesight.in/contact" },
   openGraph: {
     title: "Contact ScaleSight Global Advisory",
     description:
-      "Get in touch with ScaleSight for strategic finance advisory services across India and UAE.",
+      "Get in touch with ScaleSight for accounting, tax and advisory services across India and UAE.",
     url: "https://www.scalesight.in/contact",
     siteName: "ScaleSight Global Advisory",
     images: [{ url: "https://www.scalesight.in/fulllogo1.png", width: 1200, height: 630, alt: "Contact ScaleSight" }],

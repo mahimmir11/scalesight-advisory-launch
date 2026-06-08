@@ -10,6 +10,7 @@ interface Props {
 }
 
 const headingLines = [
+  { text: "Strategic Finance and Compliance Advisory —", teal: false },
   { text: "Built for Businesses in India and the UAE.",  teal: true  },
 ];
 

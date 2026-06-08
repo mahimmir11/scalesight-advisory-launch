@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { Building2, Rocket, TrendingUp, Users, Target, Eye, BarChart3 } from "lucide-react";
+import { Building2, Rocket, TrendingUp, Users, Target, Eye, BarChart3, Code2, Factory, ShoppingCart, Landmark, HeartPulse, Wrench, Store } from "lucide-react";
 import { useRef, useEffect, useState, useCallback } from "react";
 import ScrollParticles from "./ScrollParticles";
 
@@ -379,6 +379,155 @@ const ParallaxSection = ({ children, offset = 30 }: { children: React.ReactNode;
   );
 };
 
+/* ── Industries We Serve ── */
+const industries = [
+  { label: "Software & SaaS",                    Icon: Code2        },
+  { label: "Manufacturing",                       Icon: Factory      },
+  { label: "Trading",                             Icon: ShoppingCart },
+  { label: "Real Estate",                         Icon: Landmark     },
+  { label: "Healthcare",                          Icon: HeartPulse   },
+  { label: "Engineering & Professional Services", Icon: Wrench       },
+  { label: "E-commerce",                          Icon: Store        },
+];
+
+const IndustriesStrip = () => {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(stripRef, { once: true, margin: "-60px" });
+
+  return (
+    <div ref={stripRef} className="mt-24">
+      {/* Heading */}
+      <div className="text-center mb-12">
+        <motion.span
+          initial={{ opacity: 0, x: -30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-block text-[11px] font-bold tracking-[0.35em] uppercase text-[#00C2A8] mb-4"
+        >
+          Sectors
+        </motion.span>
+        <motion.h3
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="text-3xl md:text-4xl font-bold text-[#09285A] mb-3"
+          style={{ letterSpacing: "-0.02em" }}
+        >
+          Industries We Serve
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="text-gray-500 text-base max-w-xl mx-auto"
+        >
+          From fast-moving SaaS startups to family-run trading businesses — we bring the right financial expertise to every sector.
+        </motion.p>
+      </div>
+
+      {/* Industry cards grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+        {industries.map((ind, i) => {
+          const IndIcon = ind.Icon;
+          return (
+            <motion.div
+              key={ind.label}
+              /* entrance — wave from left with spring overshoot */
+              initial={{ opacity: 0, y: 50, scale: 0.82, rotateX: 18 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1, rotateX: 0 } : {}}
+              transition={{
+                duration: 0.6,
+                delay: 0.06 + i * 0.07,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              /* hover — spring lift + slight tilt */
+              whileHover={{
+                y: -10,
+                scale: 1.06,
+                rotate: i % 2 === 0 ? 1.5 : -1.5,
+                boxShadow: "0 20px 44px rgba(9,40,90,0.16)",
+                borderColor: "#09285A",
+                transition: { type: "spring", stiffness: 380, damping: 18 },
+              }}
+              whileTap={{ scale: 0.96, transition: { duration: 0.12 } }}
+              className="group flex flex-col items-center text-center gap-3 py-6 px-4 rounded-2xl cursor-default bg-white"
+              style={{
+                border: "1.5px solid #d1d5db",
+                boxShadow: "0 2px 12px rgba(9,40,90,0.05)",
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {/* Icon box — bobs continuously, flips colour on hover */}
+              <motion.div
+                className="w-[52px] h-[52px] rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50 group-hover:bg-[#09285A] transition-colors duration-300"
+                style={{ border: "1.5px solid #e5e7eb" }}
+                /* continuous gentle bump */
+                animate={isInView ? {
+                  y: [0, -6, 0, -3, 0],
+                  scale: [1, 1.08, 1, 1.04, 1],
+                } : {}}
+                transition={{
+                  duration: 2.2 + i * 0.2,
+                  delay: 0.5 + i * 0.15,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <IndIcon
+                  className="w-6 h-6 text-[#09285A] group-hover:text-white transition-colors duration-300"
+                  strokeWidth={1.75}
+                />
+              </motion.div>
+
+              {/* Label */}
+              <span className="text-[12px] font-semibold leading-snug text-[#09285A]">
+                {ind.label}
+              </span>
+
+              {/* Bottom accent line — fills left-to-right on hover */}
+              <div className="w-full h-[2px] rounded-full overflow-hidden bg-gray-100 mt-1">
+                <div className="h-full bg-[#09285A] rounded-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Scrolling ticker strip — faster speed */}
+      <div className="mt-12 overflow-hidden relative">
+        <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #ffffff 60%, transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #ffffff 60%, transparent)" }} />
+        <motion.div
+          className="flex gap-4 w-max"
+          animate={{ x: ["0px", "-50%"] }}
+          transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        >
+          {[...industries, ...industries, ...industries, ...industries].map((ind, i) => {
+            const TickerIcon = ind.Icon;
+            return (
+              <span
+                key={i}
+                className="ticker-pill inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[12px] font-semibold flex-shrink-0 whitespace-nowrap cursor-default"
+                style={{
+                  background: "#f9fafb",
+                  color: "#09285A",
+                  border: "1.5px solid #d1d5db",
+                  transition: "background 0.25s, color 0.25s, border-color 0.25s",
+                }}
+              >
+                <TickerIcon className="w-3.5 h-3.5" strokeWidth={2} />
+                {ind.label}
+              </span>
+            );
+          })}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
 /* ── Who We Work With Section (upgraded) ── */
 const WhoWeWorkWith = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -449,6 +598,9 @@ const WhoWeWorkWith = () => {
             <TiltCard key={card.label} card={card} index={i} sectionInView={isInView} />
           ))}
         </div>
+
+        {/* Industries We Serve strip */}
+        <IndustriesStrip />
       </div>
     </section>
   );
@@ -488,6 +640,11 @@ const ClientsSection = () => {
     <>
       <style>{`
         .ss-all-white { background-color: #ffffff !important; }
+        .ticker-pill:hover {
+          background: #09285A !important;
+          color: #ffffff !important;
+          border-color: #09285A !important;
+        }
       `}</style>
 
       <div className="relative overflow-hidden ss-all-white" ref={sectionRef}>

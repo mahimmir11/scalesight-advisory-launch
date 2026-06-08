@@ -2,14 +2,32 @@ import type { Metadata } from "next";
 import HomeClient from "@/components/HomeClient";
 
 export const metadata: Metadata = {
-  title: "Strategic Finance Advisory for Growing Businesses | ScaleSight Global Advisory",
+  title: "Accounting, Tax & Virtual CFO Services in India and the UAE | ScaleSight",
   description:
-    "Founder-led finance advisory helping businesses see clearly, stay compliant, and grow confidently across India and UAE. Expert CFO services, compliance, and strategic financial planning.",
+    "Accounting, tax, Virtual CFO, audit and advisory services for businesses across India and the UAE — delivered by experienced Chartered Accountants of ScaleSight Global Advisory LLP.",
+  keywords: [
+    "accounting services Dubai",
+    "VAT return filing Dubai",
+    "UAE corporate tax",
+    "free zone accounting",
+    "mainland accounting",
+    "business registration Dubai",
+    "outsourced CFO India",
+    "virtual CFO services",
+    "GST return filing India",
+    "TDS filing India",
+    "MCA compliance",
+    "overseas investment advisory India",
+    "financial advisory India",
+    "financial advisory UAE",
+    "chartered accountant India",
+    "chartered accountant UAE",
+  ],
   alternates: { canonical: "https://www.scalesight.in/" },
   openGraph: {
-    title: "Strategic Finance Advisory for Growing Businesses | ScaleSight Global Advisory",
+    title: "Accounting, Tax & Virtual CFO Services in India and the UAE | ScaleSight",
     description:
-      "Founder-led finance advisory helping businesses see clearly, stay compliant, and grow confidently across India and UAE.",
+      "Accounting, tax, Virtual CFO, audit and advisory services for businesses across India and the UAE — delivered by experienced Chartered Accountants of ScaleSight Global Advisory LLP.",
     url: "https://www.scalesight.in/",
     siteName: "ScaleSight Global Advisory",
     images: [{ url: "https://www.scalesight.in/fulllogo1.png", width: 1200, height: 630, alt: "ScaleSight Global Advisory" }],
@@ -17,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Strategic Finance Advisory | ScaleSight Global Advisory",
-    description: "Founder-led finance advisory for India and UAE businesses.",
+    title: "Accounting, Tax & Virtual CFO Services in India and the UAE | ScaleSight",
+    description: "Accounting, tax, Virtual CFO, audit and advisory services for businesses across India and the UAE.",
     images: ["https://www.scalesight.in/fulllogo1.png"],
   },
 };

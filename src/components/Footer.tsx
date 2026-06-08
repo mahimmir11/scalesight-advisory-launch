@@ -22,7 +22,7 @@ const Footer = () => (
         <div>
           <img src="/fulllogo1.png" alt="ScaleSight" className="h-20 md:h-24 w-auto object-contain object-left mb-4" loading="lazy" />
           <p className="text-gray-800 text-sm leading-relaxed font-light">
-            Your trusted partner for expert financial advisory, compliance, and strategic growth across India & UAE.
+            ScaleSight Global Advisory LLP is a finance, tax and advisory practice registered in India as a Limited Liability Partnership. Led by experienced Chartered Accountants with deep cross-sector expertise across India and the UAE.
           </p>
         </div>
 
