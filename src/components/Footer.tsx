@@ -111,6 +111,26 @@ const Footer = () => (
               </svg>
             </a>
 
+            {/* Instagram */}
+            <a href="https://www.instagram.com/scalesight_global_advisory" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="w-12 h-12 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="ig-grad-footer" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#f09433"/>
+                    <stop offset="25%" stopColor="#e6683c"/>
+                    <stop offset="50%" stopColor="#dc2743"/>
+                    <stop offset="75%" stopColor="#cc2366"/>
+                    <stop offset="100%" stopColor="#bc1888"/>
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-grad-footer)"/>
+                <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="url(#ig-grad-footer)" strokeWidth="0"/>
+                <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.8" fill="none"/>
+                <circle cx="17" cy="7" r="1.2" fill="white"/>
+              </svg>
+            </a>
+
           </div>
         </div>
 
