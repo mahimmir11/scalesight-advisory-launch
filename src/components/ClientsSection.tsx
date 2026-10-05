@@ -861,50 +861,7 @@ const ClientsSection = () => {
           </div>
         </section>
 
-        {/* ══ ZOHO PARTNERSHIP ══ */}
-        <section className="relative z-10 py-24 px-6 ss-all-white" style={{ borderTop: "1px solid #f1f5f9" }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="text-[11px] font-bold tracking-[0.35em] uppercase text-gray-400 mb-4"
-            >
-              Official Partnership
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.75, delay: 0.1, ease }}
-              className="text-4xl md:text-5xl font-bold text-[#09285A] mb-10"
-              style={{ letterSpacing: "-0.025em" }}
-            >
-              In <span className="italic font-serif text-[#085B63]">Partnership</span> with
-            </motion.h2>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.25, duration: 0.8, ease }}
-              whileHover={{ scale: 1.06 }}
-              className="flex items-center justify-center gap-5 mb-10"
-            >
-              <img src="/zoho.png" alt="Zoho" className="h-20 md:h-24 object-contain" />
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.7, ease }}
-              className="text-gray-500 text-lg leading-relaxed"
-            >
-              We proudly partner with Zoho to deliver powerful business tools, helping
-              organizations streamline operations, manage customers, and scale efficiently.
-            </motion.p>
-          </div>
-        </section>
+        {/* ══ ZOHO PARTNERSHIP — temporarily hidden ══ */}
       </div>
     </>
   );
